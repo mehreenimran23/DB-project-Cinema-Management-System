@@ -439,49 +439,43 @@ app.get("/seats", async (req, res) => {
   }
 });
 
-app.post("/book", async (req, res) => {
-  try {
-      
+app.post("/book", async (req, res) => 
+  {
+  try 
+  {
       let { selectedSeats, userId, showtimeId, totalAmount, paymentMethod } = req.body;
+
       if (typeof selectedSeats === 'string')
          {
           selectedSeats = selectedSeats.split(',').map(seat => seat.trim());
          }
 
-      if (!Array.isArray(selectedSeats)) 
-        {
-          return res.status(400).send("Nahi hai array bhai.");
-        }
+      if (!Array.isArray(selectedSeats))
+         {
+          return res.status(400).send("Invalid data format for selected seats.");
+         }
 
       const poolRequest = pool.request();
-      await Promise.all(
-          selectedSeats.map(seat =>
-              poolRequest
-                  .input('seatNumber', sql.VarChar, seat)
-                  .input('showtimeId', sql.Int, showtimeId)
-                  .query(`
-                      update Seats
-                      set isReserved = 1
-                      where seatNumber = @seatNumber and showtimeId = @showtimeId;
-                  `)
-          )
-      );
 
-      await poolRequest
-          .input('userId', sql.Int, userId)
-          .input('showtimeId', sql.Int, showtimeId)
-          .input('totalAmount', sql.Decimal(10, 2), totalAmount)
-          .input('paymentMethod', sql.VarChar, paymentMethod)
-          .query(`
-              INSERT INTO Bookings (userId, showtimeId, totalAmount, paymentMethod, paymentStatus)
-              VALUES (@userId, @showtimeId, @totalAmount, @paymentMethod, 'Completed');
-          `);
-
+      for (let seat of selectedSeats) 
+        {
+          await poolRequest
+              .input('seatNumber', sql.VarChar, seat)
+              .input('showtimeId', sql.Int, showtimeId)
+              .query
+              (`
+                update seats
+                  set isReserved = 1
+                  where seatNumber = @seatNumber
+                  and showtimeId = @showtimeId
+                  and isReserved = 0;  
+              `);
+      }
       res.status(200).send("Seats reserved successfully.");
   } 
   catch (err)
    {
-      console.error("Error updating seats:", err.message);  //check which code error
-      res.status(500).send("Error reserving seats");
+      console.error("Error updating seats:", err.message, err.stack);
+      res.status(500).send("Error reserving seats.");
   }
 });
