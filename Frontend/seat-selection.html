@@ -314,126 +314,128 @@
         <p>&copy; CineVerse Studios</p>
     </footer>
 
-   <script>
-    let selectedSeats = [];
-    let seatsData = [];
-    let totalCost = 0;
-    let userId = 1;
-    let showtimeId = 1; 
-    let paymentMethod = 'Credit Card'; //temporaily 
+ <script>
+let selectedSeats = [];
+let seatsData = [];
+let totalCost = 0;
+let userId = 1;
+let showtimeId = 1; 
+let paymentMethod = 'Credit Card'; // Temporarily hardcode kia va
 
-    fetch('http://localhost:3002/seats')
-      .then(response => response.json())
-      .then(data => {
-        seatsData = data;
-        renderSeats();
-      })
+fetch('http://localhost:3002/seats')
+  .then(response => response.json())
+  .then(data => {
+    seatsData = data;
+    renderSeats();
+  })
 
-      .catch(err => 
-      {
-        console.error('Error fetching seat data:', err);
-        alert('Error. Please try again later.');
-      });
+  .catch(err => {
+    console.error('Error fetching seat data:', err);
+    alert('Error. Please try again later.');
+  });
 
-    function renderSeats() 
-      {
-      const seatContainer = document.getElementById('seatContainer');
-      const groupedSeats = {};
+function renderSeats() 
+{
+  const seatContainer = document.getElementById('seatContainer');
+  const groupedSeats = {};
 
-      seatsData.forEach(seat =>
-       {
-        const row = seat.seatNumber[0]; 
-        if (!groupedSeats[row]) groupedSeats[row] = [];
-        groupedSeats[row].push(seat);
-      });
+  seatsData.forEach(seat =>
+  {
+    const row = seat.seatNumber[0]; 
+    if (!groupedSeats[row]) groupedSeats[row] = [];
+    groupedSeats[row].push(seat);
+  });
 
-       Object.keys(groupedSeats).forEach(row => {
-        const rowDiv = document.createElement('div');
-        rowDiv.classList.add('row');
+    Object.keys(groupedSeats).forEach(row => {
+    const rowDiv = document.createElement('div');
+    rowDiv.classList.add('row');
 
-        groupedSeats[row].forEach(seat => {
-          const seatDiv = document.createElement('div');
-          seatDiv.classList.add('seat');
-          seatDiv.innerText = seat.seatNumber;
-
-          if (seat.isReserved) 
-         {
-            seatDiv.classList.add('unavailable');
-          } 
-         else {
-            seatDiv.onclick = () => toggleSeat(seatDiv, seat.seatNumber);
-          }
-          rowDiv.appendChild(seatDiv);
-        });
-        seatContainer.appendChild(rowDiv);
-      });
-    }
-
-    function toggleSeat(seatDiv, seatNumber) 
+    groupedSeats[row].forEach(seat => 
      {
-      if (seatDiv.classList.contains('unavailable')) return;
+      const seatDiv = document.createElement('div');
+      seatDiv.classList.add('seat');
+      seatDiv.innerText = seat.seatNumber;
 
-      seatDiv.classList.toggle('selected');
-      if (selectedSeats.includes(seatNumber)) 
+      if (seat.isReserved)
       {
-        selectedSeats = selectedSeats.filter(seat => seat !== seatNumber);
+        seatDiv.classList.add('unavailable');
       } 
        else 
-      {
-        selectedSeats.push(seatNumber);
-      }
-      updateCost();
-    }
-
-    function updateCost() 
-     {
-      const ticketPrice = 150; 
-      totalCost = selectedSeats.length * ticketPrice;
-      document.getElementById('totalCost').innerText = `Rs.${totalCost}.00`;
-      document.getElementById('selectedSeatsList').innerText = selectedSeats.join(', ') || 'None';
-    }
-
-    function confirmSelection() 
-     {
-      if (selectedSeats.length === 0)
        {
-        alert('Please select at least one seat before proceeding.');
-        return;
+        seatDiv.onclick = () => toggleSeat(seatDiv, seat.seatNumber); // Seat click action
       }
 
-      // booking details
-      const bookingDetails = 
-      {
-        selectedSeats: selectedSeats,
-        userId: userId,
-        showtimeId: showtimeId,
-        totalAmount: totalCost,
-        paymentMethod: paymentMethod
-      };
+      rowDiv.appendChild(seatDiv);
+    });
+    seatContainer.appendChild(rowDiv);
+  });
+}
 
-      fetch('http://localhost:3002/book',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(bookingDetails),
-      })
-      .then(response => 
-      {
-        if (!response.ok) throw new Error('Failed to book seats');
-        return response.text();
-      })
-      .then(() => 
-      {
-        alert(`Booking successful! Seats: ${selectedSeats.join(', ')}`);
-        window.location.href = 'snacks.html';
-      })
+function toggleSeat(seatDiv, seatNumber) 
+{
+  if (seatDiv.classList.contains('unavailable')) return;
 
-      .catch(err => 
-       {
-        console.error('Error', err);
-        alert('Error booking seats. Please try again.');
-      });
-    }
+  seatDiv.classList.toggle('selected');
+
+  if (selectedSeats.includes(seatNumber)) 
+{
+    selectedSeats = selectedSeats.filter(seat => seat !== seatNumber);
+  } else {
+    selectedSeats.push(seatNumber);
+  }
+
+  updateCost(); 
+}
+
+function updateCost() 
+{
+  const ticketPrice = 150; // Price per ticket
+  totalCost = selectedSeats.length * ticketPrice;
+  document.getElementById('totalCost').innerText = `Rs.${totalCost}.00`;
+  document.getElementById('selectedSeatsList').innerText = selectedSeats.join(', ') || 'None';
+}
+
+function confirmSelection()
+ {
+  if (selectedSeats.length === 0) 
+{
+    alert('Please select at least one seat before proceeding.');
+    return;
+  }
+
+  // booking details
+  const bookingDetails =
+ {
+    selectedSeats: selectedSeats, 
+    userId: userId,
+    showtimeId: showtimeId,
+    totalAmount: totalCost,
+    paymentMethod: paymentMethod
+  };
+
+  fetch('http://localhost:3002/book', 
+{
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(bookingDetails),
+  })
+  .then(response => 
+  {
+    if (!response.ok) throw new Error('Failed to book seats');
+    return response.text();
+  })
+  .then(() => 
+ {
+    alert(`Booking successful! Seats: ${selectedSeats.join(', ')}`);
+    window.location.href = 'snacks.html';
+  })
+
+  .catch(err => 
+   {
+    console.error('Error', err);
+    alert('Error booking seats. Please try again.');
+  });
+}
 
 </script>
 </body>
