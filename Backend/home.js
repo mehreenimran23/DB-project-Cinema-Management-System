@@ -231,16 +231,17 @@ app.get("/movie-details/:movieTitle", async (req, res) => {
           md.genre, 
           m.opening_date, 
           md.trailer_url
-        FROM Movie m
-        JOIN MovieDetails md ON m.movie_id = md.movie_id
-        WHERE m.title = @movieTitle
+        from Movie m
+        join MovieDetails md on m.movie_id = md.movie_id
+        where m.title = @movieTitle
       `);
 
     console.log("Movie details query result:", movieResult.recordset);
 
-    if (movieResult.recordset.length === 0) {
+    if (movieResult.recordset.length === 0) 
+      {
       return res.status(404).json({ message: "Movie not found" });
-    }
+      }
 
     const movie = movieResult.recordset[0];
 
@@ -248,9 +249,9 @@ app.get("/movie-details/:movieTitle", async (req, res) => {
       .request()
       .input("movieTitle", sql.NVarChar, movieTitle)
       .query(`
-        SELECT AVG(rating) AS average_rating
-        FROM MovieRatings
-        WHERE movie_title = @movieTitle
+        select avg (rating) as averageRating
+        from MovieRatings
+        where movie_title = @movieTitle
       `);
 
     console.log("Movie ratings query result:", ratingResult.recordset);
@@ -281,7 +282,8 @@ app.get("/movie-details/:movieTitle", async (req, res) => {
 app.post("/signup", async (req, res) => {
   console.log("Signup POST request received");
 
-  const {
+  const
+   {
     first_name, last_name, dob_month, dob_day, dob_year,
     gender, marital_status, email, phoneNo, address,
     postcode, city, password, terms,
@@ -293,7 +295,8 @@ app.post("/signup", async (req, res) => {
   (
     !first_name || !last_name || !dob_month || !dob_day || !dob_year ||
     !email || !postcode || !password || terms === undefined
-  ) {
+  ) 
+  {
     return res.status(400).json({ error: "All required fields must be filled out." });
   }
 
@@ -303,7 +306,7 @@ app.post("/signup", async (req, res) => {
     const existingUser = await pool
       .request()
       .input("email", sql.NVarChar, email)
-      .query("SELECT * FROM Users WHERE email = @email");
+      .query("select * from Users where email = @email");
 
     if (existingUser.recordset.length > 0)
        {
@@ -327,12 +330,14 @@ app.post("/signup", async (req, res) => {
       .input("city", sql.NVarChar, city)
       .input("password", sql.NVarChar, password)
       .input("terms_accepted", sql.Bit, terms)
+
       .query(`
         insert into Users (
           first_name, last_name, dob_month, dob_day, dob_year, gender,
           marital_status, email, phoneNo, address, postcode, city, 
           password, terms_accepted
-        ) VALUES (
+        ) values
+         (
           @first_name, @last_name, @dob_month, @dob_day, @dob_year,
           @gender, @marital_status, @email, @phoneNo, @address, 
           @postcode, @city, @password, @terms_accepted
@@ -352,49 +357,44 @@ app.post("/signup", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
-  console.log("Received email:", email);  // Debugging: Check email
-  console.log("Received password:", password);  // Debugging: Check password
+  console.log("Received email:", email);  
+  console.log("Received password:", password);  
 
   try {
-      if (!email || !password) {
+      if (!email || !password)
+         {
           return res.status(400).json({ success: false, message: "Email and password are required" });
-      }
+        }
 
-      // Connect to the database
-      const pool = await sql.connect(dbConfig);
-
-      // Trim any spaces from the email
+      const pool = sql.connect(dbConfig);
       const trimmedEmail = email.trim();
 
-      // Query to fetch the user by email
       const result = await pool.request()
           .input("email", sql.VarChar, trimmedEmail)
-          .query("SELECT * FROM Users WHERE email = @email");
+          .query("select * from Users where email = @email");
 
-      console.log("Database query result:", result.recordset); // Debugging: Check query result
+      console.log("Database query result:", result.recordset); 
 
-      // Check if the user exists
-      if (result.recordset.length === 0) {
+      if (result.recordset.length === 0)
+         {
           return res.status(401).json({ success: false, message: "Invalid email or password" });
-      }
+         }
 
       const user = result.recordset[0];
 
-      if (user.password !== password) {
+      if (user.password !== password) 
+        {
           return res.status(401).json({ success: false, message: "Invalid email or password" });
-      }
+        }
       const u = result.recordset[0];
       res.status(200).json({ message: "Login successful", userId: u.user_id });
 
-      res.status(200).json({ success: true, message: "Login successful" });
-      
-
-  }  
-  
+      res.status(200).json({ success: true, message: "Login successful" });     
+  }   
   catch (err)
    {
       console.error("Login error:", err);
-      res.status(500).json({ success: false, message: "Internal server error" });
+      res.status(500).json({ success: false, message: "Internal server ka masla hai" });
   }
 });
 
@@ -423,4 +423,65 @@ app.post('/ticket', (req, res) =>
           totalCost: totalCost
       });
   });
+});
+
+
+app.get("/seats", async (req, res) => {
+  try 
+  {
+    const result = await pool.request().query('select * from Seats where isReserved = 0');
+    res.json(result.recordset);
+  }
+   catch (err) 
+  {
+    console.error("Error fetching seats:", err.message);
+    res.status(500).send('Error fetching available seats'); //debugging error a raha hai
+  }
+});
+
+app.post("/book", async (req, res) => {
+  try {
+      
+      let { selectedSeats, userId, showtimeId, totalAmount, paymentMethod } = req.body;
+      if (typeof selectedSeats === 'string')
+         {
+          selectedSeats = selectedSeats.split(',').map(seat => seat.trim());
+         }
+
+      if (!Array.isArray(selectedSeats)) 
+        {
+          return res.status(400).send("Nahi hai array bhai.");
+        }
+
+      const poolRequest = pool.request();
+      await Promise.all(
+          selectedSeats.map(seat =>
+              poolRequest
+                  .input('seatNumber', sql.VarChar, seat)
+                  .input('showtimeId', sql.Int, showtimeId)
+                  .query(`
+                      update Seats
+                      set isReserved = 1
+                      where seatNumber = @seatNumber and showtimeId = @showtimeId;
+                  `)
+          )
+      );
+
+      await poolRequest
+          .input('userId', sql.Int, userId)
+          .input('showtimeId', sql.Int, showtimeId)
+          .input('totalAmount', sql.Decimal(10, 2), totalAmount)
+          .input('paymentMethod', sql.VarChar, paymentMethod)
+          .query(`
+              INSERT INTO Bookings (userId, showtimeId, totalAmount, paymentMethod, paymentStatus)
+              VALUES (@userId, @showtimeId, @totalAmount, @paymentMethod, 'Completed');
+          `);
+
+      res.status(200).send("Seats reserved successfully.");
+  } 
+  catch (err)
+   {
+      console.error("Error updating seats:", err.message);  //check which code error
+      res.status(500).send("Error reserving seats");
+  }
 });
