@@ -9,8 +9,7 @@ app.use(express.json());
 app.use(cors());
 
 
-const dbConfig = 
-{
+const dbConfig = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   server: process.env.DB_SERVER,
@@ -28,14 +27,11 @@ let pool;
 
 
 const initializeDatabase = async () => {
-  try 
-  {
+  try {
     
     pool = await sql.connect(dbConfig);
     console.log("Connected to SQL Server successfully");
-  } 
-  catch (err) 
-  {
+  } catch (err) {
     console.error("Database connection failed:", err.message);
     process.exit(1); 
   }
@@ -52,14 +48,11 @@ app.get("/", (req, res) => {
   res.json({ message: "Hello Backend Side" });
 });
 
-
-//Home page now-showing adding movie
 app.post("/now-showing", async (req, res) => {
   const { title, image, book_now } = req.body;
 
  
-  if (!title || !image || !book_now) 
-    {
+  if (!title || !image || !book_now) {
     return res.status(400).json({ error: "Title, Image, and Book Now URL are required." });
   }
 
@@ -87,41 +80,35 @@ await pool
 );
 
     res.status(201).json({ message: "Movie added successfully to Now Showing and Movies." });
-  } 
-  catch (err)
-   {
+  } catch (err) {
     console.error("Error adding movie:", err);
     res.status(500).json({ error: "Error adding movie to Now Showing and Movies." });
   }
 });
 
-//home page now-showing fetching all movies
+
 app.get("/now-showing", async (req, res) => {
   try {
     const result = await pool.request().query("select* from NowShowing");
     res.status(200).json(result.recordset);
-  } 
-  catch (err) 
-  {
+  } catch (err) {
     console.error("Error fetching 'Now Showing' movies:", err);
     res.status(500).json({ error: "Error fetching Now Showing movies." });
   }
 });
 
-//home page coming-soon adding movies
+
 app.post("/coming-soon", async (req, res) => {
   const { title, image, release_date } = req.body;
 
-  if (!title || !image || !release_date) 
-    {
+  if (!title || !image || !release_date) {
     console.error("Validation failed: Missing title, image, or release_date");
     return res.status(400).json({
       error: "Title, Image, and Release Date are required.",
     });
   }
 
-  try 
-  {
+  try {
     await pool
       .request()
       .input("title", sql.NVarChar, title)
@@ -131,72 +118,46 @@ app.post("/coming-soon", async (req, res) => {
         "insert into ComingSoon (title, image, release_date) values (@title, @image, @release_date)"
       );
     res.status(201).json({ message: "Movie added successfully to Coming Soon." });
-  } 
-  catch (err) 
-  {
+  } catch (err) {
     console.error("Error adding movie to 'Coming Soon':", err);
     res.status(500).json({ error: "Error adding movie to Coming Soon." });
   }
 });
 
-//home page coming-soon fetching movies
+
 app.get("/coming-soon-home", async (req, res) => {
-  try 
-  {
+  try {
     const result = await pool
       .request()
       .query("select* from ComingSoon order by release_date ASC");
     res.status(200).json(result.recordset);
-  }
-   catch (err) 
-   {
+  } catch (err) {
     console.error("Error fetching 'Coming Soon' movies for Home Page:", err);
     res.status(500).json({ error: "Error fetching Coming Soon movies for Home Page." });
   }
 });
 
-//fetching movies for coming soon page
+
 app.get("/coming-soon", async (req, res) => {
-  try 
-  {
+  try {
     const result = await pool.request().query("select * from ComingSoon order by release_date ASC");
     res.status(200).json(result.recordset); 
-  } 
-  catch (err)
-   {
+  } catch (err) {
     console.error("Error fetching 'Coming Soon' movies:", err);
     res.status(500).json({ error: "Error fetching Coming Soon movies." });
   }
 });
 
-//fetching movies for movies page
+
 app.get("/movies", async (req, res) => {
   console.log("Testing database connection for /movies");
-  try
-   {
+  try {
     const result = await pool.request().query("select* from Movie");
     console.log("Database connection successful:", result.recordset);
     res.status(200).json(result.recordset);
-  }
-   catch (err)
-    {
+  } catch (err) {
     console.error("Database query failed:", err);
     res.status(500).json({ error: "Database connection issue" });
-  }
-});
-
-//retreiving all movies showtimes
-app.get("/showtimes", async (req, res) => {
-  console.log("Request received for /showtimes");
-  try 
-  {
-    const result = await pool.request().query("select* from Showtimes order by show_date, show_time");
-    res.status(200).json(result.recordset);
-  }
-   catch (err)
-    {
-    console.error("Error fetching all showtimes:", err);
-    res.status(500).json({ error: "Error fetching all showtimes." });
   }
 });
 
@@ -387,41 +348,79 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.post('/login', (req, res) => {
+//login page
+app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  if (!email || !password) {
-      return res.status(400).json({ success: false, message: 'Email and password are required.' });
+
+  console.log("Received email:", email);  // Debugging: Check email
+  console.log("Received password:", password);  // Debugging: Check password
+
+  try {
+      if (!email || !password) {
+          return res.status(400).json({ success: false, message: "Email and password are required" });
+      }
+
+      // Connect to the database
+      const pool = await sql.connect(dbConfig);
+
+      // Trim any spaces from the email
+      const trimmedEmail = email.trim();
+
+      // Query to fetch the user by email
+      const result = await pool.request()
+          .input("email", sql.VarChar, trimmedEmail)
+          .query("SELECT * FROM Users WHERE email = @email");
+
+      console.log("Database query result:", result.recordset); // Debugging: Check query result
+
+      // Check if the user exists
+      if (result.recordset.length === 0) {
+          return res.status(401).json({ success: false, message: "Invalid email or password" });
+      }
+
+      const user = result.recordset[0];
+
+      if (user.password !== password) {
+          return res.status(401).json({ success: false, message: "Invalid email or password" });
+      }
+      const u = result.recordset[0];
+      res.status(200).json({ message: "Login successful", userId: u.user_id });
+
+      res.status(200).json({ success: true, message: "Login successful" });
+      
+
+  }  
+  
+  catch (err)
+   {
+      console.error("Login error:", err);
+      res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
+
+//select tickets
+app.post('/ticket', (req, res) => 
+  {
+  const { userId, movieName, numTickets, ticketPrice } = req.body;
+
+  if (!userId || !movieName || !numbTickets || !ticketPrice) {
+      return res.status(400).json({ message: 'Missing required fields' });
   }
 
-  // Find user by email
-  const pool = app.locals.db;
-  pool.request()
-      .input('email', sql.NVarChar, email)
-      .query('SELECT * FROM Users WHERE Email = @email')
-      .then(result => {
-          if (result.recordset.length === 0) {
-              return res.status(404).json({ success: false, message: 'User not found.' });
-          }
+  const totalCost = numberTickets * ticketPrice;
 
-          const user = result.recordset[0];
+  const query = 'insert into Tickets (user_id, movie_name, numTickets, ticket_price, total_cost) VALUES (?, ?, ?, ?, ?)';
 
-          // Compare the password with the hashed password in the database
-          bcrypt.compare(password, user.Password, (err, isMatch) => {
-              if (err || !isMatch) {
-                  return res.status(400).json({ success: false, message: 'Invalid password.' });
-              }
-
-              // Generate a JWT token
-              const token = jwt.sign({ userId: user.UserId }, 'your-secret-key', { expiresIn: '1h' });
-
-              res.status(200).json({
-                  success: true,
-                  message: 'Login successful!',
-                  token: token
-              });
-          });
-      }).catch(err => {
-          console.error('Error fetching user:', err);
-          res.status(500).json({ success: false, message: 'Database error.' });
+  db.query(query, [userId, movieName, numTickets, ticketPrice, totalCost], (err, result) => {
+      if (err) 
+        {
+          console.error('Error inserting ticket:', err);
+          return res.status(500).json({ message: 'Error booking ticket' });
+      }
+      res.status(200).json({
+          message: 'Ticket booked successfully',
+          ticketId: result.insertId, 
+          totalCost: totalCost
       });
+  });
 });
