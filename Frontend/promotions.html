@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema Deals - CineVerse Studios</title>
+    <style>
+
+        body
+        {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+        }
+
+        header
+        {
+            background: #111;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 2px solid #006400;
+        }
+
+        header h1
+        {
+            color: #fff;
+            font-size: 28px;
+        }
+
+        nav
+        {
+            background: #222;
+        }
+
+        nav ul
+        {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        nav ul li
+        {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a
+        {
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 15px;
+            transition: background 0.3s;
+            font-size: 16px;
+        }
+
+        nav ul li a:hover
+        {
+            background: #006400;
+            color: black;
+        }
+
+        .container
+        {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 15px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+        }
+
+        .container h1
+        {
+            color: #fff;
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .deal
+        {
+            background-color: #333;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 2px solid #006400;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .deal:hover
+        {
+            transform: scale(1.05);
+        }
+
+        .deal h2
+        {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .deal p
+        {
+            margin: 8px 0;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .code
+        {
+            background-color: #006400;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            display: inline-block;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .copy-button
+        {
+            background-color: #006400;
+            border: none;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .copy-button:hover
+        {
+            background-color: #333;
+            color: #fff;
+        }
+
+       footer 
+        {
+            text-align: center;
+            padding: 1px 0;
+            background: #111; 
+            color: #fff;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer ul 
+        {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        footer ul li 
+        {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        footer ul li a 
+        {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        footer ul li a:hover 
+        {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>CineVerse Studios</h1>
+</header>
+
+<nav>
+        <ul>
+            <li><a href="cineverse.html">Home</a></li>
+            <li><a href="moviesss.html">Movies</a></li>
+            <li><a href="coming-soon.html">Coming Soon</a></li>
+           <li><a href="promotions.html">Promotion</a></li>
+           <li><a href="snacks.html">Deals</a></li>
+            <li><a href="virtualtour.html">Virtual Tour</a></li>
+            <li><a href="ratings.html">Ratings</a></li>
+            
+        </ul>  
+    </nav>
+
+<div class="container">
+    <h1>Current Ticket Deals</h1>
+
+    <div class="deal">
+        <h2>Student Deal</h2>
+        <p>Get 20% off on ticket prices!</p>
+        <div class="code">STUDENT20</div>
+        <button class="copy-button" onclick="copyToClipboard('STUDENT20')">Copy Code</button>
+    </div>
+
+    <div class="deal">
+        <h2>Group Deal</h2>
+        <p>Buy 5 tickets and get 1 free!</p>
+        <div class="code">GROUP6</div>
+        <button class="copy-button" onclick="copyToClipboard('GROUP6')">Copy Code</button>
+    </div>
+
+    <div class="deal">
+        <h2>Weekend Special</h2>
+        <p>Flat 15% off on all tickets on weekends!</p>
+        <div class="code">WEEKEND15</div>
+        <button class="copy-button" onclick="copyToClipboard('WEEKEND15')">Copy Code</button>
+    </div>
+</div>
+
+  <footer>
+        <ul>
+            <li><a href="cineverse.html">Home</a></li>
+            <li><a href="moviesss.html">Movies</a></li>
+            <li><a href="coming-soon.html">Coming Soon</a></li>
+            <li><a href="promotions.html">Promotions</a></li>
+            <li><a href="snacks.html">Deals</a></li>
+            <li><a href="virtualtour.html">Virtual Tour</a></li>
+            <li><a href="ratings.html">Ratings</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="location.html">Location</a></li>
+        </ul>
+        </ul>
+
+        <p>&copy; CineVerse Studios</p>
+    </footer>
+<script>
+    function copyToClipboard(code)
+    {
+        navigator.clipboard.writeText(code).then(() => {
+            alert('Code copied: ' + code);
+        }).catch(err => {
+            console.error('Could not copy text: ', err);
+        });
+    }
+</script>
+</body>
+</html>

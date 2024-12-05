@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineVerse Studios - Seat Selection</title>
+
+    <style>
+
+       body 
+        {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000; 
+            color: #fff; 
+        }
+
+        header 
+        {
+            background: #111; 
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 2px solid green; 
+        }
+
+        nav 
+        {
+            background: #222;
+        }
+
+        nav ul 
+        {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li 
+        {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a 
+        {
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 15px;
+            transition: background 0.3s;
+        }
+
+        nav ul li a:hover 
+        {
+            background: green; 
+            color: black;
+        }
+
+        main 
+        {
+            padding: 20px;
+        }
+
+        section 
+        {
+            background: rgba(255, 255, 255, 0.1); 
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 2px solid green; 
+        }
+
+        h2 
+        {
+            color: green; 
+            margin-bottom: 10px;
+        }
+
+        .progress-bar 
+        {
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            background-color: #333;
+            padding: 7px 0;
+            color: #888;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .progress-bar .step
+        {
+            cursor: pointer;
+        }
+
+        .progress-bar .selected 
+        {
+            color: white;
+            font-weight: bold;
+        }
+
+        .progress-bar .completed 
+         {
+            color: darkgreen; 
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1300px;
+            display: flex;
+            justify-content: center;
+            margin-top: 1px;
+            padding: 25px;
+            flex-grow: 1;
+        }
+
+        .left-section {
+            width: 80%;
+            background-color: #1a1a1a;
+            padding: 30px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .left-section h2 
+        {
+            color: #fff; 
+            margin-bottom: 15px;
+            font-size: 25px;
+        }
+
+        .row
+          {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 10px 0;
+        }
+
+        .seat 
+         {
+            width: 40px;
+            height: 40px;
+            background-color: #666;
+            border: 2px solid #006400; 
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .seat.selected 
+       {
+            background-color: #006400;
+            color: black;
+        }
+
+        .seat.unavailable
+         {
+            background-color: #777;
+            cursor: not-allowed;
+        }
+
+        .right-section {
+            width: 20%;
+            background-color: #2a2a2a;
+            padding: 30px;
+            border-radius: 8px;
+            color: #fff;
+            margin-left: 20px;
+        }
+
+        .right-section h2 
+        {
+            color: #fff; 
+            margin-top: 0;
+        }
+
+        .right-section p 
+        {
+            margin: 5px 0;
+        }
+
+        .right-section .total
+         {
+            font-weight: bold;
+            font-size: 18px;
+            color: #006400; 
+        }
+
+        button
+       {
+            background-color: #006400; 
+            color: white;
+            padding: 10px 12px; 
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px; 
+            font-weight: bold;
+            margin-top: 20px;
+            width: 140px; 
+        }
+
+        button:hover
+       {
+            background-color: #004d00; 
+        }
+
+        .seat-label 
+        {
+            color: #aaa;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+           footer 
+        {
+            text-align: center;
+            padding: 3px 0;
+            background: #111; 
+            color: #fff;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer ul 
+        {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        footer ul li 
+        {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        footer ul li a 
+        {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        footer ul li a:hover 
+        {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>CineVerse Studios - Seat Selection</h1>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="cineverse.html">Home</a></li>
+            <li><a href="moviesss.html">Movies</a></li>
+            <li><a href="coming-soon.html">Coming Soon</a></li>
+           <li><a href="promotions.html">Promotion</a></li>
+           <li><a href="snacks.html">Deals</a></li>
+            <li><a href="virtualtour.html">Virtual Tour</a></li>
+            <li><a href="ratings.html">Ratings</a></li>
+            
+        </ul>  
+    </nav>
+
+    <div class="progress-bar">
+        <div class="step" id="step1">1. Select Tickets</div>
+        <div class="step selected" id="step2">2. Select Seats</div>
+        <div class="step" id="step3">3. Food and Drink</div>
+        <div class="step" id="step4">4. Confirm</div>
+        <div class="step" id="step5">5. Booking Successful</div>
+    </div>
+
+    <div class="container">
+        <div class="left-section">
+            <h2>Select Your Seats</h2>
+            <div class="row">
+                <div class="seat" onclick="toggleSeat(this)">A1</div>
+                <div class="seat" onclick="toggleSeat(this)">A2</div>
+                <div class="seat" onclick="toggleSeat(this)">A3</div>
+                <div class="seat" onclick="toggleSeat(this)">A4</div>
+                <div class="seat" onclick="toggleSeat(this)">A5</div>
+                <div class="seat" onclick="toggleSeat(this)">A6</div>
+                <div class="seat" onclick="toggleSeat(this)">A7</div>
+            </div>
+
+            <div class="row">
+                <div class="seat" onclick="toggleSeat(this)">B1</div>
+                <div class="seat" onclick="toggleSeat(this)">B2</div>
+                <div class="seat" onclick="toggleSeat(this)">B3</div>
+                <div class="seat" onclick="toggleSeat(this)">B4</div>
+                <div class="seat" onclick="toggleSeat(this)">B5</div>
+                <div class="seat" onclick="toggleSeat(this)">B6</div>
+                <div class="seat" onclick="toggleSeat(this)">B7</div>
+            </div>
+
+            <div class="row">
+                <div class="seat" onclick="toggleSeat(this)">C1</div>
+                <div class="seat" onclick="toggleSeat(this)">C2</div>
+                <div class="seat" onclick="toggleSeat(this)">C3</div>
+                <div class="seat" onclick="toggleSeat(this)">C4</div>
+                <div class="seat" onclick="toggleSeat(this)">C5</div>
+                <div class="seat" onclick="toggleSeat(this)">C6</div>
+                <div class="seat" onclick="toggleSeat(this)">C7</div>
+            </div>
+
+            <div class="row">
+                <div class="seat" onclick="toggleSeat(this)">D1</div>
+                <div class="seat" onclick="toggleSeat(this)">D2</div>
+                <div class="seat" onclick="toggleSeat(this)">D3</div>
+                <div class="seat" onclick="toggleSeat(this)">D4</div>
+                <div class="seat" onclick="toggleSeat(this)">D5</div>
+                <div class="seat" onclick="toggleSeat(this)">D6</div>
+                <div class="seat" onclick="toggleSeat(this)">D7</div>
+            </div>
+
+          
+            <button onclick="confirmSelection()">Confirm Selection</button>
+        </div>
+
+        <div class="right-section">
+            <h2>Selection Summary</h2>
+            <p><strong>Selected Seats:</strong></p>
+            <p id="selectedSeatsList">None</p>
+            <p class="total">Total Cost: <span id="totalCost">Rs.0.00</span></p>
+        </div>
+    </div>
+
+     <footer>
+        <ul>
+            <li><a href="cineverse.html">Home</a></li>
+            <li><a href="moviesss.html">Movies</a></li>
+            <li><a href="coming-soon.html">Coming Soon</a></li>
+            <li><a href="promotions.html">Promotions</a></li>
+            <li><a href="snacks.html">Deals</a></li>
+            <li><a href="virtualtour.html">Virtual Tour</a></li>
+            <li><a href="ratings.html">Ratings</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="location.html">Location</a></li>
+        </ul>
+        </ul>
+
+        <p>&copy; CineVerse Studios</p>
+    </footer>
+
+<script>
+
+let selectedSeats = [];
+
+function toggleSeat(seat) 
+{
+    if (seat.classList.contains('unavailable')) 
+    {
+        return; 
+    }
+
+    seat.classList.toggle('selected');
+    const num= seat.innerText;
+
+    if (selectedSeats.includes(num)) 
+    {
+        selectedSeats = selectedSeats.filter(s => s !== num);
+    } 
+    else 
+    {
+        selectedSeats.push(num);
+    }
+    updatecost(); 
+}
+
+function updatecost() 
+{
+    const totalCost = selectedSeats.length * 150;
+    document.getElementById('totalCost').innerText = `Rs.${totalCost}.00`;
+    document.getElementById('selectedSeatsList').innerText = selectedSeats.join(', ') || 'None';
+}
+
+function confirmSelection() 
+    {
+    if (selectedSeats.length === 0) 
+    {
+        alert('Please select at least one seat before proceeding.');
+        return;
+    }
+
+    sessionStorage.setItem('seatsSelected', JSON.stringify(selectedSeats));
+    const totalCost = selectedSeats.length * 150;
+    sessionStorage.setItem('seatCost', totalCost.toString());
+
+    alert(`You have selected the following seats: ${selectedSeats.join(', ')}`);
+    window.location.href = "snacks.html"; 
+}
+
+ </script>
+</body>
+</html>

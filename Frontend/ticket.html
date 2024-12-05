@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineVerse Studios - Ticket Selection</title>
+
+    <style>
+        body
+        {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            min-height: 100vh; 
+            position: relative; 
+        }
+
+        header 
+        {
+            background: #111; 
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 2px solid green; 
+        }
+
+        nav 
+        {
+            background: #222;
+        }
+
+        nav ul 
+        {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li 
+        {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a 
+        {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: background 0.3s;
+        }
+
+        nav ul li a:hover 
+        {
+            background: green; 
+            color: black;
+        }
+
+        .progress-bar 
+        {
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            background-color: #333;
+            padding: 10px 0;
+            color: #888;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .progress-bar .step 
+        {
+            cursor: pointer;
+        }
+
+        .progress-bar .selected 
+        {
+            color: white;
+            font-weight: bold;
+        }
+
+        .progress-bar .completed 
+        {
+            color: #006400;
+        }
+
+        .container 
+        {
+            width: 100%;
+            max-width: 1400px;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            padding: 20px;
+            flex-grow: 1;
+            gap: 20px;
+        }
+
+        .left-section 
+        {
+            width: 60%;
+            background-color: #181818;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .left-section h2 
+        {
+            color:  #fff;
+            font-size: 28px;
+            margin-bottom: 40px;
+        }
+
+        .ticket-type 
+        {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #252525;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .ticket-type .label 
+        {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .ticket-type .cost 
+        {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .ticket-type .quantity 
+        {
+            display: flex;
+            align-items: center;
+        }
+
+        .ticket-type .quantity button 
+        {
+            background-color: #006400;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .ticket-type .quantity button:hover 
+        {
+            background-color: #28a745;
+        }
+
+        .ticket-type .quantity .count 
+        {
+            margin: 0 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .right-section 
+        {
+            width: 30%;
+            background-color: #1a1a1a;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .right-section h2 
+        {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 50px;
+        }
+
+        .order-summary .item 
+        {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .order-summary .total 
+        {
+            font-size: 18px;
+            font-weight: bold;
+            color: #006400;
+            display: flex;
+            justify-content: space-between;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+        }
+
+        button 
+        {
+            background-color: #006400;
+            color: white;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 7px;
+        }
+
+        button:hover 
+        {
+            background-color: #28a745;
+        }
+
+        footer
+        {
+            text-align: center;
+            padding: 5px 0;
+            background: #111;
+            color: #fff;
+            width: 100%;
+            position: absolute; 
+            bottom: 0;
+        }
+
+        footer ul 
+        {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        footer ul li 
+        {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        footer ul li a 
+        {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        footer ul li a:hover 
+        {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>CineVerse Studios - Ticket Selection</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="cineverse.html">Home</a></li>
+        <li><a href="moviesss.html">Movies</a></li>
+        <li><a href="coming-soon.html">Coming Soon</a></li>
+        <li><a href="promotions.html">Promotion</a></li>
+        <li><a href="snacks.html">Deals</a></li>
+        <li><a href="virtualtour.html">Virtual Tour</a></li>
+        <li><a href="ratings.html">Ratings</a></li>
+    </ul>  
+</nav>
+
+<div class="progress-bar">
+    <div class="step selected">1. Select Tickets</div>
+    <div class="step">2. Select Seats</div>
+    <div class="step">3. Food and Drink</div>
+    <div class="step">4. Confirm</div>
+    <div class="step">5. Booking Successful</div>
+</div>
+
+<div class="container">
+    <div class="left-section">
+        <h2>Select Tickets</h2>
+
+        <div class="ticket-type">
+         <span id="order-movie-title">Movie Title</span>
+         <div class="cost">Rs. 1,200.00</div>
+
+            <div class="quantity">
+                <button onclick="decrease()">-</button>
+                <div class="count" id="count">0</div>
+
+                <button onclick="increase()">+</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-section">
+        <h2>Your Order</h2>
+        <div class="order-summary">
+            <div class="item">
+                 <span id="order-movie-title">Movie Title</span>
+                <span class="cost" id="cost">Rs. 0.00</span>
+            </div>
+            <div class="total">
+                <span>Total</span>
+                <span id="total-cost">Rs. 00.00</span>
+            </div>
+        </div>
+        <button onclick="SeatSelection()">Proceed to Seat Selection</button>
+    </div>
+</div>
+
+<script>
+const movieId = 1; 
+let movieTitle = '';
+let ticketPrice = 1200; 
+let count = 0; 
+
+fetch(`/movie-title/${movieId}`)  
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) 
+        {
+            alert(data.error);
+        } 
+      else 
+        {
+            movieTitle = data.title; 
+            document.getElementById('order-movie-title').textContent = movieTitle;
+        }
+    })
+
+    .catch(error =>
+      {
+        console.error("Error fetching movie title:", error);
+        alert("Failed to fetch movie title.");
+    });
+
+function increase() 
+{
+    count++;
+    document.getElementById('count').textContent = count;
+    updateOrder();
+}
+
+
+function decrease() 
+{
+    if (count > 0) 
+{
+        count--;
+        document.getElementById('count').textContent = count;
+        updateOrder();
+    }
+}
+
+function updateOrder()
+ {
+    const cost = count * ticketPrice;
+    document.getElementById('cost').textContent = `Rs. ${cost.toFixed(2)}`;
+    document.getElementById('total-cost').textContent = `Rs. ${cost.toFixed(2)}`;
+}
+
+function SeatSelection() 
+{
+    const numTickets = count;
+    const totalCost = numTickets * ticketPrice;
+
+    if (numTickets > 0) 
+      {
+        fetch('http://localhost:3002/ticket', 
+         {
+            method: 'POST',
+            headers:
+            {
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify({
+                userId: 1,
+                movieName: movieTitle,  // Use movie title instead of full details
+                numTickets: numTickets,
+                ticketPrice: ticketPrice
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'Ticket booked successfully') 
+           {
+                sessionStorage.setItem('numTickets', numTickets);
+                sessionStorage.setItem('ticketCost', totalCost);
+                window.location.href = 'seat-selection.html'; 
+            } 
+       else {
+                alert('Failed to book ticket');
+            }
+        })
+        .catch(error => {
+            console.error("Error booking ticket:", error);
+            alert("Failed to proceed with booking.");
+        });
+    }
+    else
+       {
+        alert('Please select at least one ticket.');
+    }
+}
+
+
+</script>
+
+<footer>
+    <ul>
+        <li><a href="cineverse.html">Home</a></li>
+        <li><a href="moviesss.html">Movies</a></li>
+        <li><a href="coming-soon.html">Coming Soon</a></li>
+        <li><a href="promotions.html">Promotions</a></li>
+        <li><a href="snacks.html">Deals</a></li>
+        <li><a href="virtualtour.html">Virtual Tour</a></li>
+        <li><a href="ratings.html">Ratings</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="location.html">Location</a></li>
+    </ul>
+    <p>&copy; CineVerse Studios</p>
+</footer>
+
+</body>
+</html>

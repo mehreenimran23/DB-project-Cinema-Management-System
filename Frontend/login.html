@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+
+         body 
+        {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000; 
+            color: #fff; 
+        }
+
+        header 
+        {
+            background: #111; 
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 2px solid green; 
+        }
+
+        nav 
+        {
+            background: #222;
+        }
+
+        nav ul 
+        {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li 
+        {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a 
+        {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: background 0.3s;
+        }
+
+        nav ul li a:hover 
+        {
+            background: green; 
+            color: black;
+        }
+
+        main 
+        {
+            padding: 20px;
+        }
+
+        section 
+        {
+            background: rgba(255, 255, 255, 0.1); 
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 2px solid green; 
+        }
+
+        h2 
+        {
+            color: green; 
+            margin-bottom: 10px;
+        }
+
+        .progress-bar 
+        {
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            background-color: #333;
+            padding: 10px 0;
+            color: #888;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .progress-bar .step 
+        {
+            cursor: pointer;
+        }
+
+        .progress-bar .selected 
+        {
+            color: white;
+            font-weight: bold;
+        }
+
+        .progress-bar .completed 
+        {
+            color: green;
+        }
+
+        .container 
+        {
+            width: 100%;
+            max-width: 1400px;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 7px;
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        main 
+        {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            width: 95%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .left-section 
+        {
+            width: 60%;
+            background-color: #1a1a1a;
+            padding: 40px;
+            border-radius: 8px;
+        }
+
+        .left-section h2 
+        {
+            color: #006400;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .movie-details 
+        {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .movie-poster 
+        {
+            width: 80px;
+            border-radius: 4px;
+        }
+
+        .movie-info 
+        {
+            font-size: 14px;
+        }
+
+        .movie-info p 
+        {
+            margin: 0;
+        }
+
+        .movie-info p.title 
+        {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .login-form 
+        {
+            margin-top: 20px;
+        }
+
+        label 
+        {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"] 
+        {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background-color: #222;
+            color: #fff;
+        }
+
+        button 
+        {
+            width: 100%;
+            padding: 10px;
+            background-color: #006400;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .right-section 
+        {
+            width: 25%;
+            background-color: #2a2a2a;
+            padding: 40px;
+            border-radius: 8px;
+            color: #fff;
+        }
+
+        right-section h3 {
+            font-size: 18px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: #006400;
+        }
+
+
+
+        .order-summary 
+        {
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .order-summary .item 
+        {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+
+        .order-summary .cost 
+        {
+            font-weight: bold;
+        }
+
+        .total-cost 
+        {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+            margin-top: 20px;
+            border-top: 1px solid #444;
+            padding-top: 10px;
+        }
+
+        .links 
+        {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .links a 
+        {
+            color: #006400;
+            text-decoration: none;
+        }
+
+        .links a:hover 
+        {
+            color: #fff;
+        }
+
+        footer 
+        {
+            text-align: center;
+            padding: 5px 0;
+            background: #111;
+            color: #fff;
+            font-size: 15px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer ul 
+        {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        footer ul li 
+        {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        footer ul li a 
+        {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        footer ul li a:hover 
+        {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>CineVerse Studios - Log In</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <ul>
+            <li><a href="cineverse.html">Home</a></li>
+            <li><a href="moviesss.html">Movies</a></li>
+            <li><a href="coming-soon.html">Coming Soon</a></li>
+           <li><a href="promotions.html">Promotion</a></li>
+           <li><a href="snacks.html">Deals</a></li>
+            <li><a href="virtualtour.html">Virtual Tour</a></li>
+            <li><a href="ratings.html">Ratings</a></li>
+            
+    </nav>
+
+    <div class="progress-bar">
+        <div class="step" id="s1">1. Select Tickets</div>
+        <div class="step" id="s2">2. Select Seats</div>
+        <div class="step" id="s3">3. Food and Drink</div>
+        <div class="step" id="s4">4. Confirm</div>
+        <div class="step" id="s5">5. Booking Successful</div>
+    </div>
+
+     <main>
+        <div class="container">
+            <div class="left-section">
+                <div class="movie-details">
+                    <div class="movie-info">
+                    </div>
+                </div>
+
+                <h2>CineVerse Studios Loyalty Sign In</h2>
+                <p>You must sign in to continue any further. Please enter your details below. If you are not a member yet, you can sign up using the link below.</p>
+
+                <form class="login-form" id="login-form">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" required placeholder="_mehreen_j">
+
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+
+                    <button type="submit">Sign In</button>
+                </form>
+
+                <div class="links">
+                    <a href="#">Forgot Password?</a>
+                    <a href="signUp.html">Sign Up</a>  <a href="#">Sign In</a>
+                </div>
+            </div>
+
+            <div class="right-section">
+                <h3>Your Order</h3>
+                <div class="order-summary">
+                    <div class="item">
+                        <span>Movie</span>
+                        <span class="cost">0.00</span>
+                    </div>
+
+                    <div class="total-cost">
+                        <span>Total Cost</span>
+                        <span class="cost">0.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+       <ul>
+            <li><a href="cineverse.html">Home</a></li>
+            <li><a href="moviesss.html">Movies</a></li>
+            <li><a href="coming-soon.html">Coming Soon</a></li>
+            <li><a href="promotions.html">Promotions</a></li>
+            <li><a href="snacks.html">Deals</a></li>
+            <li><a href="virtualtour.html">Virtual Tour</a></li>
+            <li><a href="ratings.html">Ratings</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="location.html">Location</a></li>
+        </ul>
+        <p>&copy; CineVerse Studios</p>
+    </footer>
+
+    <script>
+<script>
+  fetch("http://localhost:3002/login", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ email, password }),
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Server error: ' + response.statusText);
+    }
+    return response.json();
+})
+.then(data => {
+    if (data.success) {
+        window.location.href = "ticket.html";
+    } else {
+        alert(data.message);
+    }
+})
+.catch(error => {
+    console.error("Error during login:", error);
+    alert("An error occurred during login: " + error.message);
+});
+</script>
+</script>
+
+</body>
+</html> 

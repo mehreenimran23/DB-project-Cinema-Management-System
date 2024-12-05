@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Movie Details</title>
+
+    <style>
+        body
+      {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000; 
+            color: #fff; 
+        }
+
+        header 
+         {
+            background: #111; 
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 2px solid green; 
+        }
+
+        nav
+         {
+            background: #222;
+        }
+
+        nav ul 
+        {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li
+        {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a
+       {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: background 0.3s;
+        }
+
+        nav ul li a:hover
+       {
+            background: green; 
+            color: black;
+        }
+
+        main
+        {
+            padding: 20px;
+        }
+
+        .movie-info 
+        {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border: 2px solid green;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        h2 
+       {
+            color: green; 
+        }
+
+        .rating
+      {
+            color: gold; 
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .star-rating 
+         {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .star
+        {
+            font-size: 2em;
+            color: gray; 
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .star:hover,
+        .star.selected
+         {
+            color: gold; 
+        }
+
+        .showtimes 
+        {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border: 2px solid green;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .showtime-date
+       {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .cinema
+        {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .showtime-box
+          {
+            display: inline-block;
+            width: 120px;
+            margin: 5px;
+            padding: 10px;
+            border: 2px solid green; 
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .showtime-box:hover 
+        {
+            background: green;
+            color: black; 
+            transform: scale(1.05); 
+        }
+
+        footer 
+         {
+            text-align: center;
+            padding: 10px 0;
+            background: #111; 
+            color: #fff;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer ul
+        {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        footer ul li 
+        {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        footer ul li a 
+        {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        footer ul li a:hover
+       {
+            text-decoration: underline;
+        }
+
+        .hide-future-dates
+         {
+            color: yellow;
+            cursor: pointer;
+            margin-bottom: 10px;
+            font-size: small; 
+            float: right; 
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Movie Details</h1>
+    </header>
+
+     <nav>
+        <ul>
+            <li><a href="cineverse.html">Home</a></li>
+            <li><a href="moviesss.html">Movies</a></li>
+            <li><a href="coming-soon.html">Coming Soon</a></li>
+           <li><a href="promotions.html">Promotion</a></li>
+           <li><a href="snacks.html">Deals</a></li>
+            <li><a href="virtualtour.html">Virtual Tour</a></li>
+            <li><a href="ratings.html">Ratings</a></li>
+            
+        </ul>  
+    </nav>
+
+    <main>
+        <div class="movie-info">
+    <iframe width="100%" height="315" id="movie-trailer" title="Trailer" frameborder="0" allowfullscreen></iframe>
+    
+    <h2 id="movie-title">Movie Title</h2>
+    
+    <p id="movie-rating">Rating: 0.0/5</p>
+    
+    <!-- Movie Description -->
+    <p id="movie-description">Description goes here.</p>
+    
+    <h3>Cast</h3>
+    <p id="movie-cast">Cast goes here.</p>
+    
+    <h3>Directors</h3>
+    <p id="movie-director">Director name goes here.</p>
+    
+    <h3>Run Time</h3>
+    <p id="movie-duration">Duration goes here.</p>
+    
+    <h3>Genre</h3>
+    <p id="movie-genre">Genre goes here.</p>
+    
+    <h3>Opening Date</h3>
+    <p id="movie-opening-date">Opening date goes here.</p>
+</div>
+
+        <h3>Rate this Movie</h3>
+        <div class="star-rating" id="star-rating">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star" data-value="3">&#9733;</span>
+            <span class="star" data-value="4">&#9733;</span>
+            <span class="star" data-value="5">&#9733;</span>
+        </div>
+    <button id="submit-rating" onclick="submitRating()">Submit Rating</button>
+</div>
+<div class="showtimes">
+    <span class="hide-future-dates" id="toggle-future-dates" onclick="toggleFutureDates()">Hide Future Dates</span>
+    <h3>Show Times</h3>
+    <div id="showtime-container"></div> <!-- Showtimes will be populated here -->
+</div>
+    </main>
+
+      <footer>
+        <ul>
+            <li><a href="cineverse.html">Home</a></li>
+            <li><a href="moviesss.html">Movies</a></li>
+            <li><a href="coming-soon.html">Coming Soon</a></li>
+            <li><a href="promotions.html">Promotions</a></li>
+            <li><a href="snacks.html">Deals</a></li>
+            <li><a href="virtualtour.html">Virtual Tour</a></li>
+            <li><a href="ratings.html">Ratings</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="location.html">Location</a></li>
+        </ul>
+
+        <p>&copy; CineVerse Studios</p>
+    </footer>
+
+   <script>
+ const stars = document.querySelectorAll('.star');
+        stars.forEach(star => {
+            star.addEventListener('click', rating); // Attach rating function to each star
+        });
+
+        async function rating(e) {
+            const r = e.target.getAttribute('data-value');
+            const movieTitle = document.getElementById('movie-title').innerText;
+            const userId = localStorage.getItem('userId') || 1;  // Fetch user ID from storage
+
+            stars.forEach(star => {
+                star.classList.remove('selected');
+            });
+
+            for (let i = 0; i < r; i++) {
+                stars[i].classList.add('selected');
+            }
+
+            try {
+                const response = await fetch('/rate-movie', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ movieTitle, rating: r, userId })
+                });
+                const result = await response.json();
+                alert(result.message);
+            } catch (error) {
+                console.error('Error submitting rating:', error);
+            }
+        }
+
+        async function fetchShowtimes(movieId) {
+            try {
+                const response = await fetch(`/showtimes/${movieId}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch showtimes');
+                }
+                const showtimes = await response.json();
+                displayShowtimes(showtimes);
+            } catch (error) {
+                console.error('Error fetching showtimes:', error);
+            }
+        }
+
+        function displayShowtimes(showtimes) {
+            const container = document.getElementById('showtime-container');
+            container.innerHTML = '';  // Clear existing content
+
+            const showtimesByDate = groupShowtimesByDate(showtimes);
+
+            for (const [date, showtimesForDate] of Object.entries(showtimesByDate)) {
+                const dateDiv = document.createElement('div');
+                dateDiv.classList.add('showtime-date');
+                dateDiv.textContent = date;
+
+                const cinemaDiv = document.createElement('div');
+                cinemaDiv.classList.add('cinema');
+                cinemaDiv.textContent = 'CineVerse Studios';
+
+                container.appendChild(dateDiv);
+                container.appendChild(cinemaDiv);
+
+                showtimesForDate.forEach(showtime => {
+                    const showtimeBox = document.createElement('div');
+                    showtimeBox.classList.add('showtime-box');
+                    showtimeBox.textContent = `${showtime.show_time} (${showtime.showType})`;
+                    showtimeBox.onclick = () => redirectToLogin(showtime.show_time, showtime.showType);
+                    container.appendChild(showtimeBox);
+                });
+            }
+        }
+
+        function groupShowtimesByDate(showtimes) {
+            return showtimes.reduce((acc, showtime) => {
+                const showDate = new Date(showtime.show_date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+                if (!acc[showDate]) {
+                    acc[showDate] = [];
+                }
+                acc[showDate].push(showtime);
+                return acc;
+            }, {});
+        }
+
+        function redirectToLogin(showtime, showType) {
+            window.location.href = `/login?showtime=${showtime}&showType=${showType}`;
+        }
+
+        async function MovieDetails() {
+            const params = new URLSearchParams(window.location.search);
+            const movieName = params.get('movie');
+
+            try {
+                const response = await fetch(`/movie-details/${encodeURIComponent(movieName)}`);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch movie details: ${response.status}`);
+                }
+                const movie = await response.json();
+
+                document.getElementById('movie-title').innerText = movie.title;
+                document.getElementById('movie-rating').innerText = `Rating: ${movie.rating}`;
+                document.getElementById('movie-description').innerText = movie.description;
+                document.getElementById('movie-cast').innerText = movie.cast;
+                document.getElementById('movie-director').innerText = movie.director;
+                document.getElementById('movie-duration').innerText = movie.duration;
+                document.getElementById('movie-genre').innerText = movie.genre;
+                document.getElementById('movie-opening-date').innerText = movie.openingDate;
+                document.getElementById('movie-trailer').src = movie.trailer;
+
+                fetchShowtimes(movie.movie_id); // Pass the movie_id to fetch showtimes
+            } catch (err) {
+                console.error(err.message);
+                document.getElementById('movie-title').innerText = "Error loading movie details.";
+            }
+        }
+
+        async function submitRating() {
+            const ratingValue = Array.from(stars).find(star => star.classList.contains('selected'))?.getAttribute('data-value');
+            if (ratingValue) {
+                await rating({ target: { getAttribute: () => ratingValue } });
+            } else {
+                alert('Please select a rating.');
+            }
+        }
+
+        function toggleFutureDates() {
+            const futureShowtimes = document.querySelectorAll('.future-showtime');
+            futureShowtimes.forEach(date => {
+                date.classList.toggle('hidden');
+            });
+        }
+
+        // Initialize movie details on page load
+        window.onload = MovieDetails;
+</script>
+</body>
+</html>

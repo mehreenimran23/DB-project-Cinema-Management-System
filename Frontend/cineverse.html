@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineVerse Studios</title>  
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000; 
+            color: #fff; 
+        }
+
+        header {
+            background: #111; 
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 2px solid green; 
+        }
+
+        nav {
+            background: #222;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: background 0.3s;
+        }
+
+        nav ul li a:hover {
+            background: green; 
+            color: black;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        section {
+            background: rgba(255, 255, 255, 0.1); 
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 2px solid green; 
+        }
+
+        h2 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .movie {
+            display: inline-block;
+            width: 180px; 
+            margin: 10px;
+            text-align: center;
+            border: 2px solid green; 
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .movie:hover {
+            transform: scale(1.05); 
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .movie img {
+            width: 100%;
+            height: auto;
+            border-bottom: 2px solid green; 
+        }
+
+        .book-now {
+            background-color: green; 
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+            text-decoration: none; 
+            display: inline-block; 
+        }
+
+        .book-now:hover {
+            background-color: #333; 
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background: #111; 
+            color: #fff;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        footer ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        footer ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        footer ul li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>CineVerse Studios</h1>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="cineverse.html">Home</a></li>
+            <li><a href="moviesss.html">Movies</a></li>
+            <li><a href="coming-soon.html">Coming Soon</a></li>
+            <li><a href="promotions.html">Promotion</a></li>
+            <li><a href="snacks.html">Deals</a></li>
+            <li><a href="virtualtour.html">Virtual Tour</a></li>
+            <li><a href="ratings.html">Ratings</a></li>
+        </ul>  
+    </nav>
+
+    <main>
+        <section id="movies">
+            <h2>Now Showing</h2>
+            <!-- Movies will be dynamically loaded here -->
+        </section>
+
+        <section id="coming-soon">
+            <h2>Coming Soon</h2>
+            <!-- Coming Soon movies will be dynamically loaded here -->
+        </section>
+    </main>
+
+    <footer>
+        <ul>
+            <li><a href="cineverse.html">Home</a></li>
+            <li><a href="moviesss.html">Movies</a></li>
+            <li><a href="coming-soon.html">Coming Soon</a></li>
+            <li><a href="promotions.html">Promotions</a></li>
+            <li><a href="snacks.html">Deals</a></li>
+            <li><a href="virtualtour.html">Virtual Tour</a></li>
+            <li><a href="ratings.html">Ratings</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="location.html">Location</a></li>
+        </ul>
+
+        <p>&copy; CineVerse Studios</p>
+    </footer>
+
+    <script>
+        // Fetch Now Showing Movies
+        async function fetchNowShowing() {
+            try {
+                const response = await fetch('http://localhost:3002/now-showing');
+                const movies = await response.json();
+                
+                const moviesSection = document.getElementById('movies');
+               moviesSection.innerHTML = '<h2>Now Showing</h2>'
+
+                movies.forEach(movie => {
+                    const movieDiv = document.createElement('div');
+                    movieDiv.classList.add('movie');
+                     movieDiv.innerHTML = `
+                        <img src="${movie.image}" alt="${movie.title}">
+                        <h3>${movie.title}</h3>
+                        <a class="book-now" href="movie-details.html?id=1">Book Now</a>
+                    `;
+                    moviesSection.appendChild(movieDiv);
+                });
+            } catch (err) {
+                console.error('Error fetching Now Showing movies:', err);
+            }
+        }
+
+        // Fetch Coming Soon Movies for Home Page
+async function fetchComingSoon() {
+    try {
+        // Use the correct endpoint to fetch movies for the homepage
+        const response = await fetch('http://localhost:3002/coming-soon-home');
+        const movies = await response.json();
+
+        const comingSoonSection = document.getElementById('coming-soon');
+        comingSoonSection.innerHTML = '<h2>Coming Soon</h2>'; 
+
+        movies.forEach(movie => {
+            const movieDiv = document.createElement('div');
+            movieDiv.classList.add('movie');
+            movieDiv.innerHTML = `
+                <img src="${movie.image}" alt="${movie.title}">
+                <h3>${movie.title}</h3>
+                <p>Release Date: ${movie.release_date}</p>
+            `;
+            comingSoonSection.appendChild(movieDiv);
+        });
+    } catch (err) {
+        console.error('Error fetching Coming Soon movies:', err);
+    }
+}
+
+        // Initialize by fetching movies
+        window.onload = () => {
+            fetchNowShowing();
+            fetchComingSoon();
+        };
+    </script>
+</body>
+</html>

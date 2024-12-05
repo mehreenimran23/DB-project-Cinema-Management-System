@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineVerse Studios - Coming Soon</title>
+    <style>
+
+        body 
+       {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color:  #000; 
+            color: #fff; 
+        }
+
+        header
+         {
+            background: #111;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 2px solid green; 
+        }
+
+        nav
+        {
+            background: #222;
+        }
+
+        nav ul
+       {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li
+       {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a 
+        {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: background 0.3s;
+        }
+
+        nav ul li a:hover
+        {
+            background: green; 
+            color: black;
+        }
+
+        main 
+       {
+            padding: 20px;
+        }
+
+        section
+        {
+            background: rgba(255, 255, 255, 0.1); 
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 2px solid green; 
+        }
+
+        h2
+       {
+            color:  #fff;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .movie-card
+       {
+            display: flex; 
+            background: #222; 
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid green; 
+        }
+
+        .movie-card img
+        {
+            width: 120px; 
+            height: auto;
+            border-radius: 4px;
+            margin-right: 20px; 
+        }
+
+        .movie-info
+        {
+            flex-grow: 1; 
+        }
+
+        .movie-title
+        {
+            font-size: 1.5em; 
+            color: #fff;
+            margin: 0;
+        }
+
+        .movie-description
+       {
+            color: #ccc; 
+            margin: 10px 0;
+        }
+
+        footer 
+       {
+            text-align: center;
+            padding: 10px 0;
+            background: #111; 
+            color: #fff;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer ul
+        {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        footer ul li
+        {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        footer ul li a
+        {
+            color: #fff;
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>CineVerse Studios</h1>
+    </header>
+
+      <nav>
+        <ul>
+            <li><a href="cineverse.html">Home</a></li>
+            <li><a href="moviesss.html">Movies</a></li>
+            <li><a href="coming-soon.html">Coming Soon</a></li>
+           <li><a href="promotions.html">Promotion</a></li>
+           <li><a href="snacks.html">Deals</a></li>
+            <li><a href="virtualtour.html">Virtual Tour</a></li>
+            <li><a href="ratings.html">Ratings</a></li>
+            
+        </ul>  
+    </nav>
+
+    <main>
+        <section id="coming-soon">
+    <h2>Coming Soon</h2>
+    <div id="coming-soon-movies"></div>
+</section>
+
+    </main>
+
+   
+    <footer>
+        <ul>
+            <li><a href="cineverse.html">Home</a></li>
+            <li><a href="moviesss.html">Movies</a></li>
+            <li><a href="coming-soon.html">Coming Soon</a></li>
+            <li><a href="promotions.html">Promotions</a></li>
+            <li><a href="snacks.html">Deals</a></li>
+            <li><a href="virtualtour.html">Virtual Tour</a></li>
+            <li><a href="ratings.html">Ratings</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="location.html">Location</a></li>
+        </ul>
+
+        <p>&copy; CineVerse Studios</p>
+    </footer>
+
+<script>
+
+async function fetchComingSoonMovies() {
+    try {
+        const response = await fetch('http://localhost:3002/coming-soon'); // Ensure correct endpoint
+        if (!response.ok) {
+            throw new Error('Failed to fetch movies');
+        }
+        const movies = await response.json();
+
+        console.log(movies); // Log the movies to verify the data is being fetched
+
+        const movieListContainer = document.getElementById('coming-soon-movies'); // Correct ID
+
+        if (!movieListContainer) {
+            console.error("Movie list container not found!");
+            return;
+        }
+
+        // Clear any existing content
+        movieListContainer.innerHTML = '';
+
+        if (movies.length === 0) {
+            movieListContainer.innerHTML = '<p>No movies available.</p>';
+            return;
+        }
+
+        // Loop through the movies and create movie cards
+        movies.forEach(movie => {
+            const movieCard = document.createElement('div');
+            movieCard.classList.add('movie-card');
+
+            const movieImg = document.createElement('img');
+            movieImg.src = movie.image; // Assuming the image URL is in the `image` field
+            movieImg.alt = movie.title;
+
+            const movieInfo = document.createElement('div');
+            movieInfo.classList.add('movie-info');
+
+            const movieTitle = document.createElement('h3');
+            movieTitle.classList.add('movie-title');
+            movieTitle.textContent = movie.title;
+
+            const movieDescription = document.createElement('p');
+            movieDescription.classList.add('movie-description');
+            movieDescription.textContent = `Release Date: ${movie.release_date}`;
+
+            movieInfo.appendChild(movieTitle);
+            movieInfo.appendChild(movieDescription);
+
+            movieCard.appendChild(movieImg);
+            movieCard.appendChild(movieInfo);
+
+            movieListContainer.appendChild(movieCard);
+        });
+    } catch (error) {
+        console.error('Error fetching Coming Soon movies:', error);
+    }
+}
+
+// Fetch movies when the page loads
+window.onload = fetchComingSoonMovies;
+
+
+
+    </script>
+</body>
+</html>

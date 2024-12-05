@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtual Tour - CineVerse Studios</title>
+  <style>
+    body 
+    {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #000; 
+      color: #fff; 
+    }
+
+    header 
+    {
+      background: #111; 
+      padding: 20px 0;
+      text-align: center;
+      border-bottom: 2px solid green; 
+    }
+
+    nav 
+    {
+      background: #222;
+    }
+
+    nav ul 
+    {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    nav ul li 
+    {
+      display: inline;
+      margin-right: 20px;
+    }
+
+    nav ul li a 
+    {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 15px;
+      transition: background 0.3s;
+    }
+
+    nav ul li a:hover 
+    {
+      background: green; 
+      color: black;
+    }
+
+    main 
+    {
+      padding: 20px;
+    }
+
+    section 
+    {
+      background: rgba(255, 255, 255, 0.1); 
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 2px solid green; 
+    }
+
+    h2 
+    {
+      color: green; 
+      margin-bottom: 10px;
+    }
+
+    .slides 
+    {
+      display: none;
+      text-align: center;
+    }
+
+    .slides img 
+    {
+      width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      border-radius: 5px;
+    }
+
+    .description 
+    {
+      background-color: rgba(0, 128, 0, 0.8);
+      color: black;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .prev, .next 
+    {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      padding: 16px;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      transition: 0.6s ease;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+    }
+
+    .next 
+    {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .prev:hover, .next:hover 
+    {
+      background-color: rgba(0, 128, 0, 0.8);
+    }
+
+    footer 
+    {
+      text-align: center;
+      padding: 1px 0;
+      background: #111;
+      color: #fff;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+      border-top: 2px solid green;
+      margin-top: 15px;
+    }
+
+    footer ul 
+    {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    footer ul li 
+    {
+      display: inline;
+      margin-right: 15px;
+    }
+
+    footer ul li a 
+    {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    footer ul li a:hover 
+    {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Virtual Tour of CineVerse Studios</h1>
+  </header>
+  <nav>
+        <ul>
+            <li><a href="cineverse.html">Home</a></li>
+            <li><a href="moviesss.html">Movies</a></li>
+            <li><a href="coming-soon.html">Coming Soon</a></li>
+           <li><a href="promotions.html">Promotion</a></li>
+           <li><a href="snacks.html">Deals</a></li>
+            <li><a href="virtualtour.html">Virtual Tour</a></li>
+            <li><a href="ratings.html">Ratings</a></li>
+            
+        </ul>  
+    </nav>
+
+
+  <div class="slideshow-container">
+    <div class="slides">
+      <img src="https://t3.ftcdn.net/jpg/08/00/11/08/240_F_800110826_jZtOemGHpq08JRh9q27cCk9MTaGrJ8xf.jpg" alt="Cinema Seats">
+      <div class="description">Experience our comfortable cinema seats designed for your ultimate viewing pleasure.</div>
+    </div>
+
+    <div class="slides">
+      <img src="https://t3.ftcdn.net/jpg/08/71/18/52/240_F_871185299_DeHvjjAFN2Pb4yvxat1A3bT4G3ccXdOX.jpg" alt="Snack Bar">
+      <div class="description">Visit our snack bar for a variety of delicious snacks and beverages to enjoy during the show.</div>
+    </div>
+
+    <div class="slides">
+      <img src="https://t3.ftcdn.net/jpg/09/60/37/94/240_F_960379485_c4trHPK9kF8OTUz2Mf5ACnHXYLjOxdnm.jpg" alt="Ticket Counter">
+      <div class="description">Our friendly staff at the ticket counter are ready to assist you with your ticket purchases.</div>
+    </div>
+
+    <div class="slides">
+      <img src="https://t4.ftcdn.net/jpg/08/99/99/73/240_F_899997363_1okd7usRnpVrSUAWYoZcKO6EwCbfnaB6.jpg" alt="Cinema Rooms">
+      <div class="description">Explore our state-of-the-art cinema rooms equipped with the latest technology for an immersive experience.</div>
+    </div>
+
+    <div class="slides">
+      <img src="https://t4.ftcdn.net/jpg/02/63/33/89/240_F_263338979_YRemTpdCSoG31vUmCJJVCAJwoWY7R9sq.jpg" alt="Washrooms">
+      <div class="description">Clean and spacious washrooms available for your convenience.</div>
+    </div>
+
+    <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+    <a class="next" onclick="changeSlide(1)">&#10095;</a>
+  </div>
+
+  <script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function showSlides(n) 
+    {
+      const slides = document.getElementsByClassName("slides");
+      if (n > slides.length) {slideIndex = 1} 
+      if (n < 1) {slideIndex = slides.length}
+      for (let i = 0; i < slides.length; i++) 
+      {
+        slides[i].style.display = "none";  
+      }
+      slides[slideIndex - 1].style.display = "block";  
+    }
+
+    function changeSlide(n) 
+    {
+      slideIndex += n;
+      showSlides(slideIndex);
+    }
+
+    function autoShowSlides() 
+    {
+      slideIndex++;
+      showSlides(slideIndex);
+      setTimeout(autoShowSlides, 3000);
+    }
+
+    autoShowSlides();
+  </script>
+
+    <footer>
+        <ul>
+            <li><a href="cineverse.html">Home</a></li>
+            <li><a href="moviesss.html">Movies</a></li>
+            <li><a href="coming-soon.html">Coming Soon</a></li>
+            <li><a href="promotions.html">Promotions</a></li>
+            <li><a href="snacks.html">Deals</a></li>
+            <li><a href="virtualtour.html">Virtual Tour</a></li>
+            <li><a href="ratings.html">Ratings</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="location.html">Location</a></li>
+        </ul>
+        </ul>
+
+        <p>&copy; CineVerse Studios</p>
+    </footer>
+
+</body>
+</html>

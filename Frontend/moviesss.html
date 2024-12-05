@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineVerse Studios - Now Showing</title>
+
+    <style>
+
+        body 
+        {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000; 
+            color: #fff; 
+        }
+
+        header
+        {
+            background: #111; 
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 2px solid green; 
+        }
+
+        nav 
+       {
+            background: #222;
+        }
+
+        nav ul 
+        {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li 
+         {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a
+        {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: background 0.3s;
+        }
+
+        nav ul li a:hover 
+        {
+            background: green; 
+            color: black;
+        }
+
+        main 
+         {
+            padding: 20px;
+        }
+
+        section 
+      {
+            background: rgba(255, 255, 255, 0.1); 
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 2px solid green; 
+        }
+
+        h2 
+      {
+            color:  #fff;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .movie-card
+        {
+            display: flex; 
+            background: #222; 
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid green; 
+        }
+
+        .movie-card img 
+        {
+            width: 120px;
+            height: auto;
+            border-radius: 4px;
+            margin-right: 20px; 
+        }
+
+        .movie-info
+       {
+            flex-grow: 1; 
+        }
+
+        .movie-title 
+         {
+            font-size: 1.5em;
+            color: #fff;
+            margin: 0;
+        }
+
+        .movie-description
+         {
+            color: #ccc;
+            margin: 10px 0;
+        }
+
+        .more-details 
+      {
+            font-size: 0.9em;
+            color: green; 
+            text-decoration: none; 
+            margin-top: 5px;
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid green; 
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .more-details:hover 
+        {
+            background: green; 
+            color: black;
+        }
+
+        .age-rating
+        {
+            background: green; 
+            color: black; 
+            border-radius: 50%; 
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-left: auto; 
+        }
+
+        footer
+       {
+            text-align: center;
+            padding: 10px 0;
+            background: #111; 
+            color: #fff;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer ul
+       {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        footer ul li 
+       {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        footer ul li a 
+        {
+            color: #fff;
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>CineVerse Studios</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="cineverse.html">Home</a></li>
+            <li><a href="moviesss.html">Movies</a></li>
+            <li><a href="coming-soon.html">Coming Soon</a></li>
+           <li><a href="promotions.html">Promotion</a></li>
+           <li><a href="snacks.html">Deals</a></li>
+            <li><a href="virtualtour.html">Virtual Tour</a></li>
+            <li><a href="ratings.html">Ratings</a></li>         
+        </ul>  
+    </nav>
+
+     <main>
+        <section id="movies">
+            <h2>Now Showing</h2>
+            <!-- Movie cards will be dynamically inserted here -->
+        </section>
+    </main>
+
+    <footer>
+        <ul>
+            <li><a href="cineverse.html">Home</a></li>
+            <li><a href="moviesss.html">Movies</a></li>
+            <li><a href="coming-soon.html">Coming Soon</a></li>
+            <li><a href="promotions.html">Promotions</a></li>
+            <li><a href="snacks.html">Deals</a></li>
+            <li><a href="virtualtour.html">Virtual Tour</a></li>
+            <li><a href="ratings.html">Ratings</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="location.html">Location</a></li>
+        </ul>
+
+        <p>&copy; 2024 CineVerse Studios</p>
+    </footer>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const moviesSection = document.getElementById("movies");
+
+  try {
+    const response = await fetch("http://localhost:3002/movies"); // Replace with your API URL
+    if (!response.ok) {
+      throw new Error(`Failed to fetch movies: ${response.status}`);
+    }
+
+    const movies = await response.json();
+    moviesSection.innerHTML = ""; // Clear previous content
+
+    movies.forEach((movie) => {
+      moviesSection.innerHTML += `
+        <div class="movie-card">
+          <img src="${movie.image}" alt="${movie.title}">
+          <div class="movie-info">
+            <h3 class="movie-title">${movie.title}</h3>
+            <p class="movie-description">${movie.description}</p>
+            <!-- Age Rating Circle -->
+            <div class="age-rating">${movie.ageRating}</div>
+            <!-- More Details in Rectangular Box -->
+            <a href="${movie.moreDetails}" class="movie-details-link">More Details</a>
+          </div>
+        </div>`;
+    });
+  } catch (err) {
+    console.error("Error loading movies:", err);
+    moviesSection.innerHTML = `<p>Unable to load movies. Please try again later.</p>`;
+  }
+});
+
+
+    </script>
+</body>
+</html>
