@@ -167,7 +167,8 @@
             cursor: not-allowed;
         }
 
-        .right-section {
+        .right-section
+        {
             width: 20%;
             background-color: #2a2a2a;
             padding: 30px;
@@ -282,50 +283,11 @@
         <div class="step" id="step5">5. Booking Successful</div>
     </div>
 
-    <div class="container">
+  <div class="container">
         <div class="left-section">
             <h2>Select Your Seats</h2>
-            <div class="row">
-                <div class="seat" onclick="toggleSeat(this)">A1</div>
-                <div class="seat" onclick="toggleSeat(this)">A2</div>
-                <div class="seat" onclick="toggleSeat(this)">A3</div>
-                <div class="seat" onclick="toggleSeat(this)">A4</div>
-                <div class="seat" onclick="toggleSeat(this)">A5</div>
-                <div class="seat" onclick="toggleSeat(this)">A6</div>
-                <div class="seat" onclick="toggleSeat(this)">A7</div>
-            </div>
+            <div id="seatContainer"></div>
 
-            <div class="row">
-                <div class="seat" onclick="toggleSeat(this)">B1</div>
-                <div class="seat" onclick="toggleSeat(this)">B2</div>
-                <div class="seat" onclick="toggleSeat(this)">B3</div>
-                <div class="seat" onclick="toggleSeat(this)">B4</div>
-                <div class="seat" onclick="toggleSeat(this)">B5</div>
-                <div class="seat" onclick="toggleSeat(this)">B6</div>
-                <div class="seat" onclick="toggleSeat(this)">B7</div>
-            </div>
-
-            <div class="row">
-                <div class="seat" onclick="toggleSeat(this)">C1</div>
-                <div class="seat" onclick="toggleSeat(this)">C2</div>
-                <div class="seat" onclick="toggleSeat(this)">C3</div>
-                <div class="seat" onclick="toggleSeat(this)">C4</div>
-                <div class="seat" onclick="toggleSeat(this)">C5</div>
-                <div class="seat" onclick="toggleSeat(this)">C6</div>
-                <div class="seat" onclick="toggleSeat(this)">C7</div>
-            </div>
-
-            <div class="row">
-                <div class="seat" onclick="toggleSeat(this)">D1</div>
-                <div class="seat" onclick="toggleSeat(this)">D2</div>
-                <div class="seat" onclick="toggleSeat(this)">D3</div>
-                <div class="seat" onclick="toggleSeat(this)">D4</div>
-                <div class="seat" onclick="toggleSeat(this)">D5</div>
-                <div class="seat" onclick="toggleSeat(this)">D6</div>
-                <div class="seat" onclick="toggleSeat(this)">D7</div>
-            </div>
-
-          
             <button onclick="confirmSelection()">Confirm Selection</button>
         </div>
 
@@ -337,7 +299,7 @@
         </div>
     </div>
 
-     <footer>
+    <footer>
         <ul>
             <li><a href="cineverse.html">Home</a></li>
             <li><a href="moviesss.html">Movies</a></li>
@@ -349,59 +311,130 @@
             <li><a href="contact.html">Contact Us</a></li>
             <li><a href="location.html">Location</a></li>
         </ul>
-        </ul>
-
         <p>&copy; CineVerse Studios</p>
     </footer>
 
-<script>
+   <script>
+    let selectedSeats = [];
+    let seatsData = [];
+    let totalCost = 0;
+    let userId = 1;
+    let showtimeId = 1; 
+    let paymentMethod = 'Credit Card'; //temporaily 
 
-let selectedSeats = [];
+    fetch('http://localhost:3002/seats')
+      .then(response => response.json())
+      .then(data => {
+        seatsData = data;
+        renderSeats();
+      })
 
-function toggleSeat(seat) 
-{
-    if (seat.classList.contains('unavailable')) 
-    {
-        return; 
+      .catch(err => 
+      {
+        console.error('Error fetching seat data:', err);
+        alert('Error. Please try again later.');
+      });
+
+    function renderSeats() 
+      {
+      const seatContainer = document.getElementById('seatContainer');
+      const groupedSeats = {};
+
+      seatsData.forEach(seat =>
+       {
+        const row = seat.seatNumber[0]; 
+        if (!groupedSeats[row]) groupedSeats[row] = [];
+        groupedSeats[row].push(seat);
+      });
+
+       Object.keys(groupedSeats).forEach(row => {
+        const rowDiv = document.createElement('div');
+        rowDiv.classList.add('row');
+
+        groupedSeats[row].forEach(seat => {
+          const seatDiv = document.createElement('div');
+          seatDiv.classList.add('seat');
+          seatDiv.innerText = seat.seatNumber;
+
+          if (seat.isReserved) 
+         {
+            seatDiv.classList.add('unavailable');
+          } 
+         else {
+            seatDiv.onclick = () => toggleSeat(seatDiv, seat.seatNumber);
+          }
+          rowDiv.appendChild(seatDiv);
+        });
+        seatContainer.appendChild(rowDiv);
+      });
     }
 
-    seat.classList.toggle('selected');
-    const num= seat.innerText;
+    function toggleSeat(seatDiv, seatNumber) 
+     {
+      if (seatDiv.classList.contains('unavailable')) return;
 
-    if (selectedSeats.includes(num)) 
-    {
-        selectedSeats = selectedSeats.filter(s => s !== num);
-    } 
-    else 
-    {
-        selectedSeats.push(num);
+      seatDiv.classList.toggle('selected');
+      if (selectedSeats.includes(seatNumber)) 
+      {
+        selectedSeats = selectedSeats.filter(seat => seat !== seatNumber);
+      } 
+       else 
+      {
+        selectedSeats.push(seatNumber);
+      }
+      updateCost();
     }
-    updatecost(); 
-}
 
-function updatecost() 
-{
-    const totalCost = selectedSeats.length * 150;
-    document.getElementById('totalCost').innerText = `Rs.${totalCost}.00`;
-    document.getElementById('selectedSeatsList').innerText = selectedSeats.join(', ') || 'None';
-}
+    function updateCost() 
+     {
+      const ticketPrice = 150; 
+      totalCost = selectedSeats.length * ticketPrice;
+      document.getElementById('totalCost').innerText = `Rs.${totalCost}.00`;
+      document.getElementById('selectedSeatsList').innerText = selectedSeats.join(', ') || 'None';
+    }
 
-function confirmSelection() 
-    {
-    if (selectedSeats.length === 0) 
-    {
+    function confirmSelection() 
+     {
+      if (selectedSeats.length === 0)
+       {
         alert('Please select at least one seat before proceeding.');
         return;
+      }
+
+      // booking details
+      const bookingDetails = 
+      {
+        selectedSeats: selectedSeats,
+        userId: userId,
+        showtimeId: showtimeId,
+        totalAmount: totalCost,
+        paymentMethod: paymentMethod
+      };
+
+      fetch('http://localhost:3002/book',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookingDetails),
+      })
+      .then(response => 
+      {
+        if (!response.ok) throw new Error('Failed to book seats');
+        return response.text();
+      })
+      .then(() => 
+      {
+        alert(`Booking successful! Seats: ${selectedSeats.join(', ')}`);
+        window.location.href = 'snacks.html';
+      })
+
+      .catch(err => 
+       {
+        console.error('Error', err);
+        alert('Error booking seats. Please try again.');
+      });
     }
 
-    sessionStorage.setItem('seatsSelected', JSON.stringify(selectedSeats));
-    const totalCost = selectedSeats.length * 150;
-    sessionStorage.setItem('seatCost', totalCost.toString());
-
-    alert(`You have selected the following seats: ${selectedSeats.join(', ')}`);
-    window.location.href = "snacks.html"; 
-}
-
- </script>
+</script>
 </body>
 </html>
