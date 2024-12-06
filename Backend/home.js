@@ -5,7 +5,7 @@ import sql from "mssql";
 
 
 const app = express();
-app.use(express.json()); 
+app.use(express.json());  //parse data for json
 app.use(cors());
 
 
@@ -48,6 +48,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Hello Backend Side" });
 });
 
+//home page Now-Showing category (adding movies to now showing)
 app.post("/now-showing", async (req, res) => {
   const { title, image, book_now } = req.body;
 
@@ -68,7 +69,7 @@ await pool
 );
 
 
-await pool
+await pool   //adding movies in Movie page at same time
 .request()
 .input("title", sql.NVarChar, title)
 .input("description", sql.Text, "Currently in Now Showing.") 
@@ -86,8 +87,9 @@ await pool
   }
 });
 
-
-app.get("/now-showing", async (req, res) => {
+//retreiving all movies from now showing
+app.get("/now-showing", async (req, res) => 
+  {
   try {
     const result = await pool.request().query("select* from NowShowing");
     res.status(200).json(result.recordset);
@@ -97,19 +99,22 @@ app.get("/now-showing", async (req, res) => {
   }
 });
 
-
-app.post("/coming-soon", async (req, res) => {
+//home page coming-soon category (adding movies to coming soon)
+app.post("/coming-soon", async (req, res) => 
+  {
   const { title, image, release_date } = req.body;
 
-  if (!title || !image || !release_date) {
+  if (!title || !image || !release_date) 
+    {
     console.error("Validation failed: Missing title, image, or release_date");
     return res.status(400).json({
       error: "Title, Image, and Release Date are required.",
     });
   }
 
-  try {
-    await pool
+  try 
+  {
+    await pool           // At same time adding same coming-soon movie to Coming-Soon page
       .request()
       .input("title", sql.NVarChar, title)
       .input("image", sql.NVarChar, image)
@@ -118,15 +123,19 @@ app.post("/coming-soon", async (req, res) => {
         "insert into ComingSoon (title, image, release_date) values (@title, @image, @release_date)"
       );
     res.status(201).json({ message: "Movie added successfully to Coming Soon." });
-  } catch (err) {
+  } 
+  catch (err) 
+  {
     console.error("Error adding movie to 'Coming Soon':", err);
     res.status(500).json({ error: "Error adding movie to Coming Soon." });
   }
 });
 
-
-app.get("/coming-soon-home", async (req, res) => {
-  try {
+//retreiving coming soon movies from home page
+app.get("/coming-soon-home", async (req, res) => 
+  {
+  try 
+  {
     const result = await pool
       .request()
       .query("select* from ComingSoon order by release_date ASC");
@@ -137,7 +146,7 @@ app.get("/coming-soon-home", async (req, res) => {
   }
 });
 
-
+//retreiving coming soon movies from Coming-soon page
 app.get("/coming-soon", async (req, res) => {
   try {
     const result = await pool.request().query("select * from ComingSoon order by release_date ASC");
@@ -148,7 +157,7 @@ app.get("/coming-soon", async (req, res) => {
   }
 });
 
-
+//retreiving movies data from Movies page
 app.get("/movies", async (req, res) => {
   console.log("Testing database connection for /movies");
   try {
@@ -162,8 +171,9 @@ app.get("/movies", async (req, res) => {
 });
 
 
-//displaying show time of a particular movie
-app.get("/showtimes/:movie_id", async (req, res) => {
+//retreiving show time of a particular movie
+app.get("/showtimes/:movie_id", async (req, res) => 
+  {
   const { movie_id } = req.params;
 
   try 
@@ -183,9 +193,11 @@ app.get("/showtimes/:movie_id", async (req, res) => {
 });
 
 //adding new showtime
-app.post("/showtimes", async (req, res) => {
+app.post("/showtimes", async (req, res) => 
+  {
   const { movie_id, show_date, show_time, showType } = req.body;  
-  if (!movie_id || !show_date || !show_time || !showType) {
+  if (!movie_id || !show_date || !show_time || !showType) 
+    {
     return res.status(400).json({ error: "Movie ID, Show Date, Show Time, and Show Type are required." });
   }
 
@@ -217,7 +229,6 @@ app.get("/movie-details/:movieTitle", async (req, res) => {
 
   try 
   {
-    const pool = await poolPromise;
     const movieResult = await pool
       .request()
       .input("movieTitle", sql.NVarChar, movieTitle)
@@ -229,7 +240,7 @@ app.get("/movie-details/:movieTitle", async (req, res) => {
           md.director, 
           md.duration, 
           md.genre, 
-          m.opening_date, 
+          md.release_date, 
           md.trailer_url
         from Movie m
         join MovieDetails md on m.movie_id = md.movie_id
@@ -255,9 +266,6 @@ app.get("/movie-details/:movieTitle", async (req, res) => {
       `);
 
     console.log("Movie ratings query result:", ratingResult.recordset);
-
-    const averageRating = ratingResult.recordset[0]?.average_rating || 0;
-
     res.status(200).json({      //avg rating k saath movie details display
       title: movie.title,
       description: movie.description,
@@ -265,9 +273,9 @@ app.get("/movie-details/:movieTitle", async (req, res) => {
       director: movie.director,
       duration: movie.duration,
       genre: movie.genre,
-      openingDate: movie.opening_date,
+      openingDate: movie.release_date,
       trailer: movie.trailer_url,
-      rating: averageRating.toFixed(1), 
+      rating: averageRating
     });
 
   } 
@@ -354,7 +362,8 @@ app.post("/signup", async (req, res) => {
 });
 
 //login page
-app.post("/login", async (req, res) => {
+app.post("/login", async (req, res) => 
+  {
   const { email, password } = req.body;
 
   console.log("Received email:", email);  
@@ -398,12 +407,13 @@ app.post("/login", async (req, res) => {
   }
 });
 
-//select tickets
+// tickets page
 app.post('/ticket', (req, res) => 
   {
   const { userId, movieName, numTickets, ticketPrice } = req.body;
 
-  if (!userId || !movieName || !numbTickets || !ticketPrice) {
+  if (!userId || !movieName || !numbTickets || !ticketPrice) 
+    {
       return res.status(400).json({ message: 'Missing required fields' });
   }
 
@@ -425,8 +435,9 @@ app.post('/ticket', (req, res) =>
   });
 });
 
-
-app.get("/seats", async (req, res) => {
+//seat-selection page
+app.get("/seats", async (req, res) => 
+  {
   try 
   {
     const result = await pool.request().query('select * from Seats where isReserved = 0');
@@ -439,6 +450,7 @@ app.get("/seats", async (req, res) => {
   }
 });
 
+//booking for seat-selection
 app.post("/book", async (req, res) => 
   {
   try 
@@ -479,3 +491,88 @@ app.post("/book", async (req, res) =>
       res.status(500).send("Error reserving seats.");
   }
 });
+
+//payment page
+app.post('/payment', async (req, res) => 
+  {
+  const {
+      movieName,
+      numTickets,
+      ticketCost,
+      selectedSeats,
+      seatCost,
+      snacksList,
+      snacksCost,
+      totalCost,
+      paymentMethod,
+      cardholderName,
+      cardNumber,
+      expiryDate,
+      cvv,
+      bankName,
+  } = req.body;
+
+  if (
+      !movieName ||
+      !numTickets ||
+      !ticketCost ||
+      !selectedSeats ||
+      !seatCost ||
+      !totalCost ||
+      !paymentMethod
+  )
+   {
+      return res.status(400).json({ success: false, message: 'Missing required fields' });
+  }
+
+  try 
+  {
+      const pool = await sql.connect(dbConfig);
+      const result = await pool.request()
+          .input('movieName', sql.VarChar, movieName)
+          .input('numTickets', sql.Int, numTickets)
+          .input('ticketCost', sql.Decimal(10, 2), ticketCost)
+          .input('selectedSeats', sql.VarChar, selectedSeats.join(', '))
+          .input('seatCost', sql.Decimal(10, 2), seatCost)
+          .input('snacksList', sql.VarChar, snacksList)
+          .input('snacksCost', sql.Decimal(10, 2), snacksCost)
+          .input('totalCost', sql.Decimal(10, 2), totalCost)
+          .input('paymentMethod', sql.VarChar, paymentMethod)
+          .input('cardholderName', sql.VarChar, cardholderName || null)
+          .input('cardNumber', sql.VarChar, cardNumber || null)
+          .input('expiryDate', sql.VarChar, expiryDate || null)
+          .input('cvv', sql.VarChar, cvv || null)
+          .input('bankName', sql.VarChar, bankName || null)
+          .query(`
+             insert into (
+                  movie_name, num_tickets, ticket_cost, selected_seats, seat_cost, 
+                  snacks_list, snacks_cost, total_cost, payment_method, cardholder_name, 
+                  card_number, expiry_date, cvv, bank_name
+              ) 
+             values (
+                  @movieName, @numTickets, @ticketCost, @selectedSeats, @seatCost, 
+                  @snacksList, @snacksCost, @totalCost, @paymentMethod, @cardholderName, 
+                  @cardNumber, @expiryDate, @cvv, @bankName
+              )
+          `);
+
+      res.status(200).json({ success: true, message: 'Payment processed successfully!' });
+  }
+   catch (err) 
+   {
+      console.error('Payment processing error:', err);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
+//adding movies to homepage for nowshowing
+// adding movies for homepage coming soon works w frontend as well
+//adding movies to movie page works with frontend as well
+//adding movies to now-showing page works with frontend as well
+//showtimes in movie details work for backend cannot display on froentend due to issue w moviedetails 
+//ratings work for backend cannot dispay due to moviedetails issue
+//sign up page works w frontedn as well
+//log in page works w frontend as well
+//tickets work w backend but due to issue with moviedteails cant fetch proper data
+//seat-selection page works w frontend as well
+//payment works for backend and frontend too but cannot access unless moviedetails works or webpage functions in order
