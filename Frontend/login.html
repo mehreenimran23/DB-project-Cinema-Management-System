@@ -393,35 +393,39 @@
         </ul>
         <p>&copy; CineVerse Studios</p>
     </footer>
-
-    <script>
+                
 <script>
-  fetch("http://localhost:3002/login", {
+  fetch("http://localhost:3002/login",
+        {
     method: "POST",
-    headers: {
+    headers:
+        {
         "Content-Type": "application/json"
     },
     body: JSON.stringify({ email, password }),
 })
-.then(response => {
-    if (!response.ok) {
+.then(response => 
+    {
+    if (!response.ok) 
+    {
         throw new Error('Server error: ' + response.statusText);
     }
     return response.json();
 })
-.then(data => {
-    if (data.success) {
+.then(data => 
+    {
+    if (data.success)
+    {
         window.location.href = "ticket.html";
     } else {
         alert(data.message);
     }
 })
-.catch(error => {
+.catch(error => 
+    {
     console.error("Error during login:", error);
     alert("An error occurred during login: " + error.message);
 });
 </script>
-</script>
-
 </body>
 </html> 
