@@ -349,58 +349,56 @@
         <p>&copy; CineVerse Studios</p>
     </footer>
 
-    <script>
-       window.onload = function() 
+    
+     <script>
+    document.getElementById('paymentButton').addEventListener('click', function() 
+    {
+    const paymentData =
+     {
+        movieName: document.getElementById('movieName').innerText,
+        numTickets: document.getElementById('numTickets').innerText,
+        ticketCost: document.getElementById('ticketCost').innerText,
+        selectedSeats: selectedSeatsArray,
+        seatCost: document.getElementById('seatCost').innerText,
+        snacksList: document.getElementById('snackList').innerText,
+        snacksCost: document.getElementById('snacksCost').innerText,
+        totalCost: document.getElementById('totalCost').innerText,
+        paymentMethod: document.getElementById('paymentMethod').innerText,
+        cardholderName: document.getElementById('name').value,
+        cardNumber: document.getElementById('cardNumber').value,
+        expiryDate: document.getElementById('expiry').value,
+        cvv: document.getElementById('cvv').value,
+        bankName: document.getElementById('bankName').value
+    };
+
+    fetch('/payment'
+, {
+        method: 'POST',
+        headers:
        {
-       const movieName = sessionStorage.getItem('movieName') || 'N/A';
-     const numTickets = sessionStorage.getItem('numTickets') || '0'; 
-    const ticketCost = sessionStorage.getItem('ticketCost') || '0'
-    const seatsSelected = JSON.parse(sessionStorage.getItem('seatsSelected') || '[]');
-    const seatCost = sessionStorage.getItem('seatCost') || '0';
-    const snacksList = sessionStorage.getItem('snacksList') || 'None';
-    const snacksCost = sessionStorage.getItem('snacksCost') || '0';
-    const totalCost = parseInt(seatCost) + parseInt(snacksCost);
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(paymentData)
+    })
 
-    document.getElementById('movieName').innerText = movieName;
-    document.getElementById('numTickets').innerText = numTickets;
-    document.getElementById('ticketCost').innerText = `Rs.${ticketCost}.00`;
-    document.getElementById('selectedSeatsList').innerText = seatsSelected.join(', ') || 'None';
-    document.getElementById('seatCost').innerText = `Rs.${seatCost}.00`;
-    document.getElementById('snackList').innerText = snacksList;
-    document.getElementById('snacksCost').innerText = `Rs.${snacksCost}.00`;
-    document.getElementById('totalCost').innerText = `Rs.${totalCost}.00`;  
-};
-   
-        
-        function selectMethod(element, method)
-        {
-            document.querySelectorAll('.payment-method').forEach(methodElement => {
-                methodElement.classList.remove('active');
-            });
-            
-            element.classList.add('active');
-            sessionStorage.setItem('paymentMethod', method);
-
-            if (method === 'credit-card' || method === 'debit-card') 
-             {
-                document.getElementById('card-details').style.display = 'block';
-                document.getElementById('bank-details').style.display = 'none';
-            } 
-            else if (method === 'bank-transfer') 
-             {
-                document.getElementById('card-details').style.display = 'none';
-                document.getElementById('bank-details').style.display = 'block';
-            }
-            document.getElementById('paymentMethod').innerText = method;
-        }
-
-        document.getElementById('paymentButton').addEventListener('click', function() 
+    .then(response => response.json())
+    .then(data => {
+        if (data.success)
          {
             alert('Payment processed successfully!');
- 
-          window.location.href = 'thankyou.html';
-        });
-    </script>
+            window.location.href = 'thankyou.html';
+        } 
+       else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error =>
+     {
+        console.error('Error:', error);
+        alert('An error occurred while processing the payment.');
+    });
+});
 
+</script>
 </body>
 </html>
