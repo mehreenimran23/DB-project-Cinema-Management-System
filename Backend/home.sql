@@ -53,9 +53,7 @@ insert into Movie (title, description, image, ageRating, moreDetails) values
 ('Jurassic World', 'An epic adventure set in a dinosaur theme park, where chaos ensues when the genetically engineered Indominus rex escapes containment.',
  'https://c8.alamy.com/comp/2JE347Y/movie-poster-jurassic-world-2015-2JE347Y.jpg', '10+', 'movie-details.html?movie=Jurassic World');
 
-
  select* from Movie
-
 
  --table for movieDetails
 create table MovieDetails (
@@ -92,6 +90,8 @@ insert into MovieDetails (movie_id, description, director, cast, duration, genre
  'Colin Trevorrow', 'Chris Pratt, Bryce Dallas Howard, Vincent D\ Onofrio', 124, 'Action, Adventure, Sci-Fi', 'https://www.youtube.com/watch?v=RFinNxS5P8E', '2015-06-12');
 
 
+ select * from MovieDetails;
+ select* from Movie;
 --User table
 create table Users (
 userid int primary key identity(1,1),        
@@ -124,6 +124,8 @@ foreign key (user_id) references Users(userid)
 insert into MovieRatings (movie_title,rating,user_id) values
 ('Inception','9','1')
 
+select* from MovieRatings
+
  --ShowTimes Table
 create table showtimes (
 id int primary key identity(1,1),
@@ -134,8 +136,6 @@ showType varchar(255) not null,
 foreign key (movie_id) references Movie(movie_id)  
 );
 
-
---inserting values in showtimes table
 -- Insertion of showtimes for Inception (movie_id = 1)
 insert into showtimes (movie_id, show_date, show_time, showType) values
     (1, '2024-10-25', '03:30:00', 'MAXIMUS'),
@@ -321,11 +321,36 @@ join @selectedSeats ss on s.seatNumber = ss.seatNumber
 where s.showtimeId = @showtimeId
 and s.isReserved = 0; 
 
+insert into Bookings (userId, showtimeId, totalAmount, paymentMethod, paymentStatus)
+select @userId, @showtimeId, @totalAmount, @paymentMethod, @paymentStatus
+from inserted;
+end;
 
 select * from Seats where isReserved = 1;
 
-truncate table seats
-DELETE FROM Seats;
-DBCC CHECKIDENT ('Seats', RESEED, 0);  
+--truncate table seats
+--DELETE FROM Seats;
+--DBCC CHECKIDENT ('Seats', RESEED, 0);  
+--drop trigger if exists beforeInsertBooking
 
-drop trigger if exists beforeInsertBooking
+-- payment table
+create table payments (
+    payment_id int identity(1,1) primary key,
+    movie_name varchar(255) not null,
+    num_tickets int not null,
+    ticket_cost decimal(10, 2) not null,
+    selected_seats varchar(max) not null,
+    seat_cost decimal(10, 2) not null,
+    snacks_list varchar(max),
+    snacks_cost decimal(10, 2),
+    total_cost decimal(10, 2) not null,
+    payment_method varchar(50) not null,
+    cardholder_name varchar(255),
+    card_number varchar(20),
+    expiry_date varchar(10),
+    cvv varchar(4),
+    bank_name varchar(255),
+    payment_date datetime default getdate()
+);
+
+select*from payments
