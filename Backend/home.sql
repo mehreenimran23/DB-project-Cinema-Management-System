@@ -5,7 +5,6 @@ image varchar(max) not null,
 book_Now varchar(255) not null
 )
 
-
 create table comingSoon (
 id int primary key identity(1,1),
 title varchar(255) not null,      
@@ -13,20 +12,23 @@ image varchar(max) not null,
 release_date date not null,   
 );
 
-INSERT INTO NowShowing (title, image, book_now) VALUES
+insert into NowShowing (title, image, book_now) VALUES
 ('Inception', 'https://i.ebayimg.com/images/g/G~EAAOSwAUBd5E7b/s-l960.webp', 'movie-details.html?movie=Inception'),
 ('Spider-Man: No Way Home', 'https://cdn.marvel.com/content/1x/spider-mannowayhome_lob_crd_03.jpg', 'movie-details.html?movie=Spider-Man: No Way Home'),
 ('The Conjuring 4', 'https://static1.srcdn.com/wordpress/wp-content/uploads/2023/09/the-conjuring-universe-poster.jpg', 'movie-details.html?movie=The Conjuring 4'),
 ('Jurassic World', 'https://c8.alamy.com/comp/2JE347Y/movie-poster-jurassic-world-2015-2JE347Y.jpg', 'movie-details.html?movie=Jurassic World');
 
-INSERT INTO ComingSoon (title, image, release_date) VALUES
+insert into ComingSoon (title, image, release_date) VALUES
 ('Venom: The Last Dance', 'https://cdn1.clickthecity.com/images/movies/poster/400/19823_3.jpg', '2025-01-12'),
 ('Captain America: Brave New World','https://preview.redd.it/official-poster-for-captain-america-brave-new-world-v0-xyr7di8f63cd1.jpeg?auto=webp&s=19ce30e86c98577cc214ee7b24a8ca0d4ab0f054.jpg', '2025-03-07');
 
-SELECT * FROM NowShowing;
+insert into NowShowing (title, image, book_now) VALUES
+('Inception', 'https://i.ebayimg.com/images/g/G~EAAOSwAUBd5E7b/s-l960.webp', 'movie-details.html?movie=Inception')
 
-DELETE FROM nowShowing WHERE id = 6;
+select * from NowShowing;
+select* from comingSoon
 
+--table for movies
 create table Movie (
     movie_id int primary key identity(1,1),
     title varchar(255) not null,              
@@ -53,6 +55,7 @@ insert into Movie (title, description, image, ageRating, moreDetails) values
 
 
  select* from Movie
+
 
  --table for movieDetails
 create table MovieDetails (
@@ -81,7 +84,7 @@ insert into MovieDetails (movie_id, description, director, cast, duration, genre
 -- Insert movie details for The Conjuring 4 (movie_id = 3)
 insert into MovieDetails (movie_id, description, director, cast, duration, genre, trailer_url, release_date) values 
 (3, 'Ed and Lorraine Warren return to confront their most terrifying case yet in this haunting thriller.',
- 'Michael Chaves', 'Patrick Wilson, Vera Farmiga, Ruairi O’Connor', 132, 'Horror, Thriller', 'https://www.youtube.com/watch?v=ZBdHFJ_fXqg', '2023-09-08');
+ 'Michael Chaves', 'Patrick Wilson, Vera Farmiga, Ruairi Oâ€™Connor', 132, 'Horror, Thriller', 'https://www.youtube.com/watch?v=ZBdHFJ_fXqg', '2023-09-08');
 
 -- Insert movie details for Jurassic World (movie_id = 4)
 insert into MovieDetails (movie_id, description, director, cast, duration, genre, trailer_url, release_date) values 
@@ -132,10 +135,7 @@ foreign key (movie_id) references Movie(movie_id)
 );
 
 
-
-
 --inserting values in showtimes table
-
 -- Insertion of showtimes for Inception (movie_id = 1)
 insert into showtimes (movie_id, show_date, show_time, showType) values
     (1, '2024-10-25', '03:30:00', 'MAXIMUS'),
@@ -205,3 +205,127 @@ create table tickets (
 );
 
 select* from tickets
+
+--table for seats
+create table Seats (
+    userId int,
+    seatId int primary key identity(1,1),
+    showtimeId int foreign key references Showtimes(id),
+    seatNumber varchar(10),
+    isReserved bit default 0,
+    seatType nvarchar(50)
+);
+
+-- Insert seats for Platinum 
+insert into Seats (showtimeId, seatNumber, isReserved, seatType)
+values
+(1, 'A1', 0, 'Platinum'),
+(1, 'A2', 0, 'Platinum'),
+(1, 'A3', 0, 'Platinum'),
+(1, 'A4', 0, 'Platinum'),
+(1, 'A5', 0, 'Platinum'),
+(1, 'A6', 0, 'Platinum'),
+(1, 'A7', 0, 'Platinum'),
+(1, 'B1', 0, 'Platinum'),
+(1, 'B2', 0, 'Platinum'),
+(1, 'B3', 0, 'Platinum'),
+(1, 'B4', 0, 'Platinum'),
+(1, 'B5', 0, 'Platinum'),
+(1, 'B6', 0, 'Platinum'),
+(1, 'B7', 0, 'Platinum'),
+(1, 'C1', 0, 'Platinum'),
+(1, 'C2', 0, 'Platinum'),
+(1, 'C3', 0, 'Platinum'),
+(1, 'C4', 0, 'Platinum'),
+(1, 'C5', 0, 'Platinum'),
+(1, 'C6', 0, 'Platinum'),
+(1, 'C7', 0, 'Platinum'),
+(1, 'D1', 0, 'Platinum'),
+(1, 'D2', 0, 'Platinum'),
+(1, 'D3', 0, 'Platinum'),
+(1, 'D4', 0, 'Platinum'),
+(1, 'D5', 0, 'Platinum'),
+(1, 'D6', 0, 'Platinum'),
+(1, 'D7', 0, 'Platinum');
+
+-- Insert seats for Maximus (showtimeId = 2)
+insert into Seats (showtimeId, seatNumber, isReserved, seatType)
+values
+(2, 'A1', 0, 'Maximus'),
+(2, 'A2', 0, 'Maximus'),
+(2, 'A3', 0, 'Maximus'),
+(2, 'A4', 0, 'Maximus'),
+(2, 'A5', 0, 'Maximus'),
+(2, 'A6', 0, 'Maximus'),
+(2, 'A7', 0, 'Maximus'),
+(2, 'B1', 0, 'Maximus'),
+(2, 'B2', 0, 'Maximus'),
+(2, 'B3', 0, 'Maximus'),
+(2, 'B4', 0, 'Maximus'),
+(2, 'B5', 0, 'Maximus'),
+(2, 'B6', 0, 'Maximus'),
+(2, 'B7', 0, 'Maximus'),
+(2, 'C1', 0, 'Maximus'),
+(2, 'C2', 0, 'Maximus'),
+(2, 'C3', 0, 'Maximus'),
+(2, 'C4', 0, 'Maximus'),
+(2, 'C5', 0, 'Maximus'),
+(2, 'C6', 0, 'Maximus'),
+(2, 'C7', 0, 'Maximus'),
+(2, 'D1', 0, 'Maximus'),
+(2, 'D2', 0, 'Maximus'),
+(2, 'D3', 0, 'Maximus'),
+(2, 'D4', 0, 'Maximus'),
+(2, 'D5', 0, 'Maximus'),
+(2, 'D6', 0, 'Maximus'),
+(2, 'D7', 0, 'Maximus');
+
+
+--table for bookings
+create table Bookings (
+    bookingId int primary key identity(1,1),
+    userId int foreign key references Users(user_id),
+    showtimeId int foreign key references Showtimes(id),
+    totalAmount decimal(10, 2),
+    bookingDate datetime default getdate(),
+    paymentMethod varchar(50),
+    paymentStatus varchar(50)
+);
+
+create trigger beforeInsertBooking
+on Bookings
+instead of insert
+as
+begin
+   
+declare @userId int;
+declare @showtimeId int;
+declare @totalAmount decimal(10, 2);
+declare @paymentMethod varchar(50);
+declare @paymentStatus varchar(50);
+
+select @userId = userId,
+@showtimeId = showtimeId,
+@totalAmount = totalAmount,
+@paymentMethod = paymentMethod,
+@paymentStatus = paymentStatus
+from inserted;
+
+declare @selectedSeats table (seatNumber varchar(10));
+
+update s
+set s.isReserved = 1,  
+s.userId = @userId 
+from Seats s
+join @selectedSeats ss on s.seatNumber = ss.seatNumber
+where s.showtimeId = @showtimeId
+and s.isReserved = 0; 
+
+
+select * from Seats where isReserved = 1;
+
+truncate table seats
+DELETE FROM Seats;
+DBCC CHECKIDENT ('Seats', RESEED, 0);  
+
+drop trigger if exists beforeInsertBooking
