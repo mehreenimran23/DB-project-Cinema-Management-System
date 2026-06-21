@@ -3,485 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CineVerse Studios - Snacks and Deals</title>
-    <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body
-       {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            min-height: 100vh;
-            margin: 0;
-            padding-bottom: 60px; 
-        }
-
-        header
-         {
-            background: #111;
-            padding: 30px 0;
-            text-align: center;
-            border-bottom: 2px solid #28a745;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        h1 
-       {
-            color: #fff;
-            margin: 0;
-        }
-
-        nav
-       {
-            background: #222;
-            padding: 8px 0;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-        }
-
-        nav ul
-       {
-            display: flex;
-            justify-content: flex-start;
-            list-style-type: none;
-            padding: 0;
-        }
-
-        nav ul li
-       {
-            margin-right: 30px;
-        }
-
-        nav ul li a 
-       {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 15px;
-            transition: background 0.3s;
-        }
-
-        nav ul li a:hover 
-       {
-            background: #28a745;
-            color: black;
-        }
-
-        .progress-bar
-       {
-            width: 100%;
-            display: flex;
-            justify-content: space-evenly;
-            background-color: #333;
-            padding: 10px 0;
-            color: #888;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .progress-bar .step
-        {
-            cursor: pointer;
-        }
-
-        .progress-bar .selected
-        {
-            color: white;
-            font-weight: bold;
-        }
-
-        .progress-bar .completed
-       {
-            color: green;
-        }
-
-        .progress-bar .highlight 
-       {
-            color: white;
-            font-weight: bold;
-        }
-
-        .container 
-          {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            max-width: 1200px;
-            margin: 20px;
-            justify-content: space-between;
-            gap: 20px;
-            margin-bottom: 60px; 
-        }
-
-        .menu 
-         {
-            width: 20%;
-            background-color: #1a1a1a;
-            padding: 20px;
-            border-radius: 8px;
-            color: white;
-        }
-
-        .menu h2
-        {
-            margin-bottom: 15px;
-        }
-
-        .menu ul 
-        {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .menu ul li 
-        {
-            margin: 10px 0;
-            cursor: pointer;
-        }
-
-        .menu ul li:hover
-        {
-            color: #28a745;
-        }
-
-        .deals-section 
-        {
-            width: 75%;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .deal-box 
-        {
-            background: #2a2a2a;
-            flex: 1 1 calc(33% - 13px); 
-            min-height: 200px;
-            padding: 30px;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .deal-box img
-       {
-            width: 80%;
-            height: auto; 
-            max-height: 120px; 
-            object-fit: cover; 
-            margin-bottom: 10px; 
-        }
-
-        .deal-box h3
-       {
-            margin: 15px 0;
-            color: #fff;
-        }
-
-        .deal-box button
-         {
-            background-color: #006400;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .deal-box button:hover 
-       {
-            background-color: #004d00;
-        }
-
-        .deal-box .deal-count
-        {
-            margin-top: 10px;
-            font-size: 16px;
-            color: #fff;
-        }
-
-        .deal-box .add-remove 
-        {
-            margin-top: 10px;
-        }
-
-        .right-section 
-       {
-            width: 30%;
-            background-color: #1a1a1a;
-            padding: 20px;
-            border-radius: 8px;
-            color: white;
-        }
-
-        .right-section h2 
-      {
-            color: #fff;
-        }
-
-        .right-section p
-       {
-            margin: 5px 0;
-        }
-
-        .right-section .total
-        {
-            font-weight: bold;
-            font-size: 18px;
-            color: #006400;
-        }
-
-        button.finalize-order
-         {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 10px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-        }
-
-        button.finalize-order:hover 
-       {
-            background-color: #004d00;
-        }
-
-        footer
-        {
-            text-align: center;
-            padding: 10px 0;
-            background: #111;
-            color: #fff;
-            width: 100%;
-        }
-
-        footer ul
-        {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        footer ul li
-        {
-            display: inline;
-            margin-right: 15px;
-        }
-
-        footer ul li a
-       {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        footer ul li a:hover 
-       {
-            text-decoration: underline;
-        }
-    </style>
+    <title>CineVerse Studios - Food & Drinks</title>
+    <link rel="stylesheet" href="theme.css">
 </head>
-
 <body>
-    <header>
-        <h1>CineVerse Studios - Snacks and Deals</h1>
-    </header>
-    
-     <nav>
-        <ul>
-            <li><a href="cineverse.html">Home</a></li>
-            <li><a href="moviesss.html">Movies</a></li>
-            <li><a href="coming-soon.html">Coming Soon</a></li>
-           <li><a href="promotions.html">Promotion</a></li>
-           <li><a href="snacks.html">Deals</a></li>
-            <li><a href="virtualtour.html">Virtual Tour</a></li>
-            <li><a href="ratings.html">Ratings</a></li>
-            
-        </ul>  
-    </nav>
+    <div class="site-shell">
+        <div class="top-strip">
+            <span>Step 3 | Food & Drinks</span>
+            <span>Upgrade the cinema experience</span>
+        </div>
 
-    <div class="progress-bar">
-        <div class="step" id="step1">1. Select Tickets</div>
-        <div class="step" id="step2">2. Select Seats</div>
-        <div class="step highlight" id="step3">3. Food and Drink</div>
-        <div class="step" id="step4">4. Confirm</div>
-        <div class="step" id="step5">5. Booking Successful</div>
-    </div>
+        <header class="brand-header">
+            <div class="brand-lockup">
+                <span class="brand-kicker">Booking Flow</span>
+                <h1 class="brand-title">Food & Drinks</h1>
+                <p class="brand-subtitle">Add classic cinema concessions before checkout with a menu built for quick ordering.</p>
+            </div>
+        </header>
 
-    <div class="container">
-        <div class="menu">
-            <h2>Categories</h2>
+        <nav class="main-nav">
             <ul>
-                <li onclick="showDeals()">Deals & Meals</li>
-                <li onclick="showPopcorn()">Popcorn</li>
-                <li onclick="showBeverages()">Beverages</li>
+                <li><a href="cineverse.html">Home</a></li>
+                <li><a href="moviesss.html">Movies</a></li>
+                <li><a href="location.html">Cinemas</a></li>
+                <li><a href="promotions.html">Offers</a></li>
+                <li><a href="coming-soon.html">Coming Soon</a></li>
+                <li><a class="active" href="snacks.html">Food & Drinks</a></li>
+                <li><a href="ratings.html">Ratings</a></li>
             </ul>
+        </nav>
+
+        <div class="booking-progress">
+            <div class="progress-step"><strong>1. Tickets</strong>Select quantity</div>
+            <div class="progress-step"><strong>2. Seats</strong>Choose placement</div>
+            <div class="progress-step active"><strong>3. Snacks</strong>Add extras</div>
+            <div class="progress-step"><strong>4. Payment</strong>Complete purchase</div>
+            <div class="progress-step"><strong>5. Success</strong>Booking confirmed</div>
         </div>
 
-        <div class="deals-section" id="deals-section">
-            <div class="deal-box" data-price="120">
-                <img src="https://img.freepik.com/free-psd/tasty-caramel-glazed-popcorn-isolated-transparent-background_191095-9052.jpg" alt="Popcorn Combo" class="deal-image">
-                <h3>Popcorn Combo</h3>
-                <p>Rs. 120</p>
-                <div class="add-remove">
-                    <button onclick="changeQuantity(this, 'add')">+</button>
-                    <button onclick="changeQuantity(this, 'remove')">-</button>
-                </div>
-                <div class="deal-count">Quantity: 0</div>
-            </div>
-            
-            <div class="deal-box" data-price="100">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuhBdrSATCYmQ7_MWYONIszzYkM4Hathp5vw&s" alt="Nachos Combo" class="deal-image">
-                <h3>Nachos Combo</h3>
-                <p>Rs. 100</p>
-                <div class="add-remove">
-                    <button onclick="changeQuantity(this, 'add')">+</button>
-                    <button onclick="changeQuantity(this, 'remove')">-</button>
-                </div>
-                <div class="deal-count">Quantity: 0</div>
-            </div>
-            
-            <div class="deal-box" data-price="150">
-                <img src="https://images.unsplash.com/photo-1520201163981-8cc95007dd2a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGl6emElMjBzbGljZXxlbnwwfHwwfHx8MA%3D%3D" alt="Pizza Combo" alt="Pizza Combo" class="deal-image">
-                <h3>Pizza Slice</h3>
-                <p>Rs. 150</p>
-                <div class="add-remove">
-                    <button onclick="changeQuantity(this, 'add')">+</button>
-                    <button onclick="changeQuantity(this, 'remove')">-</button>
-                </div>
-                <div class="deal-count">Quantity: 0</div>
-            </div>
+        <main class="page-content">
+            <section class="content-split">
+                <article class="surface-card">
+                    <span class="eyebrow">Concession Menu</span>
+                    <h2>Choose Your Snacks</h2>
+                    <div class="snack-grid">
+                        <div class="snack-card" data-name="Popcorn Combo" data-price="120">
+                            <img data-fallback="snack" data-title="Popcorn Combo" data-label="Fresh Counter" src="https://img.freepik.com/free-psd/tasty-caramel-glazed-popcorn-isolated-transparent-background_191095-9052.jpg" alt="Popcorn Combo">
+                            <h3>Popcorn Combo</h3>
+                            <p>Classic popcorn combo for a proper theatre night.</p>
+                            <strong>Rs. 120</strong>
+                            <div class="snack-actions">
+                                <button class="primary-btn mini-button" type="button" data-action="add">+</button>
+                                <button class="secondary-btn mini-button" type="button" data-action="remove">-</button>
+                            </div>
+                            <p class="section-copy deal-count">Quantity: 0</p>
+                        </div>
+                        <div class="snack-card" data-name="Nachos Combo" data-price="100">
+                            <img data-fallback="snack" data-title="Nachos Combo" data-label="Snack Bar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuhBdrSATCYmQ7_MWYONIszzYkM4Hathp5vw&s" alt="Nachos Combo">
+                            <h3>Nachos Combo</h3>
+                            <p>Crunchy nachos with a sharable cinema-friendly size.</p>
+                            <strong>Rs. 100</strong>
+                            <div class="snack-actions">
+                                <button class="primary-btn mini-button" type="button" data-action="add">+</button>
+                                <button class="secondary-btn mini-button" type="button" data-action="remove">-</button>
+                            </div>
+                            <p class="section-copy deal-count">Quantity: 0</p>
+                        </div>
+                        <div class="snack-card" data-name="Pizza Slice" data-price="150">
+                            <img data-fallback="snack" data-title="Pizza Slice" data-label="Hot Bites" src="https://images.unsplash.com/photo-1520201163981-8cc95007dd2a?w=500&auto=format&fit=crop&q=60" alt="Pizza Slice">
+                            <h3>Pizza Slice</h3>
+                            <p>A quick hot bite for premium evening screenings.</p>
+                            <strong>Rs. 150</strong>
+                            <div class="snack-actions">
+                                <button class="primary-btn mini-button" type="button" data-action="add">+</button>
+                                <button class="secondary-btn mini-button" type="button" data-action="remove">-</button>
+                            </div>
+                            <p class="section-copy deal-count">Quantity: 0</p>
+                        </div>
+                        <div class="snack-card" data-name="Soda (Medium)" data-price="80">
+                            <img data-fallback="snack" data-title="Soda Medium" data-label="Cold Drinks" src="https://springs.com.pk/cdn/shop/files/8964001179566_medium.jpg?v=1728387060" alt="Soda">
+                            <h3>Soda (Medium)</h3>
+                            <p>Cold drink pairing for popcorn and blockbuster nights.</p>
+                            <strong>Rs. 80</strong>
+                            <div class="snack-actions">
+                                <button class="primary-btn mini-button" type="button" data-action="add">+</button>
+                                <button class="secondary-btn mini-button" type="button" data-action="remove">-</button>
+                            </div>
+                            <p class="section-copy deal-count">Quantity: 0</p>
+                        </div>
+                    </div>
+                </article>
 
-            <div class="deal-box" data-price="80">
-                <img src="https://springs.com.pk/cdn/shop/files/8964001179566_medium.jpg?v=1728387060" alt="Soda (Medium)" alt="Soda (Medium)" class="deal-image">
-                <h3>Soda (Medium)</h3>
-                <p>Rs. 80</p>
-                <div class="add-remove">
-                    <button onclick="changeQuantity(this, 'add')">+</button>
-                    <button onclick="changeQuantity(this, 'remove')">-</button>
-                </div>
-                <div class="deal-count">Quantity: 0</div>
-            </div>
+                <aside class="surface-card">
+                    <span class="eyebrow">Order Summary</span>
+                    <h2>Current Order</h2>
+                    <div class="summary-list">
+                        <div class="summary-item"><span>Movie</span><strong id="movieName">N/A</strong></div>
+                        <div class="summary-item"><span>Seats</span><strong id="selectedSeatsLabel">None</strong></div>
+                        <div class="summary-item"><span>Snacks Selected</span><strong id="snackList">None</strong></div>
+                        <div class="summary-item"><span>Snacks Cost</span><strong id="snacksCost">Rs. 0.00</strong></div>
+                    </div>
+                    <div class="summary-total">
+                        <span>Grand Total</span>
+                        <span id="grandTotal">Rs. 0.00</span>
+                    </div>
+                    <button class="primary-btn" type="button" id="finalizeOrderButton" style="margin-top: 18px;">Continue to Payment</button>
+                </aside>
+            </section>
+        </main>
 
-            <div class="deal-box" data-price="50">
-                <img src="https://www.nestlepurelife.com/pk/sites/g/files/xknfdk411/files/1500ml_0_1.jpg" alt="Water Bottle" alt="Water Bottle" class="deal-image">
-                <h3>Water Bottle</h3>
-                <p>Rs. 50</p>
-                <div class="add-remove">
-                    <button onclick="changeQuantity(this, 'add')">+</button>
-                    <button onclick="changeQuantity(this, 'remove')">-</button>
-                </div>
-                <div class="deal-count">Quantity: 0</div>
-            </div>
-
-            <div class="deal-box" data-price="200">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRluMFy0LN4C1CjyIUKvw95DWg7EOoc1aF6uw&s" alt="Large Combo Pack" class="deal-image">
-                <h3>Large Combo Pack</h3>
-                <p>Rs. 200</p>
-                <div class="add-remove">
-                    <button onclick="changeQuantity(this, 'add')">+</button>
-                    <button onclick="changeQuantity(this, 'remove')">-</button>
-                </div>
-                <div class="deal-count">Quantity: 0</div>
-            </div>
-        </div>
-
-        <div class="right-section">
-            <h2>Order Summary</h2>
-            <p>Snacks Selected: <span id="snackList">None</span></p>
-            <p>Total Cost: Rs. <span id="totalCost">0</span></p>
-            <button class="finalize-order">Finalize Order</button>
-        </div>
+        <footer class="footer-shell">
+            <ul>
+                <li><a href="cineverse.html">Home</a></li>
+                <li><a href="moviesss.html">Movies</a></li>
+                <li><a href="location.html">Cinemas</a></li>
+                <li><a href="promotions.html">Offers</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="coming-soon.html">Coming Soon</a></li>
+            </ul>
+            <p>&copy; CineVerse Studios</p>
+        </footer>
     </div>
 
-       <footer>
-        <ul>
-            <li><a href="cineverse.html">Home</a></li>
-            <li><a href="moviesss.html">Movies</a></li>
-            <li><a href="coming-soon.html">Coming Soon</a></li>
-            <li><a href="promotions.html">Promotions</a></li>
-            <li><a href="snacks.html">Deals</a></li>
-            <li><a href="virtualtour.html">Virtual Tour</a></li>
-            <li><a href="ratings.html">Ratings</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="location.html">Location</a></li>
-        </ul>
+    <script src="app.js"></script>
+    <script>
+        const { getBooking, mergeBooking, formatCurrency, attachImageFallbacks } = window.CineVerseApp;
+        const booking = getBooking();
+        if (!booking.bookingId) window.location.href = "seat-selection.html";
+        const snackQuantities = {};
 
-        <p>&copy; CineVerse Studios</p>
-    </footer>
+        attachImageFallbacks(document);
 
-<script>
- let totalCost = 0;
+        document.getElementById("movieName").innerText = booking.movieName || "N/A";
+        document.getElementById("selectedSeatsLabel").innerText = (booking.selectedSeats || []).join(", ") || "None";
 
-function changeQuantity(button, action) 
-{
-    const dealBox = button.closest('.deal-box');
-    const price = parseInt(dealBox.getAttribute('data-price'));
-    const disp = dealBox.querySelector('.deal-count');
+        function updateSummary() {
+            const snacks = Object.entries(snackQuantities)
+                .filter(([, item]) => item.quantity > 0)
+                .map(([name, item]) => ({ name, quantity: item.quantity, price: item.price, total: item.quantity * item.price }));
+            const snacksList = snacks.map((item) => `${item.name} x${item.quantity}`).join(", ");
+            const snacksCost = snacks.reduce((sum, item) => sum + item.total, 0);
+            const grandTotal = Number(booking.ticketCost || 0) + Number(booking.seatCost || 0) + snacksCost;
+            document.getElementById("snackList").innerText = snacksList || "None";
+            document.getElementById("snacksCost").innerText = formatCurrency(snacksCost);
+            document.getElementById("grandTotal").innerText = formatCurrency(grandTotal);
+            mergeBooking({ snacks, snacksList, snacksCost, totalCost: grandTotal });
+        }
 
-    let cQuantity = parseInt(disp.textContent.replace('Quantity: ', ''));
+        document.querySelectorAll(".snack-card").forEach((card) => {
+            const name = card.dataset.name;
+            const price = Number(card.dataset.price);
+            const label = card.querySelector(".deal-count");
+            snackQuantities[name] = { quantity: 0, price };
+            card.querySelectorAll("button").forEach((button) => {
+                button.addEventListener("click", () => {
+                    const item = snackQuantities[name];
+                    if (button.dataset.action === "add") item.quantity += 1;
+                    else if (item.quantity > 0) item.quantity -= 1;
+                    label.textContent = `Quantity: ${item.quantity}`;
+                    updateSummary();
+                });
+            });
+        });
 
-    if (action === 'add') 
-    {
-        cQuantity++;
-        totalCost += price;
-    } 
-    else if (action === 'remove' && cQuantity > 0) 
-    {
-        cQuantity--;
-        totalCost -= price;
-    }
-
-    totalCost = Math.max(0, totalCost);
-
-    disp.textContent = `Quantity: ${cQuantity}`;
-    updateSummary();
-}
-
-function updateSummary() 
-{
-    const selectedDeals = Array.from(document.querySelectorAll('.deal-box')).filter(deal => 
-    {
-        return parseInt(deal.querySelector('.deal-count').textContent.replace('Quantity: ', '')) > 0;
-    });
-
-    const snackList = selectedDeals.map(deal => deal.querySelector('h3').textContent).join(', ') || 'None';
-    
-    document.getElementById('snackList').textContent = snackList;
-    document.getElementById('totalCost').textContent = `Rs.${totalCost}.00`;
-
-    sessionStorage.setItem('snacksList', snackList);
-    sessionStorage.setItem('snacksCost', totalCost.toString());
-}
-
-window.onload = function() 
-{
-    const seatsSelected = JSON.parse(sessionStorage.getItem('seatsSelected') || '[]');
-    const seatCost = sessionStorage.getItem('seatCost') || '0';
-
-    document.getElementById('selectedSeatsList').innerText = seatsSelected.join(', ') || 'None';
-    document.getElementById('seatCost').innerText = `Rs.${seatCost}.00`;
-};
-
-document.querySelector('.finalize-order').addEventListener('click', function () 
-{
-    window.location.href = 'payment.html'; 
-});
-
-</script>
-
+        document.getElementById("finalizeOrderButton").addEventListener("click", () => {
+            window.location.href = "payment.html";
+        });
+        updateSummary();
+    </script>
 </body>
 </html>

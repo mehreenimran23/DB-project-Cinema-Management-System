@@ -3,237 +3,444 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CineVerse Studios</title>  
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #000; 
-            color: #fff; 
-        }
-
-        header {
-            background: #111; 
-            padding: 20px 0;
-            text-align: center;
-            border-bottom: 2px solid green; 
-        }
-
-        nav {
-            background: #222;
-        }
-
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        nav ul li {
-            display: inline;
-            margin-right: 20px;
-        }
-
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 15px;
-            transition: background 0.3s;
-        }
-
-        nav ul li a:hover {
-            background: green; 
-            color: black;
-        }
-
-        main {
-            padding: 20px;
-        }
-
-        section {
-            background: rgba(255, 255, 255, 0.1); 
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            border: 2px solid green; 
-        }
-
-        h2 {
-            color: #fff;
-            margin-bottom: 10px;
-        }
-
-        .movie {
-            display: inline-block;
-            width: 180px; 
-            margin: 10px;
-            text-align: center;
-            border: 2px solid green; 
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .movie:hover {
-            transform: scale(1.05); 
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .movie img {
-            width: 100%;
-            height: auto;
-            border-bottom: 2px solid green; 
-        }
-
-        .book-now {
-            background-color: green; 
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 10px;
-            text-decoration: none; 
-            display: inline-block; 
-        }
-
-        .book-now:hover {
-            background-color: #333; 
-        }
-
-        footer {
-            text-align: center;
-            padding: 10px 0;
-            background: #111; 
-            color: #fff;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-
-        footer ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        footer ul li {
-            display: inline;
-            margin-right: 15px;
-        }
-
-        footer ul li a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        footer ul li a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <title>CineVerse Studios</title>
+    <link rel="stylesheet" href="theme.css">
 </head>
 
 <body>
-    <header>
-        <h1>CineVerse Studios</h1>
-    </header>
-    
-    <nav>
-        <ul>
-            <li><a href="cineverse.html">Home</a></li>
-            <li><a href="moviesss.html">Movies</a></li>
-            <li><a href="coming-soon.html">Coming Soon</a></li>
-            <li><a href="promotions.html">Promotion</a></li>
-            <li><a href="snacks.html">Deals</a></li>
-            <li><a href="virtualtour.html">Virtual Tour</a></li>
-            <li><a href="ratings.html">Ratings</a></li>
-        </ul>  
-    </nav>
+    <div class="site-shell">
+        <div class="top-strip">
+            <span>Lahore Cinemas | Online Booking | Premium Screens</span>
+            <span>Open Daily | Gulberg and Packages Mall</span>
+        </div>
 
-    <main>
-        <section id="movies">
-            <h2>Now Showing</h2>
-            <!-- Movies will be dynamically loaded here -->
-        </section>
+        <header class="brand-header">
+            <div class="brand-lockup">
+                <span class="brand-kicker">CineVerse Cinemas</span>
+                <h1 class="brand-title">CineVerse Studios</h1>
+                <p class="brand-subtitle">
+                    A polished cinema booking experience for Lahore audiences, with venue-led showtimes, reserved seating, food ordering, and a consistent guest checkout flow.
+                </p>
+            </div>
+        </header>
 
-        <section id="coming-soon">
-            <h2>Coming Soon</h2>
-            <!-- Coming Soon movies will be dynamically loaded here -->
-        </section>
-    </main>
+        <nav class="main-nav">
+            <ul>
+                <li><a class="active" href="cineverse.html">Home</a></li>
+                <li><a href="moviesss.html">Movies</a></li>
+                <li><a href="location.html">Cinemas</a></li>
+                <li><a href="promotions.html">Offers</a></li>
+                <li><a href="snacks.html">Food & Drinks</a></li>
+                <li><a href="coming-soon.html">Coming Soon</a></li>
+                <li><a href="ratings.html">Ratings</a></li>
+                <li><a href="signUp.html">Join</a></li>
+            </ul>
+        </nav>
 
-    <footer>
-        <ul>
-            <li><a href="cineverse.html">Home</a></li>
-            <li><a href="moviesss.html">Movies</a></li>
-            <li><a href="coming-soon.html">Coming Soon</a></li>
-            <li><a href="promotions.html">Promotions</a></li>
-            <li><a href="snacks.html">Deals</a></li>
-            <li><a href="virtualtour.html">Virtual Tour</a></li>
-            <li><a href="ratings.html">Ratings</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="location.html">Location</a></li>
-        </ul>
+        <main class="page-content">
+            <section class="hero-grid">
+                <article class="glass-panel hero-card">
+                    <span class="eyebrow">Now Booking Across Lahore</span>
+                    <h2 id="heroTitle">Choose your cinema, session, and seats in one clean flow.</h2>
+                    <p id="heroDescription">
+                        From nightly blockbusters to premium lounges, CineVerse is built like a real multiplex website with venue-first discovery, seat-led booking, and a focused checkout journey.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="primary-btn" id="heroLink" href="moviesss.html">Browse Movies</a>
+                        <a class="secondary-btn" href="location.html">Explore Cinemas</a>
+                    </div>
+                    <div class="hero-feature-band">
+                        <div class="hero-feature">
+                            <strong>Venue-Led Booking</strong>
+                            <span>Start with cinema, date, format, and time just like a commercial multiplex site.</span>
+                        </div>
+                        <div class="hero-feature">
+                            <strong>Reserved Seating</strong>
+                            <span>Move from ticket count into a real auditorium-style seat map with locked availability.</span>
+                        </div>
+                        <div class="hero-feature">
+                            <strong>Checkout Journey</strong>
+                            <span>Food, seats, and payment remain connected through one consistent booking state.</span>
+                        </div>
+                    </div>
+                </article>
 
-        <p>&copy; CineVerse Studios</p>
-    </footer>
+                <aside class="glass-panel booking-hub">
+                    <span class="eyebrow">Pick Tickets</span>
+                    <h3>Start with cinema, film, and session.</h3>
+                    <p class="booking-hub-copy">A compact booking launcher modeled after modern cinema websites, so guests can move straight into the exact show they want.</p>
+                    <div class="booking-grid">
+                        <div class="booking-field span-2">
+                            <label for="quickCinema">Cinema</label>
+                            <select id="quickCinema"><option value="">Select a cinema</option></select>
+                        </div>
+                        <div class="booking-field span-2">
+                            <label for="quickMovie">Movie</label>
+                            <select id="quickMovie"><option value="">Select a movie</option></select>
+                        </div>
+                        <div class="booking-field">
+                            <label for="quickDate">Date</label>
+                            <select id="quickDate"><option value="">Select date</option></select>
+                        </div>
+                        <div class="booking-field">
+                            <label for="quickFormat">Format</label>
+                            <select id="quickFormat"><option value="">Select format</option></select>
+                        </div>
+                        <div class="booking-field span-2">
+                            <label for="quickTime">Session Time</label>
+                            <select id="quickTime"><option value="">Select time</option></select>
+                        </div>
+                    </div>
+                    <div class="booking-inline-summary" id="quickSummary">
+                        <div class="stat-row">
+                            <div>
+                                <div class="stat-label">Cinema</div>
+                                <div class="stat-value" style="font-size: 1.05rem;" id="quickCinemaLabel">Choose a cinema</div>
+                            </div>
+                            <span class="movie-meta" id="nowShowingCount">0 Movies Live</span>
+                        </div>
+                        <div class="stat-row">
+                            <div>
+                                <div class="stat-label">Coming Soon</div>
+                                <div class="stat-value" style="font-size: 1.05rem;" id="comingSoonCount">0 Titles</div>
+                            </div>
+                            <span class="movie-meta" id="quickSessionBadge">Pick a session</span>
+                        </div>
+                    </div>
+                    <div class="status-banner" id="serverBanner">
+                        CineVerse is ready to load movies, cinemas, and bookings through the local application server.
+                    </div>
+                    <button class="primary-btn" type="button" id="quickBookButton" disabled>Continue Booking</button>
+                </aside>
+            </section>
 
+            <section class="glass-panel section-block">
+                <div class="section-head">
+                    <div>
+                        <h2>Our Cinemas</h2>
+                        <p class="section-copy">
+                            Browse venues, compare experience types, and head directly into booking from your preferred location.
+                        </p>
+                    </div>
+                </div>
+                <div class="cinema-grid" id="cinemaGrid"></div>
+            </section>
+
+            <section class="glass-panel section-block">
+                <div class="section-head">
+                    <div>
+                        <h2>Now Showing</h2>
+                        <p class="section-copy">
+                            Current screenings with venue-led access to movie details, showtimes, seat selection, and payment.
+                        </p>
+                    </div>
+                </div>
+                <div class="movie-grid" id="nowShowingGrid"></div>
+            </section>
+
+            <section class="glass-panel section-block">
+                <div class="section-head">
+                    <div>
+                        <h2>Coming Soon</h2>
+                        <p class="section-copy">
+                            Upcoming titles presented in a cleaner release board with reliable poster fallbacks and official destination links.
+                        </p>
+                    </div>
+                </div>
+                <div class="movie-grid" id="comingSoonGrid"></div>
+            </section>
+
+            <section class="glass-panel section-block">
+                <div class="section-head">
+                    <div>
+                        <h2>Guest Services</h2>
+                        <p class="section-copy">
+                            Key cinema pages presented like a working commercial website, from food ordering to current offers and audience sentiment.
+                        </p>
+                    </div>
+                </div>
+                <div class="support-grid">
+                    <article class="support-card">
+                        <span class="movie-meta">Offers</span>
+                        <h3>Bundle Nights and Premium Upgrades</h3>
+                        <p>Weekday pricing, family combinations, and seat upgrades are organized in a dedicated offers section.</p>
+                        <a class="secondary-btn" href="promotions.html">See Offers</a>
+                    </article>
+                    <article class="support-card">
+                        <span class="movie-meta">Concessions</span>
+                        <h3>Food & Drink Ordering</h3>
+                        <p>Snacks remain integrated with the booking journey so guests can add concessions before payment.</p>
+                        <a class="secondary-btn" href="snacks.html">View Menu</a>
+                    </article>
+                    <article class="support-card">
+                        <span class="movie-meta">Audience</span>
+                        <h3>Ratings That Update Live</h3>
+                        <p>Guests can rate films from their detail pages and view the latest audience response on the ratings board.</p>
+                        <a class="secondary-btn" href="ratings.html">Open Ratings</a>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer-shell">
+            <ul>
+                <li><a href="cineverse.html">Home</a></li>
+                <li><a href="moviesss.html">Movies</a></li>
+                <li><a href="location.html">Cinemas</a></li>
+                <li><a href="promotions.html">Offers</a></li>
+                <li><a href="snacks.html">Food & Drinks</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="coming-soon.html">Coming Soon</a></li>
+            </ul>
+            <p>&copy; CineVerse Studios</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
     <script>
-        // Fetch Now Showing Movies
-        async function fetchNowShowing() {
-            try {
-                const response = await fetch('http://localhost:3002/now-showing');
-                const movies = await response.json();
-                
-                const moviesSection = document.getElementById('movies');
-               moviesSection.innerHTML = '<h2>Now Showing</h2>'
+        const { api, formatDate, isFileMode, attachPosterFallbacks, mergeBooking, getUser, getTicketPrice } = window.CineVerseApp;
+        let movieCatalogue = [];
+        let cinemas = [];
+        let movieShowtimes = new Map();
 
-                movies.forEach(movie => {
-                    const movieDiv = document.createElement('div');
-                    movieDiv.classList.add('movie');
-                     movieDiv.innerHTML = `
-                        <img src="${movie.image}" alt="${movie.title}">
-                        <h3>${movie.title}</h3>
-                        <a class="book-now" href="movie-details.html?id=1">Book Now</a>
-                    `;
-                    moviesSection.appendChild(movieDiv);
-                });
-            } catch (err) {
-                console.error('Error fetching Now Showing movies:', err);
+        function getCinemaProfile(cinema) {
+            return {
+                phone: cinema.phone || "Guest services available daily",
+                hours: cinema.hours || "11:00 AM - 01:00 AM",
+                parking: cinema.parking || "Parking information available at venue",
+                experience: cinema.experience || "Premium moviegoing experience",
+                features: Array.isArray(cinema.features) ? cinema.features : [],
+            };
+        }
+
+        function renderNowShowingCard(movie) {
+            return `
+                <article class="movie-card">
+                    <img data-fallback="poster" data-title="${movie.title}" data-label="Now Showing" src="${movie.image}" alt="${movie.title}">
+                    <div class="movie-card-body">
+                        <div class="movie-card-head">
+                            <span class="movie-meta">Now Showing</span>
+                        </div>
+                        <h4>${movie.title}</h4>
+                        <p class="movie-card-copy">Book tickets, choose seats, and continue through a full cinema checkout experience shaped around real sessions and venues.</p>
+                        <div class="card-actions">
+                            <a class="primary-btn" href="${movie.book_now}">Book Now</a>
+                            <a class="secondary-btn" href="${movie.book_now}">Showtimes</a>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        function renderComingSoonCard(movie) {
+            return `
+                <article class="movie-card">
+                    <img data-fallback="poster" data-title="${movie.title}" data-label="Coming Soon" src="${movie.image}" alt="${movie.title}">
+                    <div class="movie-card-body">
+                        <span class="movie-meta">Coming Soon</span>
+                        <h4>${movie.title}</h4>
+                        <p>Expected release: ${formatDate(movie.release_date)}</p>
+                        <a class="secondary-btn" href="${movie.link || "#"}" target="_blank" rel="noopener">First Look</a>
+                    </div>
+                </article>
+            `;
+        }
+
+        function renderCinemaCard(cinema) {
+            const profile = getCinemaProfile(cinema);
+            const mapUrl = `https://maps.google.com/?q=${encodeURIComponent(cinema.mapQuery || cinema.location || cinema.name)}`;
+            return `
+                <article class="cinema-card">
+                    <span class="movie-meta">${cinema.city || "Cinema"}</span>
+                    <h3>${cinema.name}</h3>
+                    <p class="cinema-copy">${profile.experience}</p>
+                    <div class="cinema-details">
+                        <div class="cinema-detail">
+                            <strong>Address</strong>
+                            <span>${cinema.location}</span>
+                        </div>
+                        <div class="cinema-detail">
+                            <strong>Hours</strong>
+                            <span>${profile.hours}</span>
+                        </div>
+                        <div class="cinema-detail">
+                            <strong>Parking</strong>
+                            <span>${profile.parking}</span>
+                        </div>
+                    </div>
+                    <div class="cinema-badges">
+                        ${profile.features.map((feature) => `<span class="session-chip">${feature}</span>`).join("")}
+                    </div>
+                    <div class="card-actions" style="margin-top: 16px;">
+                        <a class="primary-btn" href="moviesss.html">Book Here</a>
+                        <a class="secondary-btn" href="${mapUrl}" target="_blank" rel="noopener">Open Maps</a>
+                    </div>
+                </article>
+            `;
+        }
+
+        function sortShowtimes(items) {
+            return [...items].sort((a, b) => `${a.show_date} ${a.show_time}`.localeCompare(`${b.show_date} ${b.show_time}`));
+        }
+
+        function fillSelect(select, items, placeholder, mapper) {
+            select.innerHTML = `<option value="">${placeholder}</option>` + items.map(mapper).join("");
+        }
+
+        function updateQuickBookState() {
+            const cinemaId = Number(document.getElementById("quickCinema").value || 0);
+            const movieId = Number(document.getElementById("quickMovie").value || 0);
+            const selectedDate = document.getElementById("quickDate").value;
+            const selectedFormat = document.getElementById("quickFormat").value;
+            const selectedTimeId = Number(document.getElementById("quickTime").value || 0);
+            const summaryBadge = document.getElementById("quickSessionBadge");
+            const quickButton = document.getElementById("quickBookButton");
+            const selectedCinema = cinemas.find((cinema) => cinema.id === cinemaId);
+            document.getElementById("quickCinemaLabel").textContent = selectedCinema ? selectedCinema.name : "Choose a cinema";
+            const showtimes = sortShowtimes(movieShowtimes.get(movieId) || []).filter((item) => !cinemaId || item.cinemaId === cinemaId);
+
+            const dateOptions = [...new Set(showtimes.map((item) => item.show_date))];
+            fillSelect(
+                document.getElementById("quickDate"),
+                dateOptions,
+                "Select date",
+                (date) => `<option value="${date}" ${selectedDate === date ? "selected" : ""}>${formatDate(date)}</option>`
+            );
+
+            const filteredByDate = selectedDate ? showtimes.filter((item) => item.show_date === selectedDate) : showtimes;
+            const formatOptions = [...new Set(filteredByDate.map((item) => item.showType))];
+            fillSelect(
+                document.getElementById("quickFormat"),
+                formatOptions,
+                "Select format",
+                (format) => `<option value="${format}" ${selectedFormat === format ? "selected" : ""}>${format}</option>`
+            );
+
+            const filteredByFormat = selectedFormat ? filteredByDate.filter((item) => item.showType === selectedFormat) : filteredByDate;
+            fillSelect(
+                document.getElementById("quickTime"),
+                filteredByFormat,
+                "Select time",
+                (item) => `<option value="${item.id}" ${selectedTimeId === item.id ? "selected" : ""}>${item.show_time} | ${item.screenName}</option>`
+            );
+
+            const selectedShowtime = filteredByFormat.find((item) => item.id === selectedTimeId);
+            if (selectedShowtime) {
+                summaryBadge.textContent = `${selectedShowtime.showType} | ${selectedShowtime.show_time}`;
+                quickButton.disabled = false;
+            } else {
+                summaryBadge.textContent = movieId ? "Pick a session" : "Choose a movie";
+                quickButton.disabled = true;
             }
         }
 
-        // Fetch Coming Soon Movies for Home Page
-async function fetchComingSoon() {
-    try {
-        // Use the correct endpoint to fetch movies for the homepage
-        const response = await fetch('http://localhost:3002/coming-soon-home');
-        const movies = await response.json();
+        async function startQuickBooking() {
+            const cinemaId = Number(document.getElementById("quickCinema").value || 0);
+            const movieId = Number(document.getElementById("quickMovie").value || 0);
+            const showtimeId = Number(document.getElementById("quickTime").value || 0);
+            const selectedCinema = cinemas.find((cinema) => cinema.id === cinemaId);
+            const selectedMovie = movieCatalogue.find((movie) => movie.movie_id === movieId);
+            const showtime = (movieShowtimes.get(movieId) || []).find((item) => item.id === showtimeId);
+            if (!selectedMovie || !showtime) return;
 
-        const comingSoonSection = document.getElementById('coming-soon');
-        comingSoonSection.innerHTML = '<h2>Coming Soon</h2>'; 
+            mergeBooking({
+                cinemaId: selectedCinema ? selectedCinema.id : showtime.cinemaId,
+                cinemaName: selectedCinema ? selectedCinema.name : showtime.cinemaName,
+                movieId: selectedMovie.movie_id,
+                movieName: selectedMovie.title,
+                movieImage: selectedMovie.image,
+                showtimeId: showtime.id,
+                showDate: showtime.show_date,
+                showTime: showtime.show_time,
+                showType: showtime.showType,
+                screenName: showtime.screenName,
+                ticketPrice: getTicketPrice(showtime.showType),
+                numTickets: 0,
+                ticketCost: 0,
+                selectedSeats: [],
+                seatCost: 0,
+                snacks: [],
+                snacksList: "",
+                snacksCost: 0,
+                totalCost: 0,
+                bookingId: null,
+                paymentReference: null,
+            });
 
-        movies.forEach(movie => {
-            const movieDiv = document.createElement('div');
-            movieDiv.classList.add('movie');
-            movieDiv.innerHTML = `
-                <img src="${movie.image}" alt="${movie.title}">
-                <h3>${movie.title}</h3>
-                <p>Release Date: ${movie.release_date}</p>
-            `;
-            comingSoonSection.appendChild(movieDiv);
-        });
-    } catch (err) {
-        console.error('Error fetching Coming Soon movies:', err);
-    }
-}
+            window.location.href = getUser() ? "ticket.html" : "login.html";
+        }
 
-        // Initialize by fetching movies
-        window.onload = () => {
-            fetchNowShowing();
-            fetchComingSoon();
-        };
+        async function loadHomePage() {
+            const nowShowingGrid = document.getElementById("nowShowingGrid");
+            const comingSoonGrid = document.getElementById("comingSoonGrid");
+            const cinemaGrid = document.getElementById("cinemaGrid");
+            const heroTitle = document.getElementById("heroTitle");
+            const heroDescription = document.getElementById("heroDescription");
+            const heroLink = document.getElementById("heroLink");
+            const serverBanner = document.getElementById("serverBanner");
+            const quickCinema = document.getElementById("quickCinema");
+            const quickMovie = document.getElementById("quickMovie");
+
+            if (isFileMode) {
+                serverBanner.innerHTML = "This page can also be opened directly from the folder, but the full booking flow runs through <strong>http://localhost:3002</strong>.";
+            }
+
+            try {
+                const [nowShowing, comingSoon, movies, cinemaList] = await Promise.all([
+                    api("/now-showing"),
+                    api("/coming-soon-home"),
+                    api("/movies"),
+                    api("/cinemas"),
+                ]);
+
+                document.getElementById("nowShowingCount").textContent = nowShowing.length;
+                document.getElementById("comingSoonCount").textContent = `${comingSoon.length} Titles`;
+                movieCatalogue = movies;
+                cinemas = cinemaList;
+                cinemaGrid.innerHTML = cinemaList.map(renderCinemaCard).join("");
+
+                if (nowShowing[0]) {
+                    heroTitle.textContent = `${nowShowing[0].title} leads tonight's lineup.`;
+                    heroDescription.textContent = `Launch the booking journey from the homepage, explore venue-led showtimes, and continue into ticketing, seats, snacks, and payment with ${nowShowing[0].title}.`;
+                    heroLink.href = nowShowing[0].book_now;
+                    heroLink.textContent = "Start Booking";
+                }
+
+                nowShowingGrid.innerHTML = nowShowing.map(renderNowShowingCard).join("");
+                comingSoonGrid.innerHTML = comingSoon.map(renderComingSoonCard).join("");
+                fillSelect(
+                    quickCinema,
+                    cinemaList,
+                    "Select a cinema",
+                    (cinema) => `<option value="${cinema.id}">${cinema.name}</option>`
+                );
+                fillSelect(
+                    quickMovie,
+                    movies,
+                    "Select a movie",
+                    (movie) => `<option value="${movie.movie_id}">${movie.title}</option>`
+                );
+                const showtimeResponses = await Promise.all(
+                    movies.map(async (movie) => [movie.movie_id, await api(`/showtimes/${movie.movie_id}`)])
+                );
+                movieShowtimes = new Map(showtimeResponses);
+                quickCinema.addEventListener("change", updateQuickBookState);
+                quickMovie.addEventListener("change", updateQuickBookState);
+                document.getElementById("quickDate").addEventListener("change", updateQuickBookState);
+                document.getElementById("quickFormat").addEventListener("change", updateQuickBookState);
+                document.getElementById("quickTime").addEventListener("change", updateQuickBookState);
+                document.getElementById("quickBookButton").addEventListener("click", startQuickBooking);
+                attachPosterFallbacks(document);
+            } catch (error) {
+                serverBanner.className = "status-banner error";
+                serverBanner.textContent = error.message;
+                cinemaGrid.innerHTML = "";
+                nowShowingGrid.innerHTML = "";
+                comingSoonGrid.innerHTML = "";
+            }
+        }
+
+        window.addEventListener("DOMContentLoaded", loadHomePage);
     </script>
 </body>
 </html>

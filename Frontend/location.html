@@ -1,157 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cinema Location - CineVerse Studios</title>
-
-    <style>
-         body 
-        {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #000; 
-            color: #fff; 
-        }
-
-        header 
-        {
-            background: #111; 
-            padding: 20px 0;
-            text-align: center;
-            border-bottom: 2px solid green; 
-        }
-
-        nav 
-        {
-            background: #222;
-        }
-
-        nav ul 
-        {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        nav ul li 
-        {
-            display: inline;
-            margin-right: 20px;
-        }
-
-        nav ul li a 
-        {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 15px;
-            transition: background 0.3s;
-        }
-
-        nav ul li a:hover 
-        {
-            background: green; 
-            color: black;
-        }
-
-        h2  
-       {
-            color: #fff;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .location 
-        {
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        iframe 
-        {
-            margin-top: 15px;
-            border-radius: 10px;
-            width: 80%;
-            height: 400px;
-            max-width: 600px;
-        }
-
-       footer 
-        {
-            text-align: center;
-            padding: 1px 0;
-            background: #111; 
-            color: #fff;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-
-        footer ul 
-        {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        footer ul li 
-        {
-            display: inline;
-            margin-right: 15px;
-        }
-
-        footer ul li a 
-        {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        footer ul li a:hover 
-        {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CineVerse Studios - Cinemas</title>
+  <link rel="stylesheet" href="theme.css">
 </head>
-
 <body>
-   <header>
-    <h1>CineVerse Studios</h1>
+  <div class="site-shell">
+    <div class="top-strip"><span>Cinemas | Access | Parking</span><span>Choose the venue that fits your movie night</span></div>
+    <header class="brand-header">
+      <div class="brand-lockup">
+        <span class="brand-kicker">Venue Information</span>
+        <h1 class="brand-title">Our Cinemas</h1>
+        <p class="brand-subtitle">Find venue details, access information, parking guidance, and arrival tips before your show.</p>
+      </div>
     </header>
-  
-      <nav>
-        <ul>
-            <li><a href="cineverse.html">Home</a></li>
-            <li><a href="moviesss.html">Movies</a></li>
-            <li><a href="coming-soon.html">Coming Soon</a></li>
-           <li><a href="promotions.html">Promotion</a></li>
-           <li><a href="snacks.html">Deals</a></li>
-            <li><a href="virtualtour.html">Virtual Tour</a></li>
-            <li><a href="ratings.html">Ratings</a></li>
-            
-        </ul>  
+    <nav class="main-nav">
+      <ul>
+        <li><a href="cineverse.html">Home</a></li>
+        <li><a href="moviesss.html">Movies</a></li>
+        <li><a href="location.html" class="active">Cinemas</a></li>
+        <li><a href="promotions.html">Offers</a></li>
+        <li><a href="snacks.html">Food & Drinks</a></li>
+        <li><a href="coming-soon.html">Coming Soon</a></li>
+        <li><a href="ratings.html">Ratings</a></li>
+      </ul>
     </nav>
-    
-    <div class="location">
-        <h2>Cinema Location</h2>
-        <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13615.86432050758!2d74.33524390000001!3d31.5203694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39191a8a05a0ae19%3A0x2c7e7b1e8dfeb1b!2sGulberg%202%2C%20Lahore%2C%20Punjab!5e0!3m2!1sen!2s!4v1633873171729!5m2!1sen!2s" 
-            allowfullscreen="" loading="lazy"></iframe>
-    </div>
+    <main class="page-content">
+      <section class="glass-panel section-block">
+        <div class="section-head">
+          <div>
+            <h2>Choose Your Venue</h2>
+            <p class="section-copy">Each CineVerse site has a distinct arrival experience, screen mix, and access profile so guests can decide where they want to watch before they book.</p>
+          </div>
+        </div>
+        <div class="cinema-grid" id="cinemaVenueGrid"></div>
+      </section>
 
-  <footer>
-        <ul>
-            <li><a href="cineverse.html">Home</a></li>
-            <li><a href="moviesss.html">Movies</a></li>
-            <li><a href="coming-soon.html">Coming Soon</a></li>
-            <li><a href="promotions.html">Promotions</a></li>
-            <li><a href="snacks.html">Deals</a></li>
-            <li><a href="virtualtour.html">Virtual Tour</a></li>
-            <li><a href="ratings.html">Ratings</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="location.html">Location</a></li>
-        </ul>
+      <section class="glass-panel section-block">
+        <div class="section-head">
+          <div>
+            <h2>Arrival Guide</h2>
+            <p class="section-copy">Simple travel guidance that feels useful to guests instead of decorative filler.</p>
+          </div>
+        </div>
+        <div class="support-grid">
+          <article class="support-card">
+            <span class="movie-meta">Before Show</span>
+            <h3>Arrive 20 Minutes Early</h3>
+            <p>That gives enough time for mobile ticket scanning, concession pickup, and a smoother walk into the auditorium before the lights go down.</p>
+          </article>
+          <article class="support-card">
+            <span class="movie-meta">Ride Hailing</span>
+            <h3>Use the Venue Name in Maps</h3>
+            <p>Search the cinema or mall name directly in Google Maps, Careem, or Uber to land at the correct guest drop-off point.</p>
+          </article>
+          <article class="support-card">
+            <span class="movie-meta">Peak Hours</span>
+            <h3>Plan for Weekend Traffic</h3>
+            <p>Friday evenings and Saturday night screenings draw the highest guest volume, especially for mall-connected locations and premium sessions.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+    <footer class="footer-shell"><ul><li><a href="cineverse.html">Home</a></li><li><a href="moviesss.html">Movies</a></li><li><a href="location.html">Cinemas</a></li><li><a href="coming-soon.html">Coming Soon</a></li><li><a href="contact.html">Contact Us</a></li></ul><p>&copy; CineVerse Studios</p></footer>
+  </div>
+  <script src="app.js"></script>
+  <script>
+    const { api } = window.CineVerseApp;
 
-        <p>&copy; CineVerse Studios</p>
-    </footer>
+    function renderCinemaVenue(cinema) {
+      const features = Array.isArray(cinema.features) ? cinema.features : [];
+      const formats = Array.isArray(cinema.formats) ? cinema.formats : [];
+      const mapUrl = `https://maps.google.com/?q=${encodeURIComponent(cinema.mapQuery || cinema.location || cinema.name)}`;
+      return `
+        <article class="cinema-card">
+          <span class="movie-meta">${cinema.city || "Cinema"}</span>
+          <h3>${cinema.name}</h3>
+          <p class="cinema-copy">${cinema.experience || "Premium cinema experience"}</p>
+          <div class="cinema-details">
+            <div class="cinema-detail">
+              <strong>Address</strong>
+              <span>${cinema.location}</span>
+            </div>
+            <div class="cinema-detail">
+              <strong>Hours</strong>
+              <span>${cinema.hours || "11:00 AM - 01:00 AM"}</span>
+            </div>
+            <div class="cinema-detail">
+              <strong>Parking</strong>
+              <span>${cinema.parking || "Parking information available at venue"}</span>
+            </div>
+            <div class="cinema-detail">
+              <strong>Contact</strong>
+              <span>${cinema.phone || "Guest services available daily"}</span>
+            </div>
+          </div>
+          <div class="cinema-badges">
+            ${features.map((feature) => `<span class="session-chip">${feature}</span>`).join("")}
+            ${formats.map((format) => `<span class="session-chip">${format}</span>`).join("")}
+          </div>
+          <p class="venue-note">${cinema.landmark || "Use the cinema name in maps for the easiest arrival route."}</p>
+          <div class="card-actions" style="margin-top: 16px;">
+            <a class="primary-btn" href="moviesss.html">Book Movies</a>
+            <a class="secondary-btn" href="${mapUrl}" target="_blank" rel="noopener">Open Maps</a>
+          </div>
+        </article>
+      `;
+    }
 
+    async function loadCinemas() {
+      const container = document.getElementById("cinemaVenueGrid");
+      try {
+        const cinemas = await api("/cinemas");
+        container.innerHTML = cinemas.map(renderCinemaVenue).join("");
+      } catch (error) {
+        container.innerHTML = `<div class="status-banner error">${error.message}</div>`;
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", loadCinemas);
+  </script>
 </body>
 </html>

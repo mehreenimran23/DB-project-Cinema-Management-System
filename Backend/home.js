@@ -1,578 +1,602 @@
-import "dotenv/config";
-import express from "express";
-import cors from "cors";
-import sql from "mssql";
+import { createServer } from "node:http";
+import { promises as fs } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { createSeedData } from "./data/seed-data.js";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const frontendDir = path.resolve(__dirname, "../Frontend");
+const dataDir = path.resolve(__dirname, "./data");
+const dataFile = path.join(dataDir, "data.json");
+const port = Number(process.env.PORT || 3002);
 
-const app = express();
-app.use(express.json());  //parse data for json
-app.use(cors());
-
-
-const dbConfig = {
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  server: process.env.DB_SERVER,
-  database: process.env.DB_NAME,
-  options: {
-    encrypt: false,
-    trustServerCertificate: true, 
-  },
+const contentTypes = {
+  ".html": "text/html; charset=utf-8",
+  ".css": "text/css; charset=utf-8",
+  ".js": "application/javascript; charset=utf-8",
+  ".json": "application/json; charset=utf-8",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".gif": "image/gif",
+  ".svg": "image/svg+xml",
+  ".ico": "image/x-icon",
 };
 
-console.log("Database Configuration:", dbConfig);
+let dataStore;
 
+function nextId(items, key) {
+  return items.reduce((max, item) => Math.max(max, Number(item[key] || 0)), 0) + 1;
+}
 
-let pool;
+function normalizeTitle(value) {
+  return decodeURIComponent(String(value || ""))
+    .trim()
+    .toLowerCase();
+}
 
+function sendJson(response, statusCode, payload) {
+  response.writeHead(statusCode, {
+    "Content-Type": "application/json; charset=utf-8",
+  });
+  response.end(JSON.stringify(payload));
+}
 
-const initializeDatabase = async () => {
+function sendText(response, statusCode, message) {
+  response.writeHead(statusCode, {
+    "Content-Type": "text/plain; charset=utf-8",
+  });
+  response.end(message);
+}
+
+async function saveData() {
+  await fs.writeFile(dataFile, JSON.stringify(dataStore, null, 2), "utf8");
+}
+
+async function ensureDataStore() {
+  await fs.mkdir(dataDir, { recursive: true });
+
   try {
-    
-    pool = await sql.connect(dbConfig);
-    console.log("Connected to SQL Server successfully");
-  } catch (err) {
-    console.error("Database connection failed:", err.message);
-    process.exit(1); 
+    const raw = await fs.readFile(dataFile, "utf8");
+    dataStore = JSON.parse(raw);
+  } catch {
+    dataStore = createSeedData();
+    await saveData();
   }
-};
+}
 
+async function readRequestBody(request) {
+  const chunks = [];
 
-app.listen(process.env.PORT || 3002, async () => {
-  await initializeDatabase();  
-  console.log(`Server is running on http://localhost:${process.env.PORT || 3002}`);
-});
-
-
-app.get("/", (req, res) => {
-  res.json({ message: "Hello Backend Side" });
-});
-
-//home page Now-Showing category (adding movies to now showing)
-app.post("/now-showing", async (req, res) => {
-  const { title, image, book_now } = req.body;
-
- 
-  if (!title || !image || !book_now) {
-    return res.status(400).json({ error: "Title, Image, and Book Now URL are required." });
+  for await (const chunk of request) {
+    chunks.push(chunk);
   }
 
-  try 
-  {  
-await pool
-.request()
-.input("title", sql.NVarChar, title)
-.input("image", sql.NVarChar, image)
-.input("book_now", sql.NVarChar, book_now)
-.query(
-  "insert into NowShowing (title, image, book_now) values (@title, @image, @book_now)"
-);
-
-
-await pool   //adding movies in Movie page at same time
-.request()
-.input("title", sql.NVarChar, title)
-.input("description", sql.Text, "Currently in Now Showing.") 
-.input("image", sql.NVarChar, image)
-.input("ageRating", sql.NVarChar, "PG") 
-.input("moreDetails", sql.NVarChar, book_now)
-.query(
-  "insert into Movie (title, description, image, ageRating, moreDetails) values (@title, @description, @image, @ageRating, @moreDetails)"
-);
-
-    res.status(201).json({ message: "Movie added successfully to Now Showing and Movies." });
-  } catch (err) {
-    console.error("Error adding movie:", err);
-    res.status(500).json({ error: "Error adding movie to Now Showing and Movies." });
-  }
-});
-
-//retreiving all movies from now showing
-app.get("/now-showing", async (req, res) => 
-  {
-  try {
-    const result = await pool.request().query("select* from NowShowing");
-    res.status(200).json(result.recordset);
-  } catch (err) {
-    console.error("Error fetching 'Now Showing' movies:", err);
-    res.status(500).json({ error: "Error fetching Now Showing movies." });
-  }
-});
-
-//home page coming-soon category (adding movies to coming soon)
-app.post("/coming-soon", async (req, res) => 
-  {
-  const { title, image, release_date } = req.body;
-
-  if (!title || !image || !release_date) 
-    {
-    console.error("Validation failed: Missing title, image, or release_date");
-    return res.status(400).json({
-      error: "Title, Image, and Release Date are required.",
-    });
+  if (chunks.length === 0) {
+    return {};
   }
 
-  try 
-  {
-    await pool           // At same time adding same coming-soon movie to Coming-Soon page
-      .request()
-      .input("title", sql.NVarChar, title)
-      .input("image", sql.NVarChar, image)
-      .input("release_date", sql.Date, release_date)
-      .query(
-        "insert into ComingSoon (title, image, release_date) values (@title, @image, @release_date)"
-      );
-    res.status(201).json({ message: "Movie added successfully to Coming Soon." });
-  } 
-  catch (err) 
-  {
-    console.error("Error adding movie to 'Coming Soon':", err);
-    res.status(500).json({ error: "Error adding movie to Coming Soon." });
-  }
-});
+  const rawBody = Buffer.concat(chunks).toString("utf8");
+  return JSON.parse(rawBody);
+}
 
-//retreiving coming soon movies from home page
-app.get("/coming-soon-home", async (req, res) => 
-  {
-  try 
-  {
-    const result = await pool
-      .request()
-      .query("select* from ComingSoon order by release_date ASC");
-    res.status(200).json(result.recordset);
-  } catch (err) {
-    console.error("Error fetching 'Coming Soon' movies for Home Page:", err);
-    res.status(500).json({ error: "Error fetching Coming Soon movies for Home Page." });
-  }
-});
+function calculateAverageRating(movieTitle) {
+  const ratings = dataStore.ratings.filter(
+    (item) => normalizeTitle(item.movie_title) === normalizeTitle(movieTitle)
+  );
 
-//retreiving coming soon movies from Coming-soon page
-app.get("/coming-soon", async (req, res) => {
-  try {
-    const result = await pool.request().query("select * from ComingSoon order by release_date ASC");
-    res.status(200).json(result.recordset); 
-  } catch (err) {
-    console.error("Error fetching 'Coming Soon' movies:", err);
-    res.status(500).json({ error: "Error fetching Coming Soon movies." });
-  }
-});
-
-//retreiving movies data from Movies page
-app.get("/movies", async (req, res) => {
-  console.log("Testing database connection for /movies");
-  try {
-    const result = await pool.request().query("select* from Movie");
-    console.log("Database connection successful:", result.recordset);
-    res.status(200).json(result.recordset);
-  } catch (err) {
-    console.error("Database query failed:", err);
-    res.status(500).json({ error: "Database connection issue" });
-  }
-});
-
-
-//retreiving show time of a particular movie
-app.get("/showtimes/:movie_id", async (req, res) => 
-  {
-  const { movie_id } = req.params;
-
-  try 
-  {
-    const result = await pool
-      .request()
-      .input("movie_id", sql.Int, movie_id)
-      .query("select * from showtimes where movie_id = @movie_id ORDER BY show_date, show_time");
-
-    res.status(200).json(result.recordset);
-  } 
-  catch (err)
-   {
-    console.error("Error fetching showtimes:", err);
-    res.status(500).json({ error: "Error fetching showtimes." });
-  }
-});
-
-//adding new showtime
-app.post("/showtimes", async (req, res) => 
-  {
-  const { movie_id, show_date, show_time, showType } = req.body;  
-  if (!movie_id || !show_date || !show_time || !showType) 
-    {
-    return res.status(400).json({ error: "Movie ID, Show Date, Show Time, and Show Type are required." });
+  if (ratings.length === 0) {
+    return 0;
   }
 
-  try 
-  {
-    await pool
-      .request()
-      .input("movie_id", sql.Int, movie_id)
-      .input("show_date", sql.Date, show_date)
-      .input("show_time", sql.Time, show_time)
-      .input("showType", sql.NVarChar, showType)  
-      .query(
-        "insert into Showtimes (movie_id, show_date, show_time, showType) VALUES (@movie_id, @show_date, @show_time, @showType)"
-      );
+  const total = ratings.reduce((sum, item) => sum + Number(item.rating || 0), 0);
+  return Number((total / ratings.length).toFixed(1));
+}
 
-    res.status(201).json({ message: "Showtime added successfully." });
-  } 
-  catch (err) 
-  {
-    console.error("Error adding showtime:", err);
-    res.status(500).json({ error: "Error adding showtime." });
-  }
-});
-
-//retreiving movie details 
-app.get("/movie-details/:movieTitle", async (req, res) => {
-  const { movieTitle } = req.params;
-  console.log("Received request for movie details:", movieTitle);
-
-  try 
-  {
-    const movieResult = await pool
-      .request()
-      .input("movieTitle", sql.NVarChar, movieTitle)
-      .query(`
-        SELECT 
-          m.title, 
-          md.description, 
-          md.cast, 
-          md.director, 
-          md.duration, 
-          md.genre, 
-          md.release_date, 
-          md.trailer_url
-        from Movie m
-        join MovieDetails md on m.movie_id = md.movie_id
-        where m.title = @movieTitle
-      `);
-
-    console.log("Movie details query result:", movieResult.recordset);
-
-    if (movieResult.recordset.length === 0) 
-      {
-      return res.status(404).json({ message: "Movie not found" });
-      }
-
-    const movie = movieResult.recordset[0];
-
-    const ratingResult = await pool
-      .request()
-      .input("movieTitle", sql.NVarChar, movieTitle)
-      .query(`
-        select avg (rating) as averageRating
-        from MovieRatings
-        where movie_title = @movieTitle
-      `);
-
-    console.log("Movie ratings query result:", ratingResult.recordset);
-    res.status(200).json({      //avg rating k saath movie details display
+function getRatingsSummary() {
+  return dataStore.movies
+    .map((movie) => ({
+      movie_id: movie.movie_id,
       title: movie.title,
-      description: movie.description,
-      cast: movie.cast,
-      director: movie.director,
-      duration: movie.duration,
-      genre: movie.genre,
-      openingDate: movie.release_date,
-      trailer: movie.trailer_url,
-      rating: averageRating
-    });
+      image: movie.image,
+      ageRating: movie.ageRating,
+      moreDetails: movie.moreDetails,
+      averageRating: calculateAverageRating(movie.title),
+      totalRatings: dataStore.ratings.filter(
+        (item) => normalizeTitle(item.movie_title) === normalizeTitle(movie.title)
+      ).length,
+    }))
+    .sort((a, b) => b.averageRating - a.averageRating || b.totalRatings - a.totalRatings);
+}
 
-  } 
-  catch (err) 
-  {
-    console.error("Error fetching movie details:", err);
-    res.status(500).json({ error: "Error fetching movie details." });
+function getTicketPrice(showType) {
+  return showType === "PLATINUM" ? 1500 : 1200;
+}
+
+function getSeatPrice(showType) {
+  return showType === "PLATINUM" ? 250 : 150;
+}
+
+function isValidExpiryDate(value) {
+  return /^(0[1-9]|1[0-2])\/\d{2}$/.test(value);
+}
+
+function isValidCardNumber(value) {
+  return /^\d{12,19}$/.test(value);
+}
+
+function isValidCvv(value) {
+  return /^\d{3,4}$/.test(value);
+}
+
+function matchRoute(pathname, prefix) {
+  return pathname.startsWith(prefix) ? pathname.slice(prefix.length) : null;
+}
+
+async function handleApi(request, response, url) {
+  const { pathname, searchParams } = url;
+
+  if (request.method === "GET" && pathname === "/api/health") {
+    return sendJson(response, 200, { ok: true });
   }
-});
 
-//sign up page
-app.post("/signup", async (req, res) => {
-  console.log("Signup POST request received");
-
-  const
-   {
-    first_name, last_name, dob_month, dob_day, dob_year,
-    gender, marital_status, email, phoneNo, address,
-    postcode, city, password, terms,
-  } = req.body;
-
-  console.log("Form Data Received:", req.body);
-
-  if 
-  (
-    !first_name || !last_name || !dob_month || !dob_day || !dob_year ||
-    !email || !postcode || !password || terms === undefined
-  ) 
-  {
-    return res.status(400).json({ error: "All required fields must be filled out." });
+  if (request.method === "GET" && pathname === "/api/now-showing") {
+    return sendJson(response, 200, dataStore.nowShowing);
   }
 
-  try 
-  {
-    console.log("Checking for existing user...");
-    const existingUser = await pool
-      .request()
-      .input("email", sql.NVarChar, email)
-      .query("select * from Users where email = @email");
+  if (request.method === "GET" && pathname === "/api/coming-soon") {
+    return sendJson(
+      response,
+      200,
+      [...dataStore.comingSoon].sort((a, b) => a.release_date.localeCompare(b.release_date))
+    );
+  }
 
-    if (existingUser.recordset.length > 0)
-       {
-      return res.status(400).json({ error: "Email already in use." });
+  if (request.method === "GET" && pathname === "/api/coming-soon-home") {
+    return sendJson(
+      response,
+      200,
+      [...dataStore.comingSoon].sort((a, b) => a.release_date.localeCompare(b.release_date))
+    );
+  }
+
+  if (request.method === "GET" && pathname === "/api/movies") {
+    return sendJson(response, 200, dataStore.movies);
+  }
+
+  if (request.method === "GET" && pathname === "/api/cinemas") {
+    return sendJson(response, 200, dataStore.cinemas || []);
+  }
+
+  if (request.method === "GET" && pathname === "/api/ratings-summary") {
+    return sendJson(response, 200, getRatingsSummary());
+  }
+
+  const movieTitlePath = matchRoute(pathname, "/api/movie-title/");
+  if (request.method === "GET" && movieTitlePath !== null) {
+    const movieId = Number(movieTitlePath);
+    const movie = dataStore.movies.find((item) => item.movie_id === movieId);
+
+    if (!movie) {
+      return sendJson(response, 404, { error: "Movie not found." });
     }
 
-    console.log("Inserting user into database...");
-    await pool
-      .request()
-      .input("first_name", sql.NVarChar, first_name)
-      .input("last_name", sql.NVarChar, last_name)
-      .input("dob_month", sql.Int, dob_month)
-      .input("dob_day", sql.Int, dob_day)
-      .input("dob_year", sql.Int, dob_year)
-      .input("gender", sql.NVarChar, gender)
-      .input("marital_status", sql.NVarChar, marital_status)
-      .input("email", sql.NVarChar, email)
-      .input("phoneNo", sql.NVarChar, phoneNo)
-      .input("address", sql.NVarChar, address)
-      .input("postcode", sql.NVarChar, postcode)
-      .input("city", sql.NVarChar, city)
-      .input("password", sql.NVarChar, password)
-      .input("terms_accepted", sql.Bit, terms)
-
-      .query(`
-        insert into Users (
-          first_name, last_name, dob_month, dob_day, dob_year, gender,
-          marital_status, email, phoneNo, address, postcode, city, 
-          password, terms_accepted
-        ) values
-         (
-          @first_name, @last_name, @dob_month, @dob_day, @dob_year,
-          @gender, @marital_status, @email, @phoneNo, @address, 
-          @postcode, @city, @password, @terms_accepted
-        )
-      `);
-
-    res.status(201).json({ message: "User registered successfully" });
-  } 
-  catch (err) 
-  {
-    console.error("Error inserting user data:", err);
-    res.status(500).json({ error: "Unable to register user.", details: err.message });
-  }
-});
-
-//login page
-app.post("/login", async (req, res) => 
-  {
-  const { email, password } = req.body;
-
-  console.log("Received email:", email);  
-  console.log("Received password:", password);  
-
-  try {
-      if (!email || !password)
-         {
-          return res.status(400).json({ success: false, message: "Email and password are required" });
-        }
-
-      const pool = sql.connect(dbConfig);
-      const trimmedEmail = email.trim();
-
-      const result = await pool.request()
-          .input("email", sql.VarChar, trimmedEmail)
-          .query("select * from Users where email = @email");
-
-      console.log("Database query result:", result.recordset); 
-
-      if (result.recordset.length === 0)
-         {
-          return res.status(401).json({ success: false, message: "Invalid email or password" });
-         }
-
-      const user = result.recordset[0];
-
-      if (user.password !== password) 
-        {
-          return res.status(401).json({ success: false, message: "Invalid email or password" });
-        }
-      const u = result.recordset[0];
-      res.status(200).json({ message: "Login successful", userId: u.user_id });
-
-      res.status(200).json({ success: true, message: "Login successful" });     
-  }   
-  catch (err)
-   {
-      console.error("Login error:", err);
-      res.status(500).json({ success: false, message: "Internal server ka masla hai" });
-  }
-});
-
-// tickets page
-app.post('/ticket', (req, res) => 
-  {
-  const { userId, movieName, numTickets, ticketPrice } = req.body;
-
-  if (!userId || !movieName || !numbTickets || !ticketPrice) 
-    {
-      return res.status(400).json({ message: 'Missing required fields' });
+    return sendJson(response, 200, { title: movie.title });
   }
 
-  const totalCost = numberTickets * ticketPrice;
+  const movieDetailsPath = matchRoute(pathname, "/api/movie-details/");
+  if (request.method === "GET" && movieDetailsPath !== null) {
+    const movie = dataStore.movies.find(
+      (item) => normalizeTitle(item.title) === normalizeTitle(movieDetailsPath)
+    );
 
-  const query = 'insert into Tickets (user_id, movie_name, numTickets, ticket_price, total_cost) VALUES (?, ?, ?, ?, ?)';
+    if (!movie) {
+      return sendJson(response, 404, { error: "Movie not found." });
+    }
 
-  db.query(query, [userId, movieName, numTickets, ticketPrice, totalCost], (err, result) => {
-      if (err) 
-        {
-          console.error('Error inserting ticket:', err);
-          return res.status(500).json({ message: 'Error booking ticket' });
-      }
-      res.status(200).json({
-          message: 'Ticket booked successfully',
-          ticketId: result.insertId, 
-          totalCost: totalCost
+    const details = dataStore.movieDetails.find((item) => item.movie_id === movie.movie_id);
+
+    if (!details) {
+      return sendJson(response, 404, { error: "Movie details not found." });
+    }
+
+    return sendJson(response, 200, {
+      movie_id: movie.movie_id,
+      title: movie.title,
+      image: movie.image,
+      ageRating: movie.ageRating,
+      description: details.description,
+      cast: details.cast,
+      director: details.director,
+      duration: `${details.duration} minutes`,
+      genre: details.genre,
+      openingDate: details.release_date,
+      trailer: details.trailer_url,
+      rating: calculateAverageRating(movie.title),
+    });
+  }
+
+  const showtimesPath = matchRoute(pathname, "/api/showtimes/");
+  if (request.method === "GET" && showtimesPath !== null) {
+    const movieId = Number(showtimesPath);
+    const showtimes = dataStore.showtimes
+      .filter((item) => item.movie_id === movieId)
+      .sort((a, b) => `${a.show_date} ${a.show_time}`.localeCompare(`${b.show_date} ${b.show_time}`));
+
+    return sendJson(response, 200, showtimes);
+  }
+
+  if (request.method === "GET" && pathname === "/api/seats") {
+    const showtimeId = Number(searchParams.get("showtimeId"));
+
+    if (!showtimeId) {
+      return sendJson(response, 400, { error: "Showtime ID is required." });
+    }
+
+    const seats = dataStore.seats
+      .filter((item) => item.showtimeId === showtimeId)
+      .sort((a, b) => a.seatNumber.localeCompare(b.seatNumber, undefined, { numeric: true }));
+
+    return sendJson(response, 200, seats);
+  }
+
+  if (request.method === "POST" && pathname === "/api/signup") {
+    const body = await readRequestBody(request);
+    const email = String(body.email || "").trim().toLowerCase();
+    const password = String(body.password || "");
+    const firstName = String(body.first_name || "").trim();
+    const lastName = String(body.last_name || "").trim();
+    const postcode = String(body.postcode || "").trim();
+    const termsAccepted = Boolean(body.terms || body.terms_accepted);
+
+    if (!firstName || !lastName || !email || !password || !postcode || !termsAccepted) {
+      return sendJson(response, 400, {
+        error: "First name, last name, email, postcode, password, and terms are required.",
       });
-  });
-});
+    }
 
-//seat-selection page
-app.get("/seats", async (req, res) => 
-  {
-  try 
-  {
-    const result = await pool.request().query('select * from Seats where isReserved = 0');
-    res.json(result.recordset);
+    const existingUser = dataStore.users.find(
+      (user) => String(user.email || "").trim().toLowerCase() === email
+    );
+
+    if (existingUser) {
+      return sendJson(response, 400, { error: "Email already in use." });
+    }
+
+    const user = {
+      user_id: nextId(dataStore.users, "user_id"),
+      first_name: firstName,
+      last_name: lastName,
+      dob_month: Number(body.dob_month || 1),
+      dob_day: Number(body.dob_day || 1),
+      dob_year: Number(body.dob_year || 2000),
+      gender: String(body.gender || "other").toLowerCase(),
+      marital_status: String(body.marital_status || "single").toLowerCase(),
+      email,
+      phoneNo: String(body.mobile || body.phoneNo || "").trim(),
+      address: String(body.address || "").trim(),
+      postcode,
+      city: String(body.city || "").trim(),
+      password,
+      terms_accepted: termsAccepted,
+      created_at: new Date().toISOString(),
+    };
+
+    dataStore.users.push(user);
+    await saveData();
+
+    return sendJson(response, 201, {
+      message: "Account created successfully.",
+      user: {
+        user_id: user.user_id,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        email: user.email,
+      },
+    });
   }
-   catch (err) 
-  {
-    console.error("Error fetching seats:", err.message);
-    res.status(500).send('Error fetching available seats'); //debugging error a raha hai
+
+  if (request.method === "POST" && pathname === "/api/login") {
+    const body = await readRequestBody(request);
+    const email = String(body.email || "").trim().toLowerCase();
+    const password = String(body.password || "");
+
+    if (!email || !password) {
+      return sendJson(response, 400, {
+        success: false,
+        message: "Email and password are required.",
+      });
+    }
+
+    const user = dataStore.users.find(
+      (item) =>
+        String(item.email || "").trim().toLowerCase() === email && item.password === password
+    );
+
+    if (!user) {
+      return sendJson(response, 401, {
+        success: false,
+        message: "Invalid email or password.",
+      });
+    }
+
+    return sendJson(response, 200, {
+      success: true,
+      message: "Login successful.",
+      user: {
+        user_id: user.user_id,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        email: user.email,
+      },
+    });
   }
-});
 
-//booking for seat-selection
-app.post("/book", async (req, res) => 
-  {
-  try 
-  {
-      let { selectedSeats, userId, showtimeId, totalAmount, paymentMethod } = req.body;
+  if (request.method === "POST" && pathname === "/api/rate-movie") {
+    const body = await readRequestBody(request);
+    const movieTitle = String(body.movieTitle || "").trim();
+    const rating = Number(body.rating);
+    const userId = Number(body.userId);
 
-      if (typeof selectedSeats === 'string')
-         {
-          selectedSeats = selectedSeats.split(',').map(seat => seat.trim());
-         }
+    if (!movieTitle || !userId || Number.isNaN(rating) || rating < 1 || rating > 5) {
+      return sendJson(response, 400, { error: "Movie, rating, and user are required." });
+    }
 
-      if (!Array.isArray(selectedSeats))
-         {
-          return res.status(400).send("Invalid data format for selected seats.");
-         }
+    const existingRating = dataStore.ratings.find(
+      (item) =>
+        normalizeTitle(item.movie_title) === normalizeTitle(movieTitle) &&
+        Number(item.user_id) === userId
+    );
 
-      const poolRequest = pool.request();
+    if (existingRating) {
+      existingRating.rating = rating;
+    } else {
+      dataStore.ratings.push({
+        movie_title: movieTitle,
+        rating,
+        user_id: userId,
+      });
+    }
 
-      for (let seat of selectedSeats) 
-        {
-          await poolRequest
-              .input('seatNumber', sql.VarChar, seat)
-              .input('showtimeId', sql.Int, showtimeId)
-              .query
-              (`
-                update seats
-                  set isReserved = 1
-                  where seatNumber = @seatNumber
-                  and showtimeId = @showtimeId
-                  and isReserved = 0;  
-              `);
-      }
-      res.status(200).send("Seats reserved successfully.");
-  } 
-  catch (err)
-   {
-      console.error("Error updating seats:", err.message, err.stack);
-      res.status(500).send("Error reserving seats.");
+    await saveData();
+
+    return sendJson(response, 200, {
+      message: "Rating saved successfully.",
+      averageRating: calculateAverageRating(movieTitle),
+    });
   }
-});
 
-//payment page
-app.post('/payment', async (req, res) => 
-  {
-  const {
-      movieName,
+  if (request.method === "POST" && pathname === "/api/ticket") {
+    const body = await readRequestBody(request);
+    const userId = Number(body.userId);
+    const movieId = Number(body.movieId);
+    const showtimeId = Number(body.showtimeId);
+    const numTickets = Number(body.numTickets);
+    const ticketPrice = Number(body.ticketPrice);
+    const movieName = String(body.movieName || "").trim();
+
+    if (!userId || !movieId || !showtimeId || !movieName || !numTickets || !ticketPrice) {
+      return sendJson(response, 400, { message: "Missing required ticket fields." });
+    }
+
+    const ticket = {
+      id: nextId(dataStore.tickets, "id"),
+      user_id: userId,
+      movie_id: movieId,
+      showtime_id: showtimeId,
+      movie_name: movieName,
       numTickets,
-      ticketCost,
-      selectedSeats,
-      seatCost,
-      snacksList,
-      snacksCost,
-      totalCost,
-      paymentMethod,
-      cardholderName,
-      cardNumber,
-      expiryDate,
-      cvv,
-      bankName,
-  } = req.body;
+      ticketPrice,
+      totalCost: numTickets * ticketPrice,
+      created_at: new Date().toISOString(),
+    };
 
-  if (
+    dataStore.tickets.push(ticket);
+    await saveData();
+
+    return sendJson(response, 201, {
+      message: "Ticket booked successfully",
+      ticketId: ticket.id,
+      totalCost: ticket.totalCost,
+    });
+  }
+
+  if (request.method === "POST" && pathname === "/api/book") {
+    const body = await readRequestBody(request);
+    const selectedSeats = Array.isArray(body.selectedSeats) ? body.selectedSeats : [];
+    const userId = Number(body.userId);
+    const showtimeId = Number(body.showtimeId);
+    const totalAmount = Number(body.totalAmount || 0);
+    const paymentMethod = String(body.paymentMethod || "Pending");
+
+    if (!userId || !showtimeId || selectedSeats.length === 0) {
+      return sendJson(response, 400, {
+        error: "User, showtime, and selected seats are required.",
+      });
+    }
+
+    const seats = dataStore.seats.filter(
+      (seat) => seat.showtimeId === showtimeId && selectedSeats.includes(seat.seatNumber)
+    );
+
+    if (seats.length !== selectedSeats.length) {
+      return sendJson(response, 400, { error: "Some selected seats do not exist." });
+    }
+
+    const unavailableSeat = seats.find((seat) => seat.isReserved);
+    if (unavailableSeat) {
+      return sendJson(response, 409, {
+        error: `Seat ${unavailableSeat.seatNumber} is no longer available.`,
+      });
+    }
+
+    seats.forEach((seat) => {
+      seat.isReserved = true;
+      seat.userId = userId;
+    });
+
+    const booking = {
+      bookingId: nextId(dataStore.bookings, "bookingId"),
+      userId,
+      showtimeId,
+      selectedSeats,
+      totalAmount,
+      bookingDate: new Date().toISOString(),
+      paymentMethod,
+      paymentStatus: "Pending",
+    };
+
+    dataStore.bookings.push(booking);
+    await saveData();
+
+    return sendJson(response, 200, {
+      message: "Seats reserved successfully.",
+      bookingId: booking.bookingId,
+    });
+  }
+
+  if (request.method === "POST" && pathname === "/api/payment") {
+    const body = await readRequestBody(request);
+    const bookingId = Number(body.bookingId);
+    const userId = Number(body.userId);
+    const showtimeId = Number(body.showtimeId);
+    const movieName = String(body.movieName || "").trim();
+    const numTickets = Number(body.numTickets);
+    const ticketCost = Number(body.ticketCost || 0);
+    const selectedSeats = Array.isArray(body.selectedSeats) ? body.selectedSeats : [];
+    const seatCost = Number(body.seatCost || 0);
+    const snacksList = Array.isArray(body.snacksList)
+      ? body.snacksList.join(", ")
+      : String(body.snacksList || "");
+    const snacksCost = Number(body.snacksCost || 0);
+    const totalCost = Number(body.totalCost || 0);
+    const paymentMethod = String(body.paymentMethod || "").trim();
+    const cardholderName = String(body.cardholderName || "").trim();
+    const cardNumber = String(body.cardNumber || "").replace(/\s+/g, "");
+    const expiryDate = String(body.expiryDate || "").trim();
+    const cvv = String(body.cvv || "").trim();
+    const bankName = String(body.bankName || "").trim();
+
+    if (
+      !bookingId ||
+      !userId ||
+      !showtimeId ||
       !movieName ||
       !numTickets ||
-      !ticketCost ||
-      !selectedSeats ||
-      !seatCost ||
-      !totalCost ||
+      selectedSeats.length === 0 ||
       !paymentMethod
-  )
-   {
-      return res.status(400).json({ success: false, message: 'Missing required fields' });
+    ) {
+      return sendJson(response, 400, { success: false, message: "Missing payment details." });
+    }
+
+    if (paymentMethod !== "Bank Transfer") {
+      if (!cardholderName || !isValidCardNumber(cardNumber) || !isValidExpiryDate(expiryDate)) {
+        return sendJson(response, 400, {
+          success: false,
+          message: "Enter a valid cardholder name, card number, and expiry date.",
+        });
+      }
+
+      if (!isValidCvv(cvv)) {
+        return sendJson(response, 400, {
+          success: false,
+          message: "Enter a valid CVV.",
+        });
+      }
+    } else if (!bankName) {
+      return sendJson(response, 400, {
+        success: false,
+        message: "Please select a bank for bank transfer.",
+      });
+    }
+
+    const booking = dataStore.bookings.find((item) => item.bookingId === bookingId);
+    if (!booking) {
+      return sendJson(response, 404, {
+        success: false,
+        message: "Booking not found. Please select your seats again.",
+      });
+    }
+
+    booking.paymentMethod = paymentMethod;
+    booking.paymentStatus = "Paid";
+    booking.totalAmount = totalCost;
+
+    const payment = {
+      payment_id: nextId(dataStore.payments, "payment_id"),
+      bookingId,
+      user_id: userId,
+      showtimeId,
+      movie_name: movieName,
+      num_tickets: numTickets,
+      ticket_cost: ticketCost,
+      selected_seats: selectedSeats.join(", "),
+      seat_cost: seatCost,
+      snacks_list: snacksList,
+      snacks_cost: snacksCost,
+      total_cost: totalCost,
+      payment_method: paymentMethod,
+      cardholder_name: cardholderName || null,
+      card_last4: cardNumber ? cardNumber.slice(-4) : null,
+      expiry_date: expiryDate || null,
+      bank_name: bankName || null,
+      payment_date: new Date().toISOString(),
+    };
+
+    dataStore.payments.push(payment);
+    await saveData();
+
+    return sendJson(response, 200, {
+      success: true,
+      message: "Payment processed successfully.",
+      bookingId,
+      paymentId: payment.payment_id,
+      reference: `CV-${bookingId}-${payment.payment_id}`,
+    });
   }
 
-  try 
-  {
-      const pool = await sql.connect(dbConfig);
-      const result = await pool.request()
-          .input('movieName', sql.VarChar, movieName)
-          .input('numTickets', sql.Int, numTickets)
-          .input('ticketCost', sql.Decimal(10, 2), ticketCost)
-          .input('selectedSeats', sql.VarChar, selectedSeats.join(', '))
-          .input('seatCost', sql.Decimal(10, 2), seatCost)
-          .input('snacksList', sql.VarChar, snacksList)
-          .input('snacksCost', sql.Decimal(10, 2), snacksCost)
-          .input('totalCost', sql.Decimal(10, 2), totalCost)
-          .input('paymentMethod', sql.VarChar, paymentMethod)
-          .input('cardholderName', sql.VarChar, cardholderName || null)
-          .input('cardNumber', sql.VarChar, cardNumber || null)
-          .input('expiryDate', sql.VarChar, expiryDate || null)
-          .input('cvv', sql.VarChar, cvv || null)
-          .input('bankName', sql.VarChar, bankName || null)
-          .query(`
-             insert into (
-                  movie_name, num_tickets, ticket_cost, selected_seats, seat_cost, 
-                  snacks_list, snacks_cost, total_cost, payment_method, cardholder_name, 
-                  card_number, expiry_date, cvv, bank_name
-              ) 
-             values (
-                  @movieName, @numTickets, @ticketCost, @selectedSeats, @seatCost, 
-                  @snacksList, @snacksCost, @totalCost, @paymentMethod, @cardholderName, 
-                  @cardNumber, @expiryDate, @cvv, @bankName
-              )
-          `);
+  return sendJson(response, 404, { error: "Route not found." });
+}
 
-      res.status(200).json({ success: true, message: 'Payment processed successfully!' });
+async function serveStaticFile(response, filePath) {
+  try {
+    const resolvedPath = path.resolve(filePath);
+    if (!resolvedPath.startsWith(frontendDir)) {
+      return sendText(response, 403, "Forbidden");
+    }
+
+    const fileBuffer = await fs.readFile(resolvedPath);
+    const extension = path.extname(resolvedPath).toLowerCase();
+    const contentType = contentTypes[extension] || "application/octet-stream";
+
+    response.writeHead(200, { "Content-Type": contentType });
+    response.end(fileBuffer);
+  } catch {
+    sendText(response, 404, "Not found");
   }
-   catch (err) 
-   {
-      console.error('Payment processing error:', err);
-      res.status(500).json({ success: false, message: 'Internal server error' });
+}
+
+async function handleRequest(request, response) {
+  try {
+    const url = new URL(request.url, `http://${request.headers.host}`);
+
+    if (url.pathname.startsWith("/api/")) {
+      return await handleApi(request, response, url);
+    }
+
+    const requestedPath =
+      url.pathname === "/" ? "/cineverse.html" : decodeURIComponent(url.pathname);
+    const filePath = path.join(frontendDir, requestedPath);
+    return await serveStaticFile(response, filePath);
+  } catch (error) {
+    console.error("Unexpected server error:", error);
+    return sendJson(response, 500, { error: "Internal server error." });
   }
+}
+
+await ensureDataStore();
+
+createServer(handleRequest).listen(port, () => {
+  console.log(`CineVerse server is running on http://localhost:${port}`);
 });
-
-//adding movies to homepage for nowshowing
-// adding movies for homepage coming soon works w frontend as well
-//adding movies to movie page works with frontend as well
-//adding movies to now-showing page works with frontend as well
-//showtimes in movie details work for backend cannot display on froentend due to issue w moviedetails 
-//ratings work for backend cannot dispay due to moviedetails issue
-//sign up page works w frontedn as well
-//log in page works w frontend as well
-//tickets work w backend but due to issue with moviedteails cant fetch proper data
-//seat-selection page works w frontend as well
-//payment works for backend and frontend too but cannot access unless moviedetails works or webpage functions in order

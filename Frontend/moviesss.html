@@ -3,253 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CineVerse Studios - Now Showing</title>
-
-    <style>
-
-        body 
-        {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #000; 
-            color: #fff; 
-        }
-
-        header
-        {
-            background: #111; 
-            padding: 20px 0;
-            text-align: center;
-            border-bottom: 2px solid green; 
-        }
-
-        nav 
-       {
-            background: #222;
-        }
-
-        nav ul 
-        {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        nav ul li 
-         {
-            display: inline;
-            margin-right: 20px;
-        }
-
-        nav ul li a
-        {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 15px;
-            transition: background 0.3s;
-        }
-
-        nav ul li a:hover 
-        {
-            background: green; 
-            color: black;
-        }
-
-        main 
-         {
-            padding: 20px;
-        }
-
-        section 
-      {
-            background: rgba(255, 255, 255, 0.1); 
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            border: 2px solid green; 
-        }
-
-        h2 
-      {
-            color:  #fff;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .movie-card
-        {
-            display: flex; 
-            background: #222; 
-            margin: 20px 0;
-            padding: 20px;
-            border-radius: 8px;
-            border: 2px solid green; 
-        }
-
-        .movie-card img 
-        {
-            width: 120px;
-            height: auto;
-            border-radius: 4px;
-            margin-right: 20px; 
-        }
-
-        .movie-info
-       {
-            flex-grow: 1; 
-        }
-
-        .movie-title 
-         {
-            font-size: 1.5em;
-            color: #fff;
-            margin: 0;
-        }
-
-        .movie-description
-         {
-            color: #ccc;
-            margin: 10px 0;
-        }
-
-        .more-details 
-      {
-            font-size: 0.9em;
-            color: green; 
-            text-decoration: none; 
-            margin-top: 5px;
-            display: inline-block;
-            padding: 5px 10px;
-            border: 1px solid green; 
-            border-radius: 4px;
-            transition: background 0.3s;
-        }
-
-        .more-details:hover 
-        {
-            background: green; 
-            color: black;
-        }
-
-        .age-rating
-        {
-            background: green; 
-            color: black; 
-            border-radius: 50%; 
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            margin-left: auto; 
-        }
-
-        footer
-       {
-            text-align: center;
-            padding: 10px 0;
-            background: #111; 
-            color: #fff;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-
-        footer ul
-       {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        footer ul li 
-       {
-            display: inline;
-            margin-right: 20px;
-        }
-
-        footer ul li a 
-        {
-            color: #fff;
-            text-decoration: none;
-        }
-
-    </style>
+    <title>CineVerse Studios - Movies</title>
+    <link rel="stylesheet" href="theme.css">
 </head>
-
 <body>
-    <header>
-        <h1>CineVerse Studios</h1>
-    </header>
+    <div class="site-shell">
+        <div class="top-strip">
+            <span>Now Showing | Venue-Led Listings</span>
+            <span>Browse movies, formats, and live sessions</span>
+        </div>
 
-    <nav>
-        <ul>
-            <li><a href="cineverse.html">Home</a></li>
-            <li><a href="moviesss.html">Movies</a></li>
-            <li><a href="coming-soon.html">Coming Soon</a></li>
-           <li><a href="promotions.html">Promotion</a></li>
-           <li><a href="snacks.html">Deals</a></li>
-            <li><a href="virtualtour.html">Virtual Tour</a></li>
-            <li><a href="ratings.html">Ratings</a></li>         
-        </ul>  
-    </nav>
+        <header class="brand-header">
+            <div class="brand-lockup">
+                <span class="brand-kicker">Now Showing</span>
+                <h1 class="brand-title">Movies & Showtimes</h1>
+                <p class="brand-subtitle">Current features with direct detail links, cinema-aware showtimes, and a tighter commercial browsing experience.</p>
+            </div>
+        </header>
 
-     <main>
-        <section id="movies">
-            <h2>Now Showing</h2>
-            <!-- Movie cards will be dynamically inserted here -->
-        </section>
-    </main>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="cineverse.html">Home</a></li>
+                <li><a class="active" href="moviesss.html">Movies</a></li>
+                <li><a href="location.html">Cinemas</a></li>
+                <li><a href="promotions.html">Offers</a></li>
+                <li><a href="snacks.html">Food & Drinks</a></li>
+                <li><a href="coming-soon.html">Coming Soon</a></li>
+                <li><a href="ratings.html">Ratings</a></li>
+            </ul>
+        </nav>
 
-    <footer>
-        <ul>
-            <li><a href="cineverse.html">Home</a></li>
-            <li><a href="moviesss.html">Movies</a></li>
-            <li><a href="coming-soon.html">Coming Soon</a></li>
-            <li><a href="promotions.html">Promotions</a></li>
-            <li><a href="snacks.html">Deals</a></li>
-            <li><a href="virtualtour.html">Virtual Tour</a></li>
-            <li><a href="ratings.html">Ratings</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="location.html">Location</a></li>
-        </ul>
+        <main class="page-content">
+            <section class="glass-panel section-block">
+                <div class="section-head">
+                    <div>
+                        <h2>Active Screenings</h2>
+                        <p class="section-copy">Choose any title below to view synopsis, ratings, cinema sessions, and direct booking actions.</p>
+                    </div>
+                </div>
+                <div class="listing-toolbar" id="listingToolbar"></div>
+                <div class="movie-grid" id="moviesList"></div>
+            </section>
+        </main>
 
-        <p>&copy; 2024 CineVerse Studios</p>
-    </footer>
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const moviesSection = document.getElementById("movies");
+        <footer class="footer-shell">
+            <ul>
+                <li><a href="cineverse.html">Home</a></li>
+                <li><a href="moviesss.html">Movies</a></li>
+                <li><a href="location.html">Cinemas</a></li>
+                <li><a href="promotions.html">Offers</a></li>
+                <li><a href="snacks.html">Food & Drinks</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="coming-soon.html">Coming Soon</a></li>
+            </ul>
+            <p>&copy; CineVerse Studios</p>
+        </footer>
+    </div>
 
-  try {
-    const response = await fetch("http://localhost:3002/movies"); // Replace with your API URL
-    if (!response.ok) {
-      throw new Error(`Failed to fetch movies: ${response.status}`);
-    }
+    <script src="app.js"></script>
+    <script>
+        const { api, attachPosterFallbacks, getTicketPrice } = window.CineVerseApp;
 
-    const movies = await response.json();
-    moviesSection.innerHTML = ""; // Clear previous content
+        document.addEventListener("DOMContentLoaded", async () => {
+            const moviesList = document.getElementById("moviesList");
+            const listingToolbar = document.getElementById("listingToolbar");
 
-    movies.forEach((movie) => {
-      moviesSection.innerHTML += `
-        <div class="movie-card">
-          <img src="${movie.image}" alt="${movie.title}">
-          <div class="movie-info">
-            <h3 class="movie-title">${movie.title}</h3>
-            <p class="movie-description">${movie.description}</p>
-            <!-- Age Rating Circle -->
-            <div class="age-rating">${movie.ageRating}</div>
-            <!-- More Details in Rectangular Box -->
-            <a href="${movie.moreDetails}" class="movie-details-link">More Details</a>
-          </div>
-        </div>`;
-    });
-  } catch (err) {
-    console.error("Error loading movies:", err);
-    moviesSection.innerHTML = `<p>Unable to load movies. Please try again later.</p>`;
-  }
-});
+            try {
+                const [movies, cinemas] = await Promise.all([api("/movies"), api("/cinemas")]);
+                const showtimeGroups = await Promise.all(
+                    movies.map(async (movie) => [movie.movie_id, await api(`/showtimes/${movie.movie_id}`)])
+                );
+                const showtimeMap = new Map(showtimeGroups);
+                const totalSessions = showtimeGroups.reduce((sum, [, showtimes]) => sum + showtimes.length, 0);
 
+                listingToolbar.innerHTML = `
+                    <span class="listing-pill">${movies.length} films live</span>
+                    <span class="listing-pill">${cinemas.length} cinemas</span>
+                    <span class="listing-pill">${totalSessions} sessions this cycle</span>
+                `;
 
+                moviesList.innerHTML = movies.map((movie) => {
+                    const showtimes = (showtimeMap.get(movie.movie_id) || []).slice(0, 4);
+                    const firstPrice = showtimes[0] ? getTicketPrice(showtimes[0].showType) : 1200;
+
+                    return `
+                        <article class="movie-card">
+                            <img data-fallback="poster" data-title="${movie.title}" data-label="${movie.ageRating}" src="${movie.image}" alt="${movie.title}">
+                            <div class="movie-card-body">
+                                <div class="movie-card-head">
+                                    <span class="movie-meta">${movie.ageRating}</span>
+                                </div>
+                                <h4>${movie.title}</h4>
+                                <p class="movie-card-copy">${movie.description}</p>
+                                <div class="movie-card-footer">
+                                    <span class="mini-meta">From Rs. ${firstPrice}</span>
+                                    <span class="mini-meta">${showtimes.length ? "Live Sessions" : "Schedule Loading"}</span>
+                                </div>
+                                <div class="session-chip-list">
+                                    ${showtimes.map((showtime) => `<span class="session-chip">${showtime.cinemaName.replace("CineVerse ", "")} | ${showtime.show_time}</span>`).join("")}
+                                </div>
+                                <div class="card-actions">
+                                    <a class="primary-btn" href="${movie.moreDetails}">Book Tickets</a>
+                                    <a class="secondary-btn" href="${movie.moreDetails}">View Details</a>
+                                </div>
+                            </div>
+                        </article>
+                    `;
+                }).join("");
+
+                attachPosterFallbacks(document);
+            } catch (error) {
+                moviesList.innerHTML = `<div class="status-banner error">${error.message}</div>`;
+            }
+        });
     </script>
 </body>
 </html>

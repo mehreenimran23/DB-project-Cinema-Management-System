@@ -4,401 +4,234 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CineVerse Studios - Payment</title>
-
-    <style>
-        body
-        {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            color: #fff;
-            min-height: 100vh; 
-            position: relative; 
-        }
-
-        header 
-      {
-            background: #111; 
-            padding: 20px 0;
-            text-align: center;
-            border-bottom: 2px solid green; 
-        }
-
-        nav 
-       {
-            background: #222;
-        }
-
-        nav ul 
-      {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        nav ul li 
-       {
-            display: inline;
-            margin-right: 20px;
-        }
-
-        nav ul li a 
-        {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 15px;
-            transition: background 0.3s;
-        }
-
-        nav ul li a:hover 
-        {
-            background: green; 
-            color: black;
-        }
-
-        .progress-bar
-         {
-            width: 100%;
-            display: flex;
-            justify-content: space-evenly;
-            background-color: #333;
-            padding: 10px 0;
-            color: #888;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .progress-bar .step 
-       {
-            cursor: pointer;
-        }
-
-        .progress-bar .selected
-       {
-            color: white;
-            font-weight: bold;
-        }
-
-        .progress-bar .completed
-       {
-            color: #006400;
-        }
-
-        .container 
-        {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            margin-top: 20px;
-            padding: 20px;
-            flex-grow: 1;
-            gap: 20px;
-            margin: 0 auto;
-          }
-
-        .payment-container
-        {
-            background-color: #1a1a1a;
-            border-radius: 8px;
-            width: 55%;
-            padding: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        }
-
-        .payment-container h2
-       {
-            color: #fff;
-            margin-bottom: 20px;
-        }
-
-        .form-group 
-         {
-            margin-bottom: 20px;
-        }
-
-        label
-        {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        input, select
-        {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #444;
-            border-radius: 5px;
-            background-color: #2a2a2a;
-            color: #fff;
-            box-sizing: border-box; 
-        }
-
-        input:focus, select:focus 
-        {
-            outline: none;
-            border-color: #006400;
-        }
-
-        .payment-methods 
-        {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .payment-method
-        {
-            background-color: #2a2a2a;
-            padding: 10px 20px;
-            border: 1px solid #444;
-            border-radius: 5px;
-            cursor: pointer;
-            flex: 1;
-            text-align: center;
-            color: #fff;
-            font-weight: bold;
-            margin-right: 10px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .payment-method:last-child 
-       {
-            margin-right: 0;
-        }
-
-        .payment-method:hover, .payment-method.active
-        {
-            background-color: #006400;
-            transform: scale(1.1);
-        }
-
-        button 
-       {
-            background-color: #006400;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        button:hover
-       {
-            background-color: #004d00;
-        }
-
-        .order-summary 
-        {
-            background-color: #1a1a1a;
-            border: 1px solid #444;
-            border-radius: 8px;
-            width: 30%;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            min-height: 500px;
-            box-sizing: border-box;
-        }
-
-        .order-summary h3 
-         {
-            color: #006400;
-            margin-bottom: 20px;
-        }
-
-        .order-summary p
-         {
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-
-        footer
-        {
-           margin-top: auto;
-           text-align: center;
-           padding: 5px 0;
-           background: #111;
-           color: #fff;
-           width: 100%;
-        }
-
-        footer ul 
-       {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        footer ul li 
-        {
-            display: inline;
-            margin-right: 15px;
-        }
-
-        footer ul li a 
-       {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        footer ul li a:hover
-       {
-            text-decoration: underline;
-        }
-
-    </style>
+    <link rel="stylesheet" href="theme.css">
 </head>
-
 <body>
-    <header>
-        <h1>CineVerse Studios - Payment</h1>
-    </header>
+    <div class="site-shell">
+        <div class="top-strip">
+            <span>Step 4 | Secure Payment</span>
+            <span>Complete your cinema reservation</span>
+        </div>
 
-    <nav>
-        <ul>
-            <li><a href="cineverse.html">Home</a></li>
-            <li><a href="moviesss.html">Movies</a></li>
-            <li><a href="coming-soon.html">Coming Soon</a></li>
-            <li><a href="promotions.html">Promotion</a></li>
-            <li><a href="snacks.html">Deals</a></li>
-            <li><a href="virtualtour.html">Virtual Tour</a></li>
-            <li><a href="ratings.html">Ratings</a></li>
-        </ul>
-    </nav>
-
-    <div class="progress-bar">
-        <div class="step">1. Select Tickets</div>
-        <div class="step">2. Select Seats</div>
-        <div class="step">3. Food and Drink</div>
-        <div class="step selected">4. Confirm</div>
-        <div class="step">5. Booking Successful</div>
-    </div>
-
-    <div class="container">
-        <div class="payment-container">
-            <h2>Payment Information</h2>
-            <div class="payment-methods">
-                <div class="payment-method active" onclick="selectMethod(this, 'credit-card')">Credit Card</div>
-                <div class="payment-method" onclick="selectMethod(this, 'debit-card')">Debit Card</div>
-                <div class="payment-method" onclick="selectMethod(this, 'bank-transfer')">Bank Transfer</div>
+        <header class="brand-header">
+            <div class="brand-lockup">
+                <span class="brand-kicker">Booking Flow</span>
+                <h1 class="brand-title">Payment</h1>
+                <p class="brand-subtitle">Review your order and finish the booking through a secure, consistent checkout experience.</p>
             </div>
+        </header>
 
-            <form id="paymentForm">
-                <div class="form-group">
-                    <label for="name">Cardholder's Name</label>
-                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
-                </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="cineverse.html">Home</a></li>
+                <li><a href="moviesss.html">Movies</a></li>
+                <li><a href="location.html">Cinemas</a></li>
+                <li><a href="promotions.html">Offers</a></li>
+                <li><a href="snacks.html">Food & Drinks</a></li>
+                <li><a href="coming-soon.html">Coming Soon</a></li>
+                <li><a href="ratings.html">Ratings</a></li>
+            </ul>
+        </nav>
 
-                <div class="form-group" id="card-details">
-                    <label for="cardNumber">Card Number</label>
-                    <input type="text" id="cardNumber" name="cardNumber" placeholder="Enter card number" required>
-                    <label for="expiry">Expiry Date</label>
-                    <input type="text" id="expiry" name="expiry" placeholder="MM/YY" required>
-                    <label for="cvv">CVV</label>
-                    <input type="text" id="cvv" name="cvv" placeholder="123" required>
-                </div>
-
-                <div class="form-group" id="bank-details" style="display: none;">
-                    <label for="bankName">Bank Name</label>
-                    <select id="bankName" name="bankName">
-                        <option value="" disabled selected>Select your bank</option>
-                        <option value="bank1">Bank 1</option>
-                        <option value="bank2">Bank 2</option>
-                        <option value="bank3">Bank 3</option>
-                    </select>
-                </div>
-
-                <button type="button" id="paymentButton">Proceed to Payment</button>
-            </form>
+        <div class="booking-progress">
+            <div class="progress-step"><strong>1. Tickets</strong>Select quantity</div>
+            <div class="progress-step"><strong>2. Seats</strong>Choose placement</div>
+            <div class="progress-step"><strong>3. Snacks</strong>Add extras</div>
+            <div class="progress-step active"><strong>4. Payment</strong>Complete purchase</div>
+            <div class="progress-step"><strong>5. Success</strong>Booking confirmed</div>
         </div>
 
-        <div class="order-summary">
-            <h3>Order Summary</h3>
-            <p><strong>Movie:</strong> <span id="movieName">N/A</span></p>
-            <p><strong>Number of Tickets:</strong> <span id="numTickets">N/A</span></p>
-            <p><strong>Ticket Cost:</strong> <span id="ticketCost">N/A</span></p>
-           <p><strong>Selected Seats:</strong> <span id="selectedSeatsList">N/A</span></p>
-          <p><strong>Seat Cost:</strong> <span id="seatCost">N/A</span></p>
-          <p><strong>Snacks:</strong> <span id="snackList">N/A</span></p>
-         <p><strong>Snacks Cost:</strong> <span id="snacksCost">N/A</span></p>
-         <p><strong>Total Cost:</strong> <span id="totalCost">N/A</span></p>
+        <main class="page-content">
+            <section class="content-split">
+                <article class="surface-card">
+                    <span class="eyebrow">Payment Method</span>
+                    <h2>Complete Your Order</h2>
+                    <div class="payment-methods">
+                        <button class="payment-method active" type="button" data-method="Credit Card"><span class="payment-method-title">Credit Card</span><span class="payment-method-copy">Visa and Mastercard style checkout</span></button>
+                        <button class="payment-method" type="button" data-method="Debit Card"><span class="payment-method-title">Debit Card</span><span class="payment-method-copy">Pay directly from your bank card</span></button>
+                        <button class="payment-method" type="button" data-method="Bank Transfer"><span class="payment-method-title">Online Bank Transfer</span><span class="payment-method-copy">Complete with selected bank confirmation</span></button>
+                    </div>
 
-            <p><strong>Payment Method:</strong> <span id="paymentMethod">N/A</span></p>
-        </div>
+                    <form id="paymentForm" class="form-sections">
+                        <div class="form-section">
+                            <h3>Cardholder Details</h3>
+                            <div class="form-grid">
+                                <div class="field field-span-2">
+                                    <label for="name">Cardholder's Name</label>
+                                    <input type="text" id="name" name="name" placeholder="Enter your name">
+                                </div>
+                                <div class="field field-span-2" id="card-details">
+                                    <label for="cardNumber">Card Number</label>
+                                    <input type="text" id="cardNumber" name="cardNumber" placeholder="Enter card number">
+                                    <div class="form-grid" style="margin-top: 12px;">
+                                        <div class="field">
+                                            <label for="expiry">Expiry Date</label>
+                                            <input type="text" id="expiry" name="expiry" placeholder="MM/YY">
+                                        </div>
+                                        <div class="field">
+                                            <label for="cvv">CVV</label>
+                                            <input type="text" id="cvv" name="cvv" placeholder="123">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field field-span-2" id="bank-details" style="display:none;">
+                                    <label for="bankName">Bank Name</label>
+                                    <select id="bankName" name="bankName">
+                                        <option value="">Select your bank</option>
+                                        <option value="HBL">HBL</option>
+                                        <option value="UBL">UBL</option>
+                                        <option value="Meezan Bank">Meezan Bank</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payment-note">
+                            Your booking will be confirmed after payment details are validated and linked to the reserved seats for this session.
+                        </div>
+                        <div id="paymentStatus" class="status-banner" style="display: none;"></div>
+                        <div class="payment-actions">
+                            <a class="secondary-btn" href="snacks.html">Back</a>
+                            <button class="primary-btn payment-submit" type="submit" id="paymentButton">Confirm Payment</button>
+                        </div>
+                    </form>
+                </article>
+
+                <aside class="surface-card">
+                    <span class="eyebrow">Order Summary</span>
+                    <h2>Booking Totals</h2>
+                    <div class="summary-list">
+                        <div class="summary-item"><span>Cinema</span><strong id="cinemaName">N/A</strong></div>
+                        <div class="summary-item"><span>Screen</span><strong id="screenName">N/A</strong></div>
+                        <div class="summary-item"><span>Session</span><strong id="sessionInfo">N/A</strong></div>
+                        <div class="summary-item"><span>Movie</span><strong id="movieName">N/A</strong></div>
+                        <div class="summary-item"><span>Tickets</span><strong id="numTickets">0</strong></div>
+                        <div class="summary-item"><span>Ticket Cost</span><strong id="ticketCost">Rs. 0.00</strong></div>
+                        <div class="summary-item"><span>Seats</span><strong id="selectedSeatsList">None</strong></div>
+                        <div class="summary-item"><span>Seat Cost</span><strong id="seatCost">Rs. 0.00</strong></div>
+                        <div class="summary-item"><span>Snacks</span><strong id="snackList">None</strong></div>
+                        <div class="summary-item"><span>Snacks Cost</span><strong id="snacksCost">Rs. 0.00</strong></div>
+                        <div class="summary-item"><span>Payment Method</span><strong id="paymentMethod">Credit Card</strong></div>
+                    </div>
+                    <div class="summary-total">
+                        <span>Total Cost</span>
+                        <span id="totalCost">Rs. 0.00</span>
+                    </div>
+                </aside>
+            </section>
+        </main>
+
+        <footer class="footer-shell">
+            <ul>
+                <li><a href="cineverse.html">Home</a></li>
+                <li><a href="moviesss.html">Movies</a></li>
+                <li><a href="location.html">Cinemas</a></li>
+                <li><a href="promotions.html">Offers</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="coming-soon.html">Coming Soon</a></li>
+            </ul>
+            <p>&copy; CineVerse Studios</p>
+        </footer>
     </div>
 
-    <footer>
-        <ul>
-            <li><a href="cineverse.html">Home</a></li>
-            <li><a href="moviesss.html">Movies</a></li>
-            <li><a href="coming-soon.html">Coming Soon</a></li>
-            <li><a href="promotions.html">Promotions</a></li>
-            <li><a href="snacks.html">Deals</a></li>
-            <li><a href="virtualtour.html">Virtual Tour</a></li>
-            <li><a href="ratings.html">Ratings</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="location.html">Location</a></li>
-        </ul>
+    <script src="app.js"></script>
+    <script>
+        const { api, getBooking, mergeBooking, getUser, formatCurrency } = window.CineVerseApp;
+        const booking = getBooking();
+        const user = getUser();
+        let paymentMethod = "Credit Card";
+        if (!booking.bookingId) window.location.href = "seat-selection.html";
+        if (!user) window.location.href = "login.html";
 
-        <p>&copy; CineVerse Studios</p>
-    </footer>
-
-    
-     <script>
-    document.getElementById('paymentButton').addEventListener('click', function() 
-    {
-    const paymentData =
-     {
-        movieName: document.getElementById('movieName').innerText,
-        numTickets: document.getElementById('numTickets').innerText,
-        ticketCost: document.getElementById('ticketCost').innerText,
-        selectedSeats: selectedSeatsArray,
-        seatCost: document.getElementById('seatCost').innerText,
-        snacksList: document.getElementById('snackList').innerText,
-        snacksCost: document.getElementById('snacksCost').innerText,
-        totalCost: document.getElementById('totalCost').innerText,
-        paymentMethod: document.getElementById('paymentMethod').innerText,
-        cardholderName: document.getElementById('name').value,
-        cardNumber: document.getElementById('cardNumber').value,
-        expiryDate: document.getElementById('expiry').value,
-        cvv: document.getElementById('cvv').value,
-        bankName: document.getElementById('bankName').value
-    };
-
-    fetch('/payment'
-, {
-        method: 'POST',
-        headers:
-       {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(paymentData)
-    })
-
-    .then(response => response.json())
-    .then(data => {
-        if (data.success)
-         {
-            alert('Payment processed successfully!');
-            window.location.href = 'thankyou.html';
-        } 
-       else {
-            alert('Error: ' + data.message);
+        function showPaymentStatus(message, type) {
+            const status = document.getElementById("paymentStatus");
+            status.style.display = "block";
+            status.className = `status-banner ${type}`;
+            status.textContent = message;
         }
-    })
-    .catch(error =>
-     {
-        console.error('Error:', error);
-        alert('An error occurred while processing the payment.');
-    });
-});
 
-</script>
+        document.getElementById("cinemaName").innerText = booking.cinemaName || "CineVerse";
+        document.getElementById("screenName").innerText = booking.screenName || "Main Screen";
+        document.getElementById("sessionInfo").innerText = `${booking.showDate || ""} ${booking.showTime || ""}`.trim() || "N/A";
+        document.getElementById("movieName").innerText = booking.movieName || "N/A";
+        document.getElementById("numTickets").innerText = booking.numTickets || 0;
+        document.getElementById("ticketCost").innerText = formatCurrency(booking.ticketCost);
+        document.getElementById("selectedSeatsList").innerText = (booking.selectedSeats || []).join(", ") || "None";
+        document.getElementById("seatCost").innerText = formatCurrency(booking.seatCost);
+        document.getElementById("snackList").innerText = booking.snacksList || "None";
+        document.getElementById("snacksCost").innerText = formatCurrency(booking.snacksCost);
+        document.getElementById("totalCost").innerText = formatCurrency(booking.totalCost);
+
+        document.querySelectorAll(".payment-method").forEach((button) => {
+            button.addEventListener("click", () => {
+                document.querySelectorAll(".payment-method").forEach((item) => item.classList.remove("active"));
+                button.classList.add("active");
+                paymentMethod = button.dataset.method;
+                document.getElementById("paymentMethod").innerText = paymentMethod;
+                document.getElementById("bank-details").style.display = paymentMethod === "Bank Transfer" ? "block" : "none";
+                document.getElementById("card-details").style.display = paymentMethod === "Bank Transfer" ? "none" : "block";
+            });
+        });
+
+        function validatePaymentForm() {
+            const cardholderName = document.getElementById("name").value.trim();
+            const cardNumber = document.getElementById("cardNumber").value.trim().replace(/\s+/g, "");
+            const expiryDate = document.getElementById("expiry").value.trim();
+            const cvv = document.getElementById("cvv").value.trim();
+            const bankName = document.getElementById("bankName").value;
+            if (paymentMethod === "Bank Transfer") {
+                if (!bankName) throw new Error("Please select your bank.");
+                return;
+            }
+            if (!cardholderName) throw new Error("Please enter the cardholder's name.");
+            if (!/^\d{12,19}$/.test(cardNumber)) throw new Error("Please enter a valid card number.");
+            if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiryDate)) throw new Error("Please enter expiry date in MM/YY format.");
+            if (!/^\d{3,4}$/.test(cvv)) throw new Error("Please enter a valid CVV.");
+        }
+
+        document.getElementById("paymentForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const submitButton = document.getElementById("paymentButton");
+            try {
+                validatePaymentForm();
+            } catch (validationError) {
+                showPaymentStatus(validationError.message, "error");
+                return;
+            }
+            const paymentData = {
+                bookingId: booking.bookingId,
+                userId: user.user_id,
+                showtimeId: booking.showtimeId,
+                movieName: booking.movieName,
+                numTickets: booking.numTickets,
+                ticketCost: booking.ticketCost,
+                selectedSeats: booking.selectedSeats,
+                seatCost: booking.seatCost,
+                snacksList: booking.snacksList,
+                snacksCost: booking.snacksCost,
+                totalCost: booking.totalCost,
+                paymentMethod,
+                cardholderName: document.getElementById("name").value.trim(),
+                cardNumber: document.getElementById("cardNumber").value.trim(),
+                expiryDate: document.getElementById("expiry").value.trim(),
+                cvv: document.getElementById("cvv").value.trim(),
+                bankName: document.getElementById("bankName").value,
+            };
+            try {
+                submitButton.textContent = "Processing Payment...";
+                submitButton.disabled = true;
+                const result = await api("/payment", {
+                    method: "POST",
+                    body: JSON.stringify(paymentData),
+                });
+                mergeBooking({ paymentMethod, paymentReference: result.reference, paymentId: result.paymentId });
+                window.location.href = "thankyou.html";
+            } catch (error) {
+                showPaymentStatus(error.message, "error");
+            } finally {
+                submitButton.textContent = "Confirm Payment";
+                submitButton.disabled = false;
+            }
+        });
+    </script>
 </body>
 </html>

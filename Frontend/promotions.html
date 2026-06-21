@@ -1,250 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cinema Deals - CineVerse Studios</title>
-    <style>
-
-        body
-        {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            color: #fff;
-        }
-
-        header
-        {
-            background: #111;
-            padding: 20px 0;
-            text-align: center;
-            border-bottom: 2px solid #006400;
-        }
-
-        header h1
-        {
-            color: #fff;
-            font-size: 28px;
-        }
-
-        nav
-        {
-            background: #222;
-        }
-
-        nav ul
-        {
-            list-style-type: none;
-            padding: 0;
-            text-align: left;
-        }
-
-        nav ul li
-        {
-            display: inline;
-            margin-right: 20px;
-        }
-
-        nav ul li a
-        {
-            color: #fff;
-            text-decoration: none;
-            padding: 8px 15px;
-            transition: background 0.3s;
-            font-size: 16px;
-        }
-
-        nav ul li a:hover
-        {
-            background: #006400;
-            color: black;
-        }
-
-        .container
-        {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 0 15px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 8px;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
-        }
-
-        .container h1
-        {
-            color: #fff;
-            text-align: center;
-            font-size: 30px;
-            margin-bottom: 20px;
-        }
-
-        .deal
-        {
-            background-color: #333;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            border: 2px solid #006400;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .deal:hover
-        {
-            transform: scale(1.05);
-        }
-
-        .deal h2
-        {
-            color: #fff;
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .deal p
-        {
-            margin: 8px 0;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .code
-        {
-            background-color: #006400;
-            color: #fff;
-            padding: 8px 12px;
-            border-radius: 5px;
-            display: inline-block;
-            font-weight: bold;
-            margin-top: 10px;
-            font-size: 16px;
-        }
-
-        .copy-button
-        {
-            background-color: #006400;
-            border: none;
-            color: #fff;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-top: 10px;
-            transition: background-color 0.3s;
-        }
-
-        .copy-button:hover
-        {
-            background-color: #333;
-            color: #fff;
-        }
-
-       footer 
-        {
-            text-align: center;
-            padding: 1px 0;
-            background: #111; 
-            color: #fff;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-
-        footer ul 
-        {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        footer ul li 
-        {
-            display: inline;
-            margin-right: 15px;
-        }
-
-        footer ul li a 
-        {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        footer ul li a:hover 
-        {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CineVerse Studios - Offers</title>
+  <link rel="stylesheet" href="theme.css">
 </head>
-
 <body>
-
-<header>
-    <h1>CineVerse Studios</h1>
-</header>
-
-<nav>
-        <ul>
-            <li><a href="cineverse.html">Home</a></li>
-            <li><a href="moviesss.html">Movies</a></li>
-            <li><a href="coming-soon.html">Coming Soon</a></li>
-           <li><a href="promotions.html">Promotion</a></li>
-           <li><a href="snacks.html">Deals</a></li>
-            <li><a href="virtualtour.html">Virtual Tour</a></li>
-            <li><a href="ratings.html">Ratings</a></li>
-            
-        </ul>  
+  <div class="site-shell">
+    <div class="top-strip"><span>Offers | Bundles | Upgrades</span><span>Current cinema value across CineVerse</span></div>
+    <header class="brand-header">
+      <div class="brand-lockup">
+        <span class="brand-kicker">Special Offers</span>
+        <h1 class="brand-title">Offers</h1>
+        <p class="brand-subtitle">Explore cinema bundles, premium upgrades, and booking incentives currently available across CineVerse.</p>
+      </div>
+    </header>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="cineverse.html">Home</a></li>
+        <li><a href="moviesss.html">Movies</a></li>
+        <li><a href="location.html">Cinemas</a></li>
+        <li><a class="active" href="promotions.html">Offers</a></li>
+        <li><a href="snacks.html">Food & Drinks</a></li>
+        <li><a href="coming-soon.html">Coming Soon</a></li>
+        <li><a href="ratings.html">Ratings</a></li>
+      </ul>
     </nav>
+    <main class="page-content">
+      <section class="hero-grid">
+        <article class="glass-panel hero-card">
+          <span class="eyebrow">Live Offers</span>
+          <h2>Make every booking stretch further.</h2>
+          <p>Offers are presented as part of the same guest journey as tickets, seats, and concessions, making it easy to move from a campaign into a real booking without changing context.</p>
+          <div class="hero-actions">
+            <a class="primary-btn" href="moviesss.html">Browse Movies</a>
+            <a class="secondary-btn" href="snacks.html">See Menu</a>
+          </div>
+        </article>
+        <aside class="glass-panel stats-card">
+          <div class="stat-row"><div><div class="stat-label">Weekday Deal</div><div class="stat-value">20%</div></div><span class="movie-meta">Before 5 PM</span></div>
+          <div class="stat-row"><div><div class="stat-label">Family Bundle</div><div class="stat-value">4 Seats</div></div><span class="movie-meta">Snack Upgrade</span></div>
+          <div class="stat-row"><div><div class="stat-label">Member Perk</div><div class="stat-value">Priority</div></div><span class="movie-meta">Faster Checkout</span></div>
+        </aside>
+      </section>
 
-<div class="container">
-    <h1>Current Ticket Deals</h1>
-
-    <div class="deal">
-        <h2>Student Deal</h2>
-        <p>Get 20% off on ticket prices!</p>
-        <div class="code">STUDENT20</div>
-        <button class="copy-button" onclick="copyToClipboard('STUDENT20')">Copy Code</button>
-    </div>
-
-    <div class="deal">
-        <h2>Group Deal</h2>
-        <p>Buy 5 tickets and get 1 free!</p>
-        <div class="code">GROUP6</div>
-        <button class="copy-button" onclick="copyToClipboard('GROUP6')">Copy Code</button>
-    </div>
-
-    <div class="deal">
-        <h2>Weekend Special</h2>
-        <p>Flat 15% off on all tickets on weekends!</p>
-        <div class="code">WEEKEND15</div>
-        <button class="copy-button" onclick="copyToClipboard('WEEKEND15')">Copy Code</button>
-    </div>
-</div>
-
-  <footer>
-        <ul>
-            <li><a href="cineverse.html">Home</a></li>
-            <li><a href="moviesss.html">Movies</a></li>
-            <li><a href="coming-soon.html">Coming Soon</a></li>
-            <li><a href="promotions.html">Promotions</a></li>
-            <li><a href="snacks.html">Deals</a></li>
-            <li><a href="virtualtour.html">Virtual Tour</a></li>
-            <li><a href="ratings.html">Ratings</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="location.html">Location</a></li>
-        </ul>
-        </ul>
-
-        <p>&copy; CineVerse Studios</p>
-    </footer>
-<script>
-    function copyToClipboard(code)
-    {
-        navigator.clipboard.writeText(code).then(() => {
-            alert('Code copied: ' + code);
-        }).catch(err => {
-            console.error('Could not copy text: ', err);
-        });
-    }
-</script>
+      <section class="glass-panel section-block">
+        <div class="section-head"><div><h2>Current Offers</h2><p class="section-copy">Clear terms, direct booking entry points, and offer structures that feel closer to a live cinema product.</p></div></div>
+        <div class="offer-grid">
+          <article class="offer-card">
+            <span class="movie-meta">Students</span>
+            <h3>Weekday Student Pass</h3>
+            <p>Save on selected Monday to Thursday sessions before 5:00 PM with a valid student ID at entry.</p>
+            <p class="section-copy">Includes standard seating access and works best for afternoon shows.</p>
+            <a class="primary-btn" href="moviesss.html">Book a Show</a>
+          </article>
+          <article class="offer-card">
+            <span class="movie-meta">Families</span>
+            <h3>Family Night Bundle</h3>
+            <p>Book four tickets together and add popcorn plus two drinks at a bundled checkout price.</p>
+            <p class="section-copy">Ideal for early evening screenings and weekend visits.</p>
+            <a class="primary-btn" href="snacks.html">Plan the Order</a>
+          </article>
+          <article class="offer-card">
+            <span class="movie-meta">Premium</span>
+            <h3>Platinum Upgrade</h3>
+            <p>Move into premium seating for select shows with wider recliners and priority entry lanes.</p>
+            <p class="section-copy">Applied during showtime and ticket selection where available.</p>
+            <a class="primary-btn" href="moviesss.html">Choose Premium</a>
+          </article>
+          <article class="offer-card">
+            <span class="movie-meta">Private Events</span>
+            <h3>Corporate & Private Screenings</h3>
+            <p>Host launches, team events, or private celebrations with dedicated screen and catering options.</p>
+            <p class="section-copy">Best arranged in advance through the guest services team.</p>
+            <a class="primary-btn" href="contact.html">Contact Guest Services</a>
+          </article>
+        </div>
+      </section>
+    </main>
+    <footer class="footer-shell"><ul><li><a href="cineverse.html">Home</a></li><li><a href="moviesss.html">Movies</a></li><li><a href="location.html">Cinemas</a></li><li><a href="coming-soon.html">Coming Soon</a></li><li><a href="contact.html">Contact Us</a></li></ul><p>&copy; CineVerse Studios</p></footer>
+  </div>
 </body>
 </html>

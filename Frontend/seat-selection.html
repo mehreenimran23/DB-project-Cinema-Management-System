@@ -4,439 +4,233 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CineVerse Studios - Seat Selection</title>
-
-    <style>
-
-       body 
-        {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #000; 
-            color: #fff; 
-        }
-
-        header 
-        {
-            background: #111; 
-            padding: 20px 0;
-            text-align: center;
-            border-bottom: 2px solid green; 
-        }
-
-        nav 
-        {
-            background: #222;
-        }
-
-        nav ul 
-        {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        nav ul li 
-        {
-            display: inline;
-            margin-right: 20px;
-        }
-
-        nav ul li a 
-        {
-            color: #fff;
-            text-decoration: none;
-            padding: 15px 15px;
-            transition: background 0.3s;
-        }
-
-        nav ul li a:hover 
-        {
-            background: green; 
-            color: black;
-        }
-
-        main 
-        {
-            padding: 20px;
-        }
-
-        section 
-        {
-            background: rgba(255, 255, 255, 0.1); 
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            border: 2px solid green; 
-        }
-
-        h2 
-        {
-            color: green; 
-            margin-bottom: 10px;
-        }
-
-        .progress-bar 
-        {
-            width: 100%;
-            display: flex;
-            justify-content: space-evenly;
-            background-color: #333;
-            padding: 7px 0;
-            color: #888;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .progress-bar .step
-        {
-            cursor: pointer;
-        }
-
-        .progress-bar .selected 
-        {
-            color: white;
-            font-weight: bold;
-        }
-
-        .progress-bar .completed 
-         {
-            color: darkgreen; 
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1300px;
-            display: flex;
-            justify-content: center;
-            margin-top: 1px;
-            padding: 25px;
-            flex-grow: 1;
-        }
-
-        .left-section {
-            width: 80%;
-            background-color: #1a1a1a;
-            padding: 30px;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .left-section h2 
-        {
-            color: #fff; 
-            margin-bottom: 15px;
-            font-size: 25px;
-        }
-
-        .row
-          {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 10px 0;
-        }
-
-        .seat 
-         {
-            width: 40px;
-            height: 40px;
-            background-color: #666;
-            border: 2px solid #006400; 
-            border-radius: 5px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 12px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-
-        .seat.selected 
-       {
-            background-color: #006400;
-            color: black;
-        }
-
-        .seat.unavailable
-         {
-            background-color: #777;
-            cursor: not-allowed;
-        }
-
-        .right-section
-        {
-            width: 20%;
-            background-color: #2a2a2a;
-            padding: 30px;
-            border-radius: 8px;
-            color: #fff;
-            margin-left: 20px;
-        }
-
-        .right-section h2 
-        {
-            color: #fff; 
-            margin-top: 0;
-        }
-
-        .right-section p 
-        {
-            margin: 5px 0;
-        }
-
-        .right-section .total
-         {
-            font-weight: bold;
-            font-size: 18px;
-            color: #006400; 
-        }
-
-        button
-       {
-            background-color: #006400; 
-            color: white;
-            padding: 10px 12px; 
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px; 
-            font-weight: bold;
-            margin-top: 20px;
-            width: 140px; 
-        }
-
-        button:hover
-       {
-            background-color: #004d00; 
-        }
-
-        .seat-label 
-        {
-            color: #aaa;
-            text-align: center;
-            margin-top: 5px;
-        }
-
-           footer 
-        {
-            text-align: center;
-            padding: 3px 0;
-            background: #111; 
-            color: #fff;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-
-        footer ul 
-        {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        footer ul li 
-        {
-            display: inline;
-            margin-right: 15px;
-        }
-
-        footer ul li a 
-        {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        footer ul li a:hover 
-        {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="theme.css">
 </head>
-
 <body>
-    <header>
-        <h1>CineVerse Studios - Seat Selection</h1>
-    </header>
-    
-    <nav>
-        <ul>
-            <li><a href="cineverse.html">Home</a></li>
-            <li><a href="moviesss.html">Movies</a></li>
-            <li><a href="coming-soon.html">Coming Soon</a></li>
-           <li><a href="promotions.html">Promotion</a></li>
-           <li><a href="snacks.html">Deals</a></li>
-            <li><a href="virtualtour.html">Virtual Tour</a></li>
-            <li><a href="ratings.html">Ratings</a></li>
-            
-        </ul>  
-    </nav>
-
-    <div class="progress-bar">
-        <div class="step" id="step1">1. Select Tickets</div>
-        <div class="step selected" id="step2">2. Select Seats</div>
-        <div class="step" id="step3">3. Food and Drink</div>
-        <div class="step" id="step4">4. Confirm</div>
-        <div class="step" id="step5">5. Booking Successful</div>
-    </div>
-
-  <div class="container">
-        <div class="left-section">
-            <h2>Select Your Seats</h2>
-            <div id="seatContainer"></div>
-
-            <button onclick="confirmSelection()">Confirm Selection</button>
+    <div class="site-shell">
+        <div class="top-strip">
+            <span>Step 2 | Seat Selection</span>
+            <span>Interactive cinema seating</span>
         </div>
 
-        <div class="right-section">
-            <h2>Selection Summary</h2>
-            <p><strong>Selected Seats:</strong></p>
-            <p id="selectedSeatsList">None</p>
-            <p class="total">Total Cost: <span id="totalCost">Rs.0.00</span></p>
+        <header class="brand-header">
+            <div class="brand-lockup">
+                <span class="brand-kicker">Booking Flow</span>
+                <h1 class="brand-title">Choose Your Seats</h1>
+                <p class="brand-subtitle">Interactive seating layout with live reservation handling and a theatre-style interface.</p>
+            </div>
+        </header>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="cineverse.html">Home</a></li>
+                <li><a href="moviesss.html">Movies</a></li>
+                <li><a href="location.html">Cinemas</a></li>
+                <li><a href="promotions.html">Offers</a></li>
+                <li><a href="snacks.html">Food & Drinks</a></li>
+                <li><a href="coming-soon.html">Coming Soon</a></li>
+                <li><a href="ratings.html">Ratings</a></li>
+            </ul>
+        </nav>
+
+        <div class="booking-progress">
+            <div class="progress-step"><strong>1. Tickets</strong>Select quantity</div>
+            <div class="progress-step active"><strong>2. Seats</strong>Choose placement</div>
+            <div class="progress-step"><strong>3. Snacks</strong>Add extras</div>
+            <div class="progress-step"><strong>4. Payment</strong>Complete purchase</div>
+            <div class="progress-step"><strong>5. Success</strong>Booking confirmed</div>
         </div>
+
+        <main class="page-content">
+            <section class="content-split">
+                <article class="surface-card">
+                    <span class="eyebrow">Seat Map</span>
+                    <h2 id="seatTitle">Select Your Seats</h2>
+                    <p id="seatInstructions" class="section-copy"></p>
+                    <div class="seat-shell">
+                        <div class="seat-legend">
+                            <span class="legend-item"><span class="legend-box"></span>Available</span>
+                            <span class="legend-item"><span class="legend-box selected"></span>Selected</span>
+                            <span class="legend-item"><span class="legend-box unavailable"></span>Reserved</span>
+                        </div>
+                        <div class="seat-screen">Screen</div>
+                        <div class="seat-map" id="seatContainer"></div>
+                    </div>
+                    <div id="seatStatus" class="status-banner" style="display: none;"></div>
+                    <div class="action-row">
+                        <a class="secondary-btn" href="ticket.html">Back to Tickets</a>
+                        <button class="primary-btn" type="button" id="confirmSelectionButton">Continue to Snacks</button>
+                    </div>
+                </article>
+
+                <aside class="surface-card">
+                    <span class="eyebrow">Selection Summary</span>
+                    <h2>Your Seats</h2>
+                    <div class="summary-list">
+                        <div class="summary-item"><span>Cinema</span><strong id="summaryCinema">N/A</strong></div>
+                        <div class="summary-item"><span>Movie</span><strong id="summaryMovie">N/A</strong></div>
+                        <div class="summary-item"><span>Showtime</span><strong id="summaryShowtime">N/A</strong></div>
+                        <div class="summary-item"><span>Required Seats</span><strong id="requiredSeatCount">0</strong></div>
+                        <div class="summary-item"><span>Selected Seats</span><strong id="selectedSeatsList">None</strong></div>
+                        <div class="summary-item"><span>Seat Charges</span><strong id="seatCost">Rs. 0.00</strong></div>
+                    </div>
+                    <div class="seat-selection-pills" id="selectedSeatPills"></div>
+                    <div class="summary-total">
+                        <span>Running Total</span>
+                        <span id="totalCost">Rs. 0.00</span>
+                    </div>
+                </aside>
+            </section>
+        </main>
+
+        <footer class="footer-shell">
+            <ul>
+                <li><a href="cineverse.html">Home</a></li>
+                <li><a href="moviesss.html">Movies</a></li>
+                <li><a href="location.html">Cinemas</a></li>
+                <li><a href="promotions.html">Offers</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="coming-soon.html">Coming Soon</a></li>
+            </ul>
+            <p>&copy; CineVerse Studios</p>
+        </footer>
     </div>
 
-    <footer>
-        <ul>
-            <li><a href="cineverse.html">Home</a></li>
-            <li><a href="moviesss.html">Movies</a></li>
-            <li><a href="coming-soon.html">Coming Soon</a></li>
-            <li><a href="promotions.html">Promotions</a></li>
-            <li><a href="snacks.html">Deals</a></li>
-            <li><a href="virtualtour.html">Virtual Tour</a></li>
-            <li><a href="ratings.html">Ratings</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="location.html">Location</a></li>
-        </ul>
-        <p>&copy; CineVerse Studios</p>
-    </footer>
+    <script src="app.js"></script>
+    <script>
+        const { api, getBooking, mergeBooking, getUser, formatCurrency, formatDate, getSeatPrice } = window.CineVerseApp;
+        const booking = getBooking();
+        const user = getUser();
+        let selectedSeats = Array.isArray(booking.selectedSeats) ? [...booking.selectedSeats] : [];
+        if (!booking.showtimeId || !booking.numTickets) window.location.href = "ticket.html";
+        if (!user) window.location.href = "login.html";
 
- <script>
-let selectedSeats = [];
-let seatsData = [];
-let totalCost = 0;
-let userId = 1;
-let showtimeId = 1; 
-let paymentMethod = 'Credit Card'; // Temporarily hardcode kia va
+        function showSeatStatus(message, type) {
+            const status = document.getElementById("seatStatus");
+            status.style.display = "block";
+            status.className = `status-banner ${type}`;
+            status.textContent = message;
+        }
 
-fetch('http://localhost:3002/seats')
-  .then(response => response.json())
-  .then(data => {
-    seatsData = data;
-    renderSeats();
-  })
+        document.getElementById("summaryCinema").innerText = booking.cinemaName || "CineVerse";
+        document.getElementById("summaryMovie").innerText = booking.movieName;
+        document.getElementById("summaryShowtime").innerText = `${booking.screenName || "Main Screen"} | ${formatDate(booking.showDate)} ${booking.showTime}`;
+        document.getElementById("seatInstructions").innerText = `Please select exactly ${booking.numTickets} seat(s) for the ${booking.showType} show.`;
+        document.getElementById("requiredSeatCount").innerText = booking.numTickets;
 
-  .catch(err => {
-    console.error('Error fetching seat data:', err);
-    alert('Error. Please try again later.');
-  });
+        function updateSummary() {
+            const seatCost = selectedSeats.length * getSeatPrice(booking.showType);
+            const totalCost = Number(booking.ticketCost || 0) + seatCost;
+            document.getElementById("selectedSeatsList").innerText = selectedSeats.join(", ") || "None";
+            document.getElementById("seatCost").innerText = formatCurrency(seatCost);
+            document.getElementById("totalCost").innerText = formatCurrency(totalCost);
+            document.getElementById("confirmSelectionButton").disabled = selectedSeats.length !== Number(booking.numTickets);
+            document.getElementById("selectedSeatPills").innerHTML = selectedSeats.length
+                ? selectedSeats.map((seat) => `<span class="seat-pill">${seat}</span>`).join("")
+                : "";
+        }
 
-function renderSeats() 
-{
-  const seatContainer = document.getElementById('seatContainer');
-  const groupedSeats = {};
+        function toggleSeat(element, seatNumber) {
+            if (element.classList.contains("unavailable")) return;
+            const existingIndex = selectedSeats.indexOf(seatNumber);
+            if (existingIndex >= 0) {
+                selectedSeats.splice(existingIndex, 1);
+                element.classList.remove("selected");
+            } else {
+                if (selectedSeats.length >= Number(booking.numTickets)) {
+                    showSeatStatus(`You can only select ${booking.numTickets} seat(s) for this booking.`, "error");
+                    return;
+                }
+                selectedSeats.push(seatNumber);
+                element.classList.add("selected");
+            }
+            updateSummary();
+        }
 
-  seatsData.forEach(seat =>
-  {
-    const row = seat.seatNumber[0]; 
-    if (!groupedSeats[row]) groupedSeats[row] = [];
-    groupedSeats[row].push(seat);
-  });
+        function renderSeats(seatsData) {
+            const seatContainer = document.getElementById("seatContainer");
+            seatContainer.innerHTML = "";
+            const groupedSeats = seatsData.reduce((acc, seat) => {
+                const row = seat.seatNumber.charAt(0);
+                if (!acc[row]) acc[row] = [];
+                acc[row].push(seat);
+                return acc;
+            }, {});
 
-    Object.keys(groupedSeats).forEach(row => {
-    const rowDiv = document.createElement('div');
-    rowDiv.classList.add('row');
+            Object.keys(groupedSeats).forEach((row) => {
+                const rowDiv = document.createElement("div");
+                rowDiv.className = "seat-row";
+                const rowLabel = document.createElement("div");
+                rowLabel.className = "seat-row-label";
+                rowLabel.textContent = row;
+                rowDiv.appendChild(rowLabel);
+                const cluster = document.createElement("div");
+                cluster.className = "seat-cluster";
+                groupedSeats[row].forEach((seat, index) => {
+                    if (index === 3) {
+                        const aisle = document.createElement("div");
+                        aisle.className = "seat-aisle";
+                        cluster.appendChild(aisle);
+                    }
+                    const seatDiv = document.createElement("button");
+                    seatDiv.type = "button";
+                    seatDiv.className = "seat";
+                    seatDiv.innerText = seat.seatNumber.slice(1);
+                    seatDiv.title = seat.seatNumber;
+                    if (seat.isReserved) {
+                        seatDiv.classList.add("unavailable");
+                        seatDiv.disabled = true;
+                    }
+                    if (selectedSeats.includes(seat.seatNumber) && !seat.isReserved) seatDiv.classList.add("selected");
+                    seatDiv.addEventListener("click", () => toggleSeat(seatDiv, seat.seatNumber));
+                    cluster.appendChild(seatDiv);
+                });
+                rowDiv.appendChild(cluster);
+                seatContainer.appendChild(rowDiv);
+            });
+        }
 
-    groupedSeats[row].forEach(seat => 
-     {
-      const seatDiv = document.createElement('div');
-      seatDiv.classList.add('seat');
-      seatDiv.innerText = seat.seatNumber;
+        document.getElementById("confirmSelectionButton").addEventListener("click", async () => {
+            if (selectedSeats.length !== Number(booking.numTickets)) {
+                showSeatStatus(`Please select exactly ${booking.numTickets} seat(s) before continuing.`, "error");
+                return;
+            }
+            const seatCost = selectedSeats.length * getSeatPrice(booking.showType);
+            const totalCost = Number(booking.ticketCost || 0) + seatCost;
+            const button = document.getElementById("confirmSelectionButton");
+            try {
+                button.textContent = "Saving Seats...";
+                button.disabled = true;
+                const result = await api("/book", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        selectedSeats,
+                        userId: user.user_id,
+                        showtimeId: booking.showtimeId,
+                        totalAmount: totalCost,
+                        paymentMethod: "Pending",
+                    }),
+                });
+                mergeBooking({ selectedSeats, seatCost, totalCost, bookingId: result.bookingId });
+                window.location.href = "snacks.html";
+            } catch (error) {
+                showSeatStatus(error.message, "error");
+            } finally {
+                button.textContent = "Continue to Snacks";
+                updateSummary();
+            }
+        });
 
-      if (seat.isReserved)
-      {
-        seatDiv.classList.add('unavailable');
-      } 
-       else 
-       {
-        seatDiv.onclick = () => toggleSeat(seatDiv, seat.seatNumber); // Seat click action
-      }
-
-      rowDiv.appendChild(seatDiv);
-    });
-    seatContainer.appendChild(rowDiv);
-  });
-}
-
-function toggleSeat(seatDiv, seatNumber) 
-{
-  if (seatDiv.classList.contains('unavailable')) return;
-
-  seatDiv.classList.toggle('selected');
-
-  if (selectedSeats.includes(seatNumber)) 
-{
-    selectedSeats = selectedSeats.filter(seat => seat !== seatNumber);
-  } else {
-    selectedSeats.push(seatNumber);
-  }
-
-  updateCost(); 
-}
-
-function updateCost() 
-{
-  const ticketPrice = 150; // Price per ticket
-  totalCost = selectedSeats.length * ticketPrice;
-  document.getElementById('totalCost').innerText = `Rs.${totalCost}.00`;
-  document.getElementById('selectedSeatsList').innerText = selectedSeats.join(', ') || 'None';
-}
-
-function confirmSelection()
- {
-  if (selectedSeats.length === 0) 
-{
-    alert('Please select at least one seat before proceeding.');
-    return;
-  }
-
-  // booking details
-  const bookingDetails =
- {
-    selectedSeats: selectedSeats, 
-    userId: userId,
-    showtimeId: showtimeId,
-    totalAmount: totalCost,
-    paymentMethod: paymentMethod
-  };
-
-  fetch('http://localhost:3002/book', 
-{
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(bookingDetails),
-  })
-  .then(response => 
-  {
-    if (!response.ok) throw new Error('Failed to book seats');
-    return response.text();
-  })
-  .then(() => 
- {
-    alert(`Booking successful! Seats: ${selectedSeats.join(', ')}`);
-    window.location.href = 'snacks.html';
-  })
-
-  .catch(err => 
-   {
-    console.error('Error', err);
-    alert('Error booking seats. Please try again.');
-  });
-}
-
-</script>
+        async function initializeSeats() {
+            try {
+                const seats = await api(`/seats?showtimeId=${booking.showtimeId}`);
+                renderSeats(seats);
+                updateSummary();
+            } catch (error) {
+                showSeatStatus(error.message, "error");
+            }
+        }
+        window.addEventListener("DOMContentLoaded", initializeSeats);
+    </script>
 </body>
 </html>
