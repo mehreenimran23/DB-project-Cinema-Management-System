@@ -1,29 +1,45 @@
-# CineVerse Studios
+# CineVerse Studios - Cinema Management System
 
-This version of the project is fully runnable without SQL Server or MySQL.
+CineVerse Studios is a cinema management system that simulates a real-world movie booking platform. It allows users to browse movies, view cinema locations, book tickets, select seats, order snacks, and complete a full booking flow including a demo payment process.
 
-## What changed
+The project is built with a Node.js backend and uses local JSON-based data storage for simplicity and easy setup.
 
-- The backend was rebuilt into a self-contained Node server that serves the frontend and API together.
-- The booking flow now works across movie details, login, ticket selection, seat selection, snacks, payment, and thank you pages.
-- Local JSON seed data is used instead of a database so the project works immediately and is easier to deploy for a first project demo.
-- Ratings, tickets, seat reservations, bookings, and payments are stored in `Backend/data/data.json`.
+## Features
 
-## Run locally
+- Browse available movies  
+- View cinema locations and details  
+- Complete ticket booking flow  
+- Seat selection system  
+- Snacks and concessions ordering  
+- User login and signup system  
+- Ratings and feedback system  
+- Demo payment flow  
+- Booking confirmation page  
 
-1. Open a terminal in `Backend`.
-2. Run `node home.js`.
+## Data Storage
+
+This includes:
+- Users  
+- Movies  
+- Bookings  
+- Seat reservations  
+- Ratings  
+- Payment (demo records)  
+
+## How to Run
+
+1. Open terminal in project folder  
+2. Install dependencies (if required):
+```bash
+npm install
+3. Open a terminal in Backend.
+2. Run node home.js.
 3. Open [http://localhost:3002/cineverse.html](http://localhost:3002/cineverse.html).
 
-## Demo login
+## Demo Login
+Use the following credentials to test the system:
 
-- Email: `demo@cineverse.com`
+- Email: `demo@cineverse.com`  
 - Password: `demo123`
 
-You can also create a new account from the signup page.
-
-## Notes
-
-- No extra database install is needed right now.
-- Payment is a demo flow suitable for project presentation and deployment practice.
-- If you want, this can be upgraded later to MySQL, SQL Server, Stripe, or another real payment/database stack.
+You can also create a new account using the signup page if you want to test the full user registration flow.
