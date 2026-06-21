@@ -1,6 +1,6 @@
 # CineVerse Studios - Cinema Management System
 
-CineVerse Studios is a comprehensive cinema management system that simulates a real-world movie booking platform. It allows users to browse movies, view cinema locations, select seats, order snacks, and complete a full booking flow—including a demo payment process.
+CineVerse Studios is a comprehensive cinema management system that simulates a real-world movie booking platform. It allows users to browse movies, view cinema locations, select seats, order snacks, and complete a full booking flow, including a demo payment process.
 
 The project is built with a **Node.js** backend and utilizes a local, file-based **JSON data storage** system for simplicity and straightforward setup.
 
